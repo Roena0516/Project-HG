@@ -18,7 +18,7 @@ public class LoadManager : MonoBehaviour
 
     private void Start()
     {
-        LoadFromJson("/Users/roena0516/Desktop/Game/LevelEditerTest.json");
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "TestLevel.json"));
     }
 
     public void LoadFromJson(string filePath)
