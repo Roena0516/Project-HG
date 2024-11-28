@@ -25,11 +25,11 @@ public class LineInputChecker : MonoBehaviour
         {
             DownInput(1);
         }
-        if (Input.GetKeyDown(KeyCode.Semicolon))
+        if (Input.GetKeyDown(KeyCode.L))
         {
             DownInput(2);
         }
-        if (Input.GetKeyDown(KeyCode.Quote))
+        if (Input.GetKeyDown(KeyCode.Semicolon))
         {
             DownInput(3);
         }
@@ -44,12 +44,12 @@ public class LineInputChecker : MonoBehaviour
             currentTimeMs = Time.time * 1000f;
             StartCoroutine(UpLines(1));
         }
-        if (Input.GetKeyUp(KeyCode.Semicolon))
+        if (Input.GetKeyUp(KeyCode.L))
         {
             currentTimeMs = Time.time * 1000f;
             StartCoroutine(UpLines(2));
         }
-        if (Input.GetKeyUp(KeyCode.Quote))
+        if (Input.GetKeyUp(KeyCode.Semicolon))
         {
             currentTimeMs = Time.time * 1000f;
             StartCoroutine(UpLines(3));
@@ -71,7 +71,7 @@ public class LineInputChecker : MonoBehaviour
         float elapsedTime = 0f;
         float startAlpha = 0f;
         float duration = 0.0625f;
-        float targetAlpha = 0.3f;
+        float targetAlpha = 0.2f;
 
         while (elapsedTime < duration)
         {

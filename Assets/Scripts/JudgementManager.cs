@@ -1,5 +1,8 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class JudgementManager : MonoBehaviour
 {
@@ -8,6 +11,11 @@ public class JudgementManager : MonoBehaviour
     private float good = 120f;
 
     private NoteGenerator noteGenerator;
+
+    public TextMeshProUGUI judgeText;
+    public GameObject judgeObject;
+
+    private Coroutine currentJudgementRoutine;
 
     [System.Obsolete]
     private void Start()
@@ -41,7 +49,29 @@ public class JudgementManager : MonoBehaviour
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
-
+        StartCoroutine(JudegementTextShower(judgement));
         Destroy(note.noteObject);
     }
+
+    IEnumerator JudegementTextShower(string judgement)
+    {
+        if (currentJudgementRoutine != null)
+        {
+            StopCoroutine(currentJudgementRoutine);
+        }
+        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement));
+        yield break;
+    }
+
+    private IEnumerator ShowJudgementTextRoutine(string judgement)
+    {
+        judgeObject.SetActive(true);
+        judgeText.text = $"{judgement}";
+
+        yield return new WaitForSeconds(2f);
+
+        judgeObject.SetActive(false);
+        currentJudgementRoutine = null;
+    }
+
 }
