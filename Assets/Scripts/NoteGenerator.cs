@@ -91,10 +91,14 @@ public class NoteGenerator : MonoBehaviour
     {
         Note noteScript = note.GetComponent<Note>();
 
-        noteClass.ms = beatDuration + fallTime + 1000f;
+        float ms = beatDuration + fallTime + 1000f;
+
+        noteClass.ms = ms;
 
         yield return new WaitForSeconds(beatDuration / 1000f);
 
         noteScript.SetNote();
+        noteScript.noteClass = noteClass;
+        noteScript.ms = ms;
     }
 }

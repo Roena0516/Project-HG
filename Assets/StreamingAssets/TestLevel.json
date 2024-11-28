@@ -348,6 +348,222 @@
             "ms": 0,
             "position": 4,
             "type": "normal"
+        },
+        {
+            "beat": 76,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 76.5,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 77,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 77,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 77.5,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 78,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 78,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
+        },
+        {
+            "beat": 78.5,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 79,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 79.5,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 79.5,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
+        },
+        {
+            "beat": 80,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 80,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 80.5,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 81,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 81,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 81.5,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 81.5,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
+        },
+        {
+            "beat": 82,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 82.5,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 83,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 83,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 83.5,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 84,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 84,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
+        },
+        {
+            "beat": 84.5,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 85,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 85.5,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 85.5,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
+        },
+        {
+            "beat": 86,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 86,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 86.5,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 87,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 87,
+            "ms": 0,
+            "position": 2,
+            "type": "normal"
+        },
+        {
+            "beat": 87.5,
+            "ms": 0,
+            "position": 3,
+            "type": "normal"
+        },
+        {
+            "beat": 87.5,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
         }
     ]
 }
