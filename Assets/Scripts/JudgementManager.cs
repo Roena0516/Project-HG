@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class JudgementManager : MonoBehaviour
 {
@@ -25,7 +26,11 @@ public class JudgementManager : MonoBehaviour
 
     public void Judge(int raneNumber, float currentTimeMs)
     {
-        foreach (NoteClass note in noteGenerator.notes)
+        var filteredNotes = noteGenerator.notes
+        .Where(note => Mathf.Abs(note.ms - currentTimeMs) <= 2000)
+        .ToList();
+
+        foreach (NoteClass note in filteredNotes)
         {
             float timeDifference = Mathf.Abs(note.ms - currentTimeMs);
 
@@ -65,12 +70,16 @@ public class JudgementManager : MonoBehaviour
 
     private IEnumerator ShowJudgementTextRoutine(string judgement)
     {
-        judgeObject.SetActive(true);
+        Color tempColor = judgeText.color;
+        tempColor.a = 1f;
+        judgeText.color = tempColor;
         judgeText.text = $"{judgement}";
 
         yield return new WaitForSeconds(2f);
 
-        judgeObject.SetActive(false);
+        tempColor = judgeText.color;
+        tempColor.a = 0;
+        judgeText.color = tempColor;
         currentJudgementRoutine = null;
     }
 

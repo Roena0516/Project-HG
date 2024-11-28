@@ -12,6 +12,7 @@ public class LineInputChecker : MonoBehaviour
     [System.Obsolete]
     private void Start()
     {
+        currentTimeMs = 0f;
         judgementManager = GetComponent<JudgementManager>();
     }
 
