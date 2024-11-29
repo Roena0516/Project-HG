@@ -950,6 +950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 6337606673481639946, guid: 4abdef666c000490386f30db52b8255b, type: 3}
+  holdPrefab: {fileID: 8099512853674441928, guid: 0defce2f331834795aa353d37693dc76, type: 3}
   BPM: 240
   distance: 0
   fallTime: 0

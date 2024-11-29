@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class LineInputChecker : MonoBehaviour
@@ -8,12 +9,14 @@ public class LineInputChecker : MonoBehaviour
     public List<GameObject> Lines;
 
     private JudgementManager judgementManager;
+    private NoteGenerator noteGenerator;
 
     [System.Obsolete]
     private void Start()
     {
         currentTimeMs = 0f;
         judgementManager = GetComponent<JudgementManager>();
+        noteGenerator = FindObjectOfType<NoteGenerator>();
     }
 
     void Update()
@@ -35,6 +38,26 @@ public class LineInputChecker : MonoBehaviour
             DownInput(3);
         }
 
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            CheckHold(0);
+        }
+        if (Input.GetKey(KeyCode.D))
+        {
+            CheckHold(1);
+        }
+        if (Input.GetKey(KeyCode.L))
+        {
+            CheckHold(2);
+        }
+        if (Input.GetKey(KeyCode.Semicolon))
+        {
+            CheckHold(3);
+        }
+
+
+
         if (Input.GetKeyUp(KeyCode.S))
         {
             currentTimeMs = Time.time * 1000f;
@@ -54,6 +77,23 @@ public class LineInputChecker : MonoBehaviour
         {
             currentTimeMs = Time.time * 1000f;
             StartCoroutine(UpLines(3));
+        }
+    }
+
+    private void CheckHold(int raneNumber)
+    {
+        var filteredNotes = noteGenerator.notes
+        .Where(note => Mathf.Abs(note.ms - (Time.time * 1000)) <= 10)
+        .ToList();
+
+        foreach (NoteClass note in filteredNotes)
+        {
+            if (note.type == "hold" && raneNumber + 1 == note.position)
+            {
+                judgementManager.PerformAction(note, "Perfect", note.ms);
+                judgementManager.AddCombo(1);
+                break;
+            }
         }
     }
 

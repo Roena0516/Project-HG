@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class NoteGenerator : MonoBehaviour
 {
     public GameObject notePrefab;
+    public GameObject holdPrefab;
     public float BPM = 120f;
 
     public float distance;
@@ -81,6 +82,15 @@ public class NoteGenerator : MonoBehaviour
         if (type == "normal")
         {
             GameObject note = Instantiate(notePrefab, ranePosition, R);
+            noteClass.noteObject = note;
+            noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
+            oneBeatDuration = 60f / BPM * 1000f;
+            beatDuration = oneBeatDuration * beat;
+            StartCoroutine(NoteSetter(noteClass, note, beatDuration));
+        }
+        if (type == "hold")
+        {
+            GameObject note = Instantiate(holdPrefab, ranePosition, R);
             noteClass.noteObject = note;
             noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
             oneBeatDuration = 60f / BPM * 1000f;

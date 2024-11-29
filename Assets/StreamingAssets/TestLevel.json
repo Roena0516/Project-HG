@@ -7,6 +7,12 @@
             "type": "normal"
         },
         {
+            "beat": 6,
+            "ms": 0,
+            "position": 1,
+            "type": "hold"
+        },
+        {
             "beat": 8,
             "ms": 0,
             "position": 2,
@@ -564,6 +570,54 @@
             "ms": 0,
             "position": 4,
             "type": "normal"
+        },
+        {
+            "beat": 92,
+            "ms": 0,
+            "position": 1,
+            "type": "normal"
+        },
+        {
+            "beat": 94,
+            "ms": 0,
+            "position": 1,
+            "type": "hold"
+        },
+        {
+            "beat": 96,
+            "ms": 0,
+            "position": 1,
+            "type": "hold"
+        },
+        {
+            "beat": 98,
+            "ms": 0,
+            "position": 1,
+            "type": "hold"
+        },
+        {
+            "beat": 100,
+            "ms": 0,
+            "position": 4,
+            "type": "normal"
+        },
+        {
+            "beat": 102,
+            "ms": 0,
+            "position": 4,
+            "type": "hold"
+        },
+        {
+            "beat": 104,
+            "ms": 0,
+            "position": 4,
+            "type": "hold"
+        },
+        {
+            "beat": 106,
+            "ms": 0,
+            "position": 4,
+            "type": "hold"
         }
     ]
 }
