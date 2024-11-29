@@ -1,4 +1,9 @@
 {
+	"info": {
+		"title": "test",
+		"artist": "test",
+		"bpm" : 180
+	},
     "notes": [
         {
             "beat": 4,

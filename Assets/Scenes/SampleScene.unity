@@ -951,16 +951,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 6337606673481639946, guid: 4abdef666c000490386f30db52b8255b, type: 3}
   holdPrefab: {fileID: 8099512853674441928, guid: 0defce2f331834795aa353d37693dc76, type: 3}
-  BPM: 240
+  BPM: 180
   distance: 0
   fallTime: 0
-  speed: 15
+  speed: 18
   Lines:
   - {fileID: 721333007}
   - {fileID: 1509514657}
   - {fileID: 1155442951}
   - {fileID: 2104346033}
   notes: []
+  info:
+    title: 
+    artist: 
+    bpm: 0
 --- !u!1 &1244622319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1112,6 +1116,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: afdafc93eabea4aacb141ab7879d47cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  info:
+    title: 
+    artist: 
+    bpm: 0
   notes: []
 --- !u!114 &1299961085
 MonoBehaviour:
