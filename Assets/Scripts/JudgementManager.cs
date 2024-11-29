@@ -11,10 +11,13 @@ public class JudgementManager : MonoBehaviour
     private float great = 60f;
     private float good = 120f;
 
+    public int combo;
+
     private NoteGenerator noteGenerator;
 
     public TextMeshProUGUI judgeText;
     public TextMeshProUGUI fastSlow;
+    public TextMeshProUGUI comboText;
 
     private Coroutine currentJudgementRoutine;
 
@@ -26,6 +29,7 @@ public class JudgementManager : MonoBehaviour
         judgeText.color = tempColor;
         fastSlow.color = tempColor;
         noteGenerator = FindObjectOfType<NoteGenerator>();
+        combo = 0;
     }
 
     public void Judge(int raneNumber, float currentTimeMs)
@@ -41,20 +45,36 @@ public class JudgementManager : MonoBehaviour
             if (timeDifference <= perfect && raneNumber + 1 == note.position)
             {
                 PerformAction(note, "Perfect", currentTimeMs);
+                AddCombo(1);
                 break;
             }
             if (timeDifference <= great && raneNumber + 1 == note.position)
             {
                 PerformAction(note, "Great", currentTimeMs);
+                AddCombo(1);
                 break;
             }
             if (timeDifference <= good && raneNumber + 1 == note.position)
             {
                 PerformAction(note, "Good", currentTimeMs);
+                AddCombo(1);
                 break;
             }
         }
     }
+
+    public void AddCombo(int amount)
+    {
+        combo += amount;
+        comboText.text = $"{combo}";
+    }
+
+    public void ClearCombo()
+    {
+        combo = 0;
+        comboText.text = $"{combo}";
+    }
+
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
