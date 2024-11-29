@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class Note : MonoBehaviour
 {
-    public float speed = 15f;
+    private float speed;
 
     private bool isSet;
     public float ms;
@@ -34,5 +34,10 @@ public class Note : MonoBehaviour
     public void SetNote()
     {
         isSet = !isSet;
+    }
+
+    public void SetSpeed(float spd)
+    {
+        speed = spd;
     }
 }
