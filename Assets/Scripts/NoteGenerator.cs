@@ -8,7 +8,7 @@ public class NoteGenerator : MonoBehaviour
 {
     public GameObject notePrefab;
     public GameObject holdPrefab;
-    public float BPM = 120f;
+    public float BPM;
 
     public float distance;
     public float fallTime;
@@ -26,6 +26,7 @@ public class NoteGenerator : MonoBehaviour
     private LoadManager loadManager;
 
     public List<NoteClass> notes;
+    public SongInfoClass info;
 
     [System.Obsolete]
     void Start()
@@ -49,6 +50,8 @@ public class NoteGenerator : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
         notes = loadManager.notes;
+        info = loadManager.info;
+        BPM = info.bpm;
 
         foreach (NoteClass note in notes)
         {
@@ -63,6 +66,7 @@ public class NoteGenerator : MonoBehaviour
         Vector3 ranePosition = spawnPosition1;
         float oneBeatDuration;
         float beatDuration;
+        GameObject note = null;
         if (position == 1)
         {
             ranePosition = spawnPosition1;
@@ -81,22 +85,17 @@ public class NoteGenerator : MonoBehaviour
         }
         if (type == "normal")
         {
-            GameObject note = Instantiate(notePrefab, ranePosition, R);
-            noteClass.noteObject = note;
-            noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
-            oneBeatDuration = 60f / BPM * 1000f;
-            beatDuration = oneBeatDuration * beat;
-            StartCoroutine(NoteSetter(noteClass, note, beatDuration));
+            note = Instantiate(notePrefab, ranePosition, R);
         }
         if (type == "hold")
         {
-            GameObject note = Instantiate(holdPrefab, ranePosition, R);
-            noteClass.noteObject = note;
-            noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
-            oneBeatDuration = 60f / BPM * 1000f;
-            beatDuration = oneBeatDuration * beat;
-            StartCoroutine(NoteSetter(noteClass, note, beatDuration));
+            note = Instantiate(holdPrefab, ranePosition, R);
         }
+        noteClass.noteObject = note;
+        noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
+        oneBeatDuration = 60f / BPM * 1000f;
+        beatDuration = oneBeatDuration * beat;
+        StartCoroutine(NoteSetter(noteClass, note, beatDuration));
     }
 
     IEnumerator NoteSetter(NoteClass noteClass, GameObject note, float beatDuration)

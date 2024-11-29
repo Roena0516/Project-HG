@@ -42,19 +42,25 @@ public class JudgementManager : MonoBehaviour
         {
             float timeDifference = Mathf.Abs(note.ms - currentTimeMs);
 
-            if (timeDifference <= perfect && raneNumber + 1 == note.position)
+            if (timeDifference <= perfect && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
+            {
+                PerformAction(note, "Perfect", note.ms);
+                AddCombo(1);
+                break;
+            }
+            if (timeDifference <= perfect && note.type == "normal" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Perfect", currentTimeMs);
                 AddCombo(1);
                 break;
             }
-            if (timeDifference <= great && raneNumber + 1 == note.position)
+            if (timeDifference <= great && note.type == "normal" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Great", currentTimeMs);
                 AddCombo(1);
                 break;
             }
-            if (timeDifference <= good && raneNumber + 1 == note.position)
+            if (timeDifference <= good && note.type == "normal" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Good", currentTimeMs);
                 AddCombo(1);
@@ -78,6 +84,7 @@ public class JudgementManager : MonoBehaviour
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
+        note.isInputed = true;
         Destroy(note.noteObject);
         float Ms = note.ms - currentTimeMs;
         StartCoroutine(JudegementTextShower(judgement, Ms));
@@ -103,6 +110,11 @@ public class JudgementManager : MonoBehaviour
         {
             fastSlow.color = tempColor;
             fastSlow.text = $"+{(int)Ms}";
+        }
+        if (Ms == 0)
+        {
+            fastSlow.color = tempColor;
+            fastSlow.text = $"";
         }
         if (Ms < 0)
         {

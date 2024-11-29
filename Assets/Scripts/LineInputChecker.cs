@@ -88,7 +88,7 @@ public class LineInputChecker : MonoBehaviour
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position)
+            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 judgementManager.PerformAction(note, "Perfect", note.ms);
                 judgementManager.AddCombo(1);
