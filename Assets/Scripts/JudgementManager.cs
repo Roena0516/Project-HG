@@ -35,7 +35,7 @@ public class JudgementManager : MonoBehaviour
     public void Judge(int raneNumber, float currentTimeMs)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs(note.ms - currentTimeMs) <= 2000)
+        .Where(note => Mathf.Abs(note.ms - currentTimeMs) <= 1000)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)
@@ -78,9 +78,9 @@ public class JudgementManager : MonoBehaviour
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
-        float Ms = (int)note.ms - (int)currentTimeMs;
-        StartCoroutine(JudegementTextShower(judgement, Ms));
         Destroy(note.noteObject);
+        float Ms = note.ms - currentTimeMs;
+        StartCoroutine(JudegementTextShower(judgement, Ms));
     }
 
     IEnumerator JudegementTextShower(string judgement, float Ms)
