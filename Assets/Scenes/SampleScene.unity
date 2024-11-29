@@ -816,6 +816,7 @@ MonoBehaviour:
   BPM: 240
   distance: 0
   fallTime: 0
+  speed: 14
   Lines:
   - {fileID: 721333007}
   - {fileID: 1509514657}

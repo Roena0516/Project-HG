@@ -11,6 +11,7 @@ public class NoteGenerator : MonoBehaviour
 
     public float distance;
     public float fallTime;
+    public float speed = 12f;
 
     public List<GameObject> Lines;
 
@@ -35,7 +36,7 @@ public class NoteGenerator : MonoBehaviour
         spawnPosition4 = new Vector3(Lines[3].transform.position.x, transform.position.y, 0);
         spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
-        fallTime = distance / notePrefab.GetComponent<Note>().speed * 1000f;
+        fallTime = distance / speed * 1000f;
 
         loadManager = FindObjectOfType<LoadManager>();
 
@@ -81,6 +82,7 @@ public class NoteGenerator : MonoBehaviour
         {
             GameObject note = Instantiate(notePrefab, ranePosition, R);
             noteClass.noteObject = note;
+            noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
             oneBeatDuration = 60f / BPM * 1000f;
             beatDuration = oneBeatDuration * beat;
             StartCoroutine(NoteSetter(noteClass, note, beatDuration));
