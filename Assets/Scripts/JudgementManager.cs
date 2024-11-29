@@ -14,13 +14,17 @@ public class JudgementManager : MonoBehaviour
     private NoteGenerator noteGenerator;
 
     public TextMeshProUGUI judgeText;
-    public GameObject judgeObject;
+    public TextMeshProUGUI fastSlow;
 
     private Coroutine currentJudgementRoutine;
 
     [System.Obsolete]
     private void Start()
     {
+        Color tempColor = judgeText.color;
+        tempColor.a = 0f;
+        judgeText.color = tempColor;
+        fastSlow.color = tempColor;
         noteGenerator = FindObjectOfType<NoteGenerator>();
     }
 
@@ -54,32 +58,44 @@ public class JudgementManager : MonoBehaviour
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
-        StartCoroutine(JudegementTextShower(judgement));
+        float Ms = (int)note.ms - (int)currentTimeMs;
+        StartCoroutine(JudegementTextShower(judgement, Ms));
         Destroy(note.noteObject);
     }
 
-    IEnumerator JudegementTextShower(string judgement)
+    IEnumerator JudegementTextShower(string judgement, float Ms)
     {
         if (currentJudgementRoutine != null)
         {
             StopCoroutine(currentJudgementRoutine);
         }
-        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement));
+        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement, Ms));
         yield break;
     }
 
-    private IEnumerator ShowJudgementTextRoutine(string judgement)
+    private IEnumerator ShowJudgementTextRoutine(string judgement, float Ms)
     {
         Color tempColor = judgeText.color;
         tempColor.a = 1f;
         judgeText.color = tempColor;
         judgeText.text = $"{judgement}";
+        if (Ms > 0)
+        {
+            fastSlow.color = tempColor;
+            fastSlow.text = $"+{(int)Ms}";
+        }
+        if (Ms < 0)
+        {
+            fastSlow.color = tempColor;
+            fastSlow.text = $"{(int)Ms}";
+        }
 
         yield return new WaitForSeconds(2f);
 
         tempColor = judgeText.color;
         tempColor.a = 0;
         judgeText.color = tempColor;
+        fastSlow.color = tempColor;
         currentJudgementRoutine = null;
     }
 
