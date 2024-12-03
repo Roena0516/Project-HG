@@ -29,7 +29,7 @@ public class JudgementManager : MonoBehaviour
         judgeText.color = tempColor;
         fastSlow.color = tempColor;
         noteGenerator = FindObjectOfType<NoteGenerator>();
-        combo = 0;
+        ClearCombo();
     }
 
     public void Judge(int raneNumber, float currentTimeMs)
@@ -78,7 +78,7 @@ public class JudgementManager : MonoBehaviour
     public void ClearCombo()
     {
         combo = 0;
-        comboText.text = $"{combo}";
+        comboText.text = $"";
     }
 
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
