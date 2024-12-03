@@ -83,12 +83,12 @@ public class LineInputChecker : MonoBehaviour
     private void CheckHold(int raneNumber)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs(note.ms - (Time.time * 1000)) <= 10)
+        .Where(note => Mathf.Abs(note.ms - (Time.time * 1000)) <= 40)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
+            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (Time.time * 1000) <= 3 && note.ms - (Time.time * 1000) >= -120))
             {
                 judgementManager.PerformAction(note, "Perfect", note.ms);
                 judgementManager.AddCombo(1);
