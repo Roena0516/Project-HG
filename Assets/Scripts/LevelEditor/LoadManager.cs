@@ -8,6 +8,7 @@ public class SongInfoClass
     public string title;
     public string artist;
     public float bpm;
+    public string songFile;
 }
 
 [System.Serializable]
@@ -29,7 +30,7 @@ public class LoadManager : MonoBehaviour
 
     private void Start()
     {
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "TestLevel.json"));
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", "TestLevel.json"));
     }
 
     public void LoadFromJson(string filePath)
