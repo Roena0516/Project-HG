@@ -16,7 +16,7 @@
             "beat": 6,
             "ms": 0,
             "position": 1,
-            "type": "hold"
+            "type": "up"
         },
         {
             "beat": 8,
@@ -208,7 +208,7 @@
             "beat": 57,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 58,
@@ -226,7 +226,7 @@
             "beat": 59,
             "ms": 0,
             "position": 1,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 62,
@@ -262,7 +262,7 @@
             "beat": 64.5,
             "ms": 0,
             "position": 1,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 65,
@@ -274,7 +274,7 @@
             "beat": 65.5,
             "ms": 0,
             "position": 2,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 66,
@@ -286,7 +286,7 @@
             "beat": 66.5,
             "ms": 0,
             "position": 3,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 67,
@@ -298,7 +298,7 @@
             "beat": 67.5,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 68,
@@ -401,7 +401,7 @@
             "beat": 78,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 78.5,
@@ -425,7 +425,7 @@
             "beat": 79.5,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 80,
@@ -467,7 +467,7 @@
             "beat": 81.5,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 82,
@@ -491,7 +491,7 @@
             "beat": 83,
             "ms": 0,
             "position": 3,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 83.5,
@@ -509,7 +509,7 @@
             "beat": 84,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 84.5,
@@ -533,7 +533,7 @@
             "beat": 85.5,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 86,
@@ -575,7 +575,7 @@
             "beat": 87.5,
             "ms": 0,
             "position": 4,
-            "type": "normal"
+            "type": "up"
         },
         {
             "beat": 92,

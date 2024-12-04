@@ -60,23 +60,19 @@ public class LineInputChecker : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.S))
         {
-            currentTimeMs = Time.time * 1000f;
-            StartCoroutine(UpLines(0));
+            UpInput(0);
         }
         if (Input.GetKeyUp(KeyCode.D))
         {
-            currentTimeMs = Time.time * 1000f;
-            StartCoroutine(UpLines(1));
+            UpInput(1);
         }
         if (Input.GetKeyUp(KeyCode.L))
         {
-            currentTimeMs = Time.time * 1000f;
-            StartCoroutine(UpLines(2));
+            UpInput(2);
         }
         if (Input.GetKeyUp(KeyCode.Semicolon))
         {
-            currentTimeMs = Time.time * 1000f;
-            StartCoroutine(UpLines(3));
+            UpInput(3);
         }
     }
 
@@ -103,6 +99,13 @@ public class LineInputChecker : MonoBehaviour
         judgementManager.Judge(raneNumber, currentTimeMs);
 
         StartCoroutine(DownLines(raneNumber));
+    }
+    private void UpInput(int raneNumber)
+    {
+        currentTimeMs = Time.time * 1000f;
+        judgementManager.UpJudge(raneNumber, currentTimeMs);
+
+        StartCoroutine(UpLines(raneNumber));
     }
 
     private IEnumerator DownLines(int lineNumber)
