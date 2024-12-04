@@ -7,6 +7,8 @@ public class MusicPlayer : MonoBehaviour
 {
     EventInstance eventInstance;
 
+    public float sync = 0f;
+
     void Start()
     {
         eventInstance = RuntimeManager.CreateInstance("event:/umiyurikaiteitan 3");
@@ -20,7 +22,7 @@ public class MusicPlayer : MonoBehaviour
 
     IEnumerator StartSong()
     {
-        yield return new WaitForSeconds(1.0f - 0.11f);
+        yield return new WaitForSeconds(1.0f + sync);
         eventInstance.start();
     }
 
