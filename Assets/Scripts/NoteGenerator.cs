@@ -8,6 +8,7 @@ public class NoteGenerator : MonoBehaviour
 {
     public GameObject notePrefab;
     public GameObject holdPrefab;
+    public GameObject upPrefab;
     public float BPM;
 
     public float distance;
@@ -90,6 +91,10 @@ public class NoteGenerator : MonoBehaviour
         if (type == "hold")
         {
             note = Instantiate(holdPrefab, ranePosition, R);
+        }
+        if (type == "up")
+        {
+            note = Instantiate(upPrefab, ranePosition, R);
         }
         noteClass.noteObject = note;
         noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);

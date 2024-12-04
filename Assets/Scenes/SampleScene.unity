@@ -719,6 +719,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfaf151f317d4419fafb8e3af75ea35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sync: 0.13
 --- !u!4 &669266813
 Transform:
   m_ObjectHideFlags: 0
@@ -1033,6 +1034,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   notePrefab: {fileID: 6337606673481639946, guid: 4abdef666c000490386f30db52b8255b, type: 3}
   holdPrefab: {fileID: 8099512853674441928, guid: 0defce2f331834795aa353d37693dc76, type: 3}
+  upPrefab: {fileID: 3159952297815292006, guid: 3ee392724c6b64d14ac73d09ef761969, type: 3}
   BPM: 180
   distance: 0
   fallTime: 0
