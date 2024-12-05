@@ -24,7 +24,7 @@ public class Note : MonoBehaviour
         if (isSet)
         {
             transform.Translate(Vector2.down * speed * Time.deltaTime);
-            if ((Time.time * 1000f) - ms >= 200f)
+            if ((line.currentTime * 1000f) - ms >= 200f)
             {
                 judgement.PerformAction(noteClass, "Miss", ms);
                 judgement.ClearCombo();

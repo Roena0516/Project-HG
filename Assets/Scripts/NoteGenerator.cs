@@ -25,6 +25,7 @@ public class NoteGenerator : MonoBehaviour
     Quaternion spawnRotation;
 
     private LoadManager loadManager;
+    private LineInputChecker checker;
 
     public List<NoteClass> notes;
     public SongInfoClass info;
@@ -42,6 +43,7 @@ public class NoteGenerator : MonoBehaviour
         fallTime = distance / speed * 1000f;
 
         loadManager = FindObjectOfType<LoadManager>();
+        checker = FindObjectOfType<LineInputChecker>();
 
         StartCoroutine(NoteGenerate());
     }
