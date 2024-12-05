@@ -6,6 +6,8 @@ using UnityEngine;
 public class LineInputChecker : MonoBehaviour
 {
     public float currentTimeMs;
+    public float startTime;
+    public float currentTime;
     public List<GameObject> Lines;
 
     private JudgementManager judgementManager;
@@ -15,12 +17,15 @@ public class LineInputChecker : MonoBehaviour
     private void Start()
     {
         currentTimeMs = 0f;
+        startTime = Time.time;
+        Debug.Log($"Start Time : {startTime}");
         judgementManager = GetComponent<JudgementManager>();
         noteGenerator = FindObjectOfType<NoteGenerator>();
     }
 
     void Update()
     {
+        currentTime = Time.time - startTime;
         if (Input.GetKeyDown(KeyCode.S))
         {
             DownInput(0);
@@ -79,12 +84,12 @@ public class LineInputChecker : MonoBehaviour
     private void CheckHold(int raneNumber)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs(note.ms - (Time.time * 1000)) <= 40)
+        .Where(note => Mathf.Abs(note.ms - (currentTime * 1000)) <= 40)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (Time.time * 1000) <= 3 && note.ms - (Time.time * 1000) >= -120))
+            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000) <= 3 && note.ms - (currentTime * 1000) >= -120))
             {
                 judgementManager.PerformAction(note, "Perfect", note.ms);
                 judgementManager.AddCombo(1);
@@ -95,14 +100,14 @@ public class LineInputChecker : MonoBehaviour
 
     private void DownInput(int raneNumber)
     {
-        currentTimeMs = Time.time * 1000f;
+        currentTimeMs = currentTime * 1000f;
         judgementManager.Judge(raneNumber, currentTimeMs);
 
         StartCoroutine(DownLines(raneNumber));
     }
     private void UpInput(int raneNumber)
     {
-        currentTimeMs = Time.time * 1000f;
+        currentTimeMs = currentTime * 1000f;
         judgementManager.UpJudge(raneNumber, currentTimeMs);
 
         StartCoroutine(UpLines(raneNumber));
