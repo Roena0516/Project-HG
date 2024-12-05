@@ -9,8 +9,8 @@ public class JudgementManager : MonoBehaviour
 {
     private float perfect = 40f;
     private float great = 60f;
-    private float good = 120f;
-    private float bad = 200f;
+    private float good = 110f;
+    private float bad = 140f;
 
     public int combo;
 
