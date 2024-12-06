@@ -17,6 +17,8 @@ public class NoteGenerator : MonoBehaviour
 
     public List<GameObject> Lines;
 
+    public Dictionary<string, int> noteTypeCounts = new Dictionary<string, int>();
+
     private Vector3 spawnPosition1;
     private Vector3 spawnPosition2;
     private Vector3 spawnPosition3;
@@ -26,6 +28,7 @@ public class NoteGenerator : MonoBehaviour
 
     private LoadManager loadManager;
     private LineInputChecker checker;
+    private JudgementManager judgement;
 
     public List<NoteClass> notes;
     public SongInfoClass info;
@@ -44,6 +47,11 @@ public class NoteGenerator : MonoBehaviour
 
         loadManager = FindObjectOfType<LoadManager>();
         checker = FindObjectOfType<LineInputChecker>();
+        judgement = FindObjectOfType<JudgementManager>();
+
+        noteTypeCounts["normal"] = 0;
+        noteTypeCounts["hold"] = 0;
+        noteTypeCounts["up"] = 0;
 
         StartCoroutine(NoteGenerate());
     }
@@ -59,9 +67,10 @@ public class NoteGenerator : MonoBehaviour
         foreach (NoteClass note in notes)
         {
             NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
+            noteTypeCounts[note.type]++;
         }
 
-        yield break;
+        StartCoroutine(judgement.CalcRate());
     }
 
     public void NoteSpawner(NoteClass noteClass, int position, string type, float beat, Quaternion R)
