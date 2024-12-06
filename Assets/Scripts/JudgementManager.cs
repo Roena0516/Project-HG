@@ -10,7 +10,7 @@ public class JudgementManager : MonoBehaviour
     private float perfect = 40f;
     private float great = 60f;
     private float good = 110f;
-    private float bad = 140f;
+    private float bad = 160f;
 
     public int combo;
     public float rate;
@@ -46,10 +46,10 @@ public class JudgementManager : MonoBehaviour
     public IEnumerator CalcRate()
     {
         float rateAllNote = (noteGenerator.noteTypeCounts["normal"] * 1) + (noteGenerator.noteTypeCounts["hold"] * 1) + (noteGenerator.noteTypeCounts["up"] * 2);
-        
+
         noteTypeRate["normal"] = (noteGenerator.noteTypeCounts["normal"] > 0) ? (noteGenerator.noteTypeCounts["normal"] / rateAllNote * 100 / noteGenerator.noteTypeCounts["normal"]) : 0;
         noteTypeRate["hold"] = (noteGenerator.noteTypeCounts["hold"] > 0) ? (noteGenerator.noteTypeCounts["hold"] / rateAllNote * 100) / noteGenerator.noteTypeCounts["hold"] : 0;
-        noteTypeRate["up"] = (noteGenerator.noteTypeCounts["up"] > 0) ? (noteGenerator.noteTypeCounts["up"] / rateAllNote * 100) / noteGenerator.noteTypeCounts["up"] : 0;
+        noteTypeRate["up"] = (noteGenerator.noteTypeCounts["up"] > 0) ? (noteGenerator.noteTypeCounts["up"] * 2 / rateAllNote * 100) / noteGenerator.noteTypeCounts["up"] : 0;
         //foreach (var pair in noteGenerator.noteTypeCounts)
         //{
         //    Debug.Log($"{pair.Key}: {pair.Value}");
