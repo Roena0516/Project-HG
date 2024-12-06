@@ -146,13 +146,13 @@ public class JudgementManager : MonoBehaviour
                 ClearCombo();
                 break;
             }
-            if (notAbsDiff > 40 && notAbsDiff <= 50  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff > 60 && notAbsDiff <= 100  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Great", currentTimeMs);
                 AddCombo(1);
                 break;
             }
-            if (notAbsDiff > 50 && notAbsDiff <= 60 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff > 100 && notAbsDiff <= 140 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Good", currentTimeMs);
                 AddCombo(1);
