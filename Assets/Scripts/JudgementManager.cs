@@ -9,18 +9,22 @@ public class JudgementManager : MonoBehaviour
 {
     private float perfect = 40f;
     private float great = 60f;
-    private float good = 120f;
-    private float bad = 200f;
+    private float good = 110f;
+    private float bad = 140f;
 
     public int combo;
+    public float rate;
 
     private NoteGenerator noteGenerator;
 
     public TextMeshProUGUI judgeText;
     public TextMeshProUGUI fastSlow;
     public TextMeshProUGUI comboText;
+    public TextMeshProUGUI rateText;
 
     private Coroutine currentJudgementRoutine;
+
+    public Dictionary<string, float> noteTypeRate = new Dictionary<string, float>();
 
     [System.Obsolete]
     private void Start()
@@ -30,7 +34,32 @@ public class JudgementManager : MonoBehaviour
         judgeText.color = tempColor;
         fastSlow.color = tempColor;
         noteGenerator = FindObjectOfType<NoteGenerator>();
+        rate = 100f;
+
+        noteTypeRate["normal"] = 0f;
+        noteTypeRate["hold"] = 0f;
+        noteTypeRate["up"] = 0f;
+
         ClearCombo();
+    }
+
+    public IEnumerator CalcRate()
+    {
+        float rateAllNote = (noteGenerator.noteTypeCounts["normal"] * 1) + (noteGenerator.noteTypeCounts["hold"] * 1) + (noteGenerator.noteTypeCounts["up"] * 2);
+        
+        noteTypeRate["normal"] = (noteGenerator.noteTypeCounts["normal"] > 0) ? (noteGenerator.noteTypeCounts["normal"] / rateAllNote * 100 / noteGenerator.noteTypeCounts["normal"]) : 0;
+        noteTypeRate["hold"] = (noteGenerator.noteTypeCounts["hold"] > 0) ? (noteGenerator.noteTypeCounts["hold"] / rateAllNote * 100) / noteGenerator.noteTypeCounts["hold"] : 0;
+        noteTypeRate["up"] = (noteGenerator.noteTypeCounts["up"] > 0) ? (noteGenerator.noteTypeCounts["up"] / rateAllNote * 100) / noteGenerator.noteTypeCounts["up"] : 0;
+        //foreach (var pair in noteGenerator.noteTypeCounts)
+        //{
+        //    Debug.Log($"{pair.Key}: {pair.Value}");
+        //}
+        //foreach (var pair in noteTypeRate)
+        //{
+        //    Debug.Log($"{pair.Key}: {pair.Value}");
+        //}
+
+        yield break;
     }
 
     public void Judge(int raneNumber, float currentTimeMs)
@@ -149,8 +178,31 @@ public class JudgementManager : MonoBehaviour
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
         note.isInputed = true;
         Destroy(note.noteObject);
+        Debug.Log(noteTypeRate[note.type]);
+        if (judgement == "Great")
+        {
+            ChangeRate(noteTypeRate[note.type], 0.25f);
+        }
+        if (judgement == "Good")
+        {
+            ChangeRate(noteTypeRate[note.type], 0.5f);
+        }
+        if (judgement == "Bad")
+        {
+            ChangeRate(noteTypeRate[note.type], 0.75f);
+        }
+        if (judgement == "Miss")
+        {
+            ChangeRate(noteTypeRate[note.type], 1f);
+        }
         float Ms = note.ms - currentTimeMs;
         StartCoroutine(JudegementTextShower(judgement, Ms));
+    }
+
+    private void ChangeRate(float typeRate, float ratio)
+    {
+        rate -= typeRate * ratio;
+        rateText.text = $"{rate:F2}%";
     }
 
     IEnumerator JudegementTextShower(string judgement, float Ms)
