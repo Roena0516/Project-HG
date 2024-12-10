@@ -21,10 +21,12 @@ public class JudgementManager : MonoBehaviour
     public TextMeshProUGUI fastSlow;
     public TextMeshProUGUI comboText;
     public TextMeshProUGUI rateText;
+    public TextMeshProUGUI judgeCountText;
 
     private Coroutine currentJudgementRoutine;
 
     public Dictionary<string, float> noteTypeRate = new Dictionary<string, float>();
+    public Dictionary<string, int> judgeCount = new Dictionary<string, int>();
 
     [System.Obsolete]
     private void Start()
@@ -39,6 +41,12 @@ public class JudgementManager : MonoBehaviour
         noteTypeRate["normal"] = 0f;
         noteTypeRate["hold"] = 0f;
         noteTypeRate["up"] = 0f;
+
+        judgeCount["Perfect"] = 0;
+        judgeCount["Great"] = 0;
+        judgeCount["Good"] = 0;
+        judgeCount["Bad"] = 0;
+        judgeCount["Miss"] = 0;
 
         ClearCombo();
     }
@@ -173,6 +181,11 @@ public class JudgementManager : MonoBehaviour
         comboText.text = $"";
     }
 
+    public void UpdateJudgeCountText()
+    {
+        judgeCountText.text = $"{judgeCount["Perfect"]} / {judgeCount["Great"]} / {judgeCount["Good"]} / {judgeCount["Bad"]} / {judgeCount["Miss"]}";
+    }
+
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
@@ -196,6 +209,8 @@ public class JudgementManager : MonoBehaviour
             ChangeRate(noteTypeRate[note.type], 1f);
         }
         float Ms = note.ms - currentTimeMs;
+        judgeCount[judgement]++;
+        UpdateJudgeCountText();
         StartCoroutine(JudegementTextShower(judgement, Ms));
     }
 
