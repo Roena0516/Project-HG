@@ -70,7 +70,7 @@ public class NoteGenerator : MonoBehaviour
             noteTypeCounts[note.type]++;
         }
 
-        StartCoroutine(judgement.CalcRate());
+        judgement.CalcRate();
     }
 
     public void NoteSpawner(NoteClass noteClass, int position, string type, float beat, Quaternion R)

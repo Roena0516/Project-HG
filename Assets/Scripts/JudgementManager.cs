@@ -49,9 +49,10 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Miss"] = 0;
 
         ClearCombo();
+        UpdateJudgeCountText();
     }
 
-    public IEnumerator CalcRate()
+    public void CalcRate()
     {
         float rateAllNote = (noteGenerator.noteTypeCounts["normal"] * 1) + (noteGenerator.noteTypeCounts["hold"] * 1) + (noteGenerator.noteTypeCounts["up"] * 2);
 
@@ -66,8 +67,6 @@ public class JudgementManager : MonoBehaviour
         //{
         //    Debug.Log($"{pair.Key}: {pair.Value}");
         //}
-
-        yield break;
     }
 
     public void Judge(int raneNumber, float currentTimeMs)
@@ -142,16 +141,10 @@ public class JudgementManager : MonoBehaviour
                 AddCombo(1);
                 break;
             }
-            if (notAbsDiff >= -160 && notAbsDiff < -120 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff >= -200 && notAbsDiff < -120 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Good", currentTimeMs);
                 AddCombo(1);
-                break;
-            }
-            if (notAbsDiff >= -200 && notAbsDiff < -160 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
-            {
-                PerformAction(note, "Bad", currentTimeMs);
-                ClearCombo();
                 break;
             }
             if (notAbsDiff > 60 && notAbsDiff <= 100  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
