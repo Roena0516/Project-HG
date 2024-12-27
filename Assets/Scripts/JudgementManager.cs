@@ -176,7 +176,7 @@ public class JudgementManager : MonoBehaviour
 
     public void UpdateJudgeCountText()
     {
-        judgeCountText.text = $"{judgeCount["Perfect"]} / {judgeCount["Great"]} / {judgeCount["Good"]} / {judgeCount["Bad"]} / {judgeCount["Miss"]}";
+        judgeCountText.text = $"{judgeCount["Miss"]}/{judgeCount["Bad"]}/{judgeCount["Good"]}/{judgeCount["Great"]}/{judgeCount["Perfect"]}";
     }
 
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
