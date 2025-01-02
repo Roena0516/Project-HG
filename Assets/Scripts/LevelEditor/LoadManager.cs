@@ -30,7 +30,7 @@ public class LoadManager : MonoBehaviour
 
     private void Start()
     {
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", "TestLevel.json"));
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", "LevelEditorTest.json"));
     }
 
     public void LoadFromJson(string filePath)

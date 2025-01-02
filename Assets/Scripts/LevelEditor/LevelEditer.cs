@@ -10,6 +10,8 @@ public class LevelEditer : MonoBehaviour
     private SaveManager saveManager;
 
     public GameObject normalPrefab;
+    public GameObject holdPrefab;
+    public GameObject upPrefab;
 
     public GameObject notesFolder;
     public GameObject gridFolder;
@@ -17,7 +19,15 @@ public class LevelEditer : MonoBehaviour
     public int madi;
     public int madi2;
 
+    private bool isRemoving;
+
     private float scrollSpeed;
+
+    public float BPM;
+    public string artist;
+    public string title;
+
+    public string noteType;
 
     private GameObject beat13;
     private GameObject beat14;
@@ -56,6 +66,15 @@ public class LevelEditer : MonoBehaviour
 
     public TMP_Dropdown dropdown;
 
+    public List<GameObject> beats13;
+    public List<GameObject> beats14;
+    public List<GameObject> beats16;
+    public List<GameObject> beats18;
+    public List<GameObject> beats112;
+    public List<GameObject> beats116;
+    public List<GameObject> beats124;
+    public List<GameObject> beats132;
+
     private void Awake()
     {
         beat13 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat13");
@@ -87,6 +106,10 @@ public class LevelEditer : MonoBehaviour
 
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
 
+        noteType = "Normal";
+
+        isRemoving = false;
+
         scrollSpeed = 10f;
 
         madi = 192;
@@ -104,6 +127,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum13; i++)
         {
             GameObject instantiateObject = Instantiate(beat13, new Vector3(0, rect13.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder13.transform);
+            beats13.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -179,6 +203,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum14; i++)
         {
             GameObject instantiateObject = Instantiate(beat14, new Vector3(0, rect14.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder14.transform);
+            beats14.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -254,6 +279,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum16; i++)
         {
             GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect16.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder16.transform);
+            beats16.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -329,6 +355,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum18; i++)
         {
             GameObject instantiateObject = Instantiate(beat18, new Vector3(0, rect18.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder18.transform);
+            beats18.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -404,6 +431,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum112; i++)
         {
             GameObject instantiateObject = Instantiate(beat112, new Vector3(0, rect112.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder112.transform);
+            beats112.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -479,6 +507,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum116; i++)
         {
             GameObject instantiateObject = Instantiate(beat116, new Vector3(0, rect116.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder116.transform);
+            beats116.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -554,6 +583,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum124; i++)
         {
             GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect124.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder124.transform);
+            beats124.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -629,6 +659,7 @@ public class LevelEditer : MonoBehaviour
         for (int i = 0; i < madi * beatNum132; i++)
         {
             GameObject instantiateObject = Instantiate(beat132, new Vector3(0, rect132.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder132.transform);
+            beats132.Add(instantiateObject);
             Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
             if (buttonTransform != null)
             {
@@ -857,7 +888,81 @@ public class LevelEditer : MonoBehaviour
     {
         canvas.transform.localScale = Vector3.one;
 
-        Debug.Log($"Position : {position}, Beat : {beat}");
+        float realBeat = 0f;
+
+        if (beat == 3)
+        {
+            int index = beats13.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 4)
+        {
+            int index = beats14.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 6)
+        {
+            int index = beats16.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 8)
+        {
+            int index = beats18.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 12)
+        {
+            int index = beats112.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 16)
+        {
+            int index = beats116.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 24)
+        {
+            int index = beats124.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+        if (beat == 32)
+        {
+            int index = beats132.IndexOf(buttonT.gameObject);
+            if (index != -1)
+            {
+                realBeat = (2f / (float)beat) * (index);
+            }
+        }
+
+        Debug.Log($"Position : {position}, Beat : {realBeat} 1/{beat}, Type : {noteType}");
+
+        if (isRemoving)
+        {
+            saveManager.notes.Remove(saveManager.notes.Find(note => note.beat == realBeat && note.position == position));
+            //Destroy
+            return;
+        }
 
         float positionX = 0f;
         if (position == 1)
@@ -881,7 +986,33 @@ public class LevelEditer : MonoBehaviour
 
         //Debug.Log(positionY);
 
-        Instantiate(normalPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+        if (noteType == "Normal")
+        {
+            GameObject instantiateObject = Instantiate(normalPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+            levelEditerNoteManager.noteClass.position = position;
+            levelEditerNoteManager.noteClass.beat = realBeat;
+            levelEditerNoteManager.noteClass.type = "normal";
+            saveManager.notes.Add(levelEditerNoteManager.noteClass);
+        }
+        if (noteType == "Hold")
+        {
+            GameObject instantiateObject = Instantiate(holdPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+            levelEditerNoteManager.noteClass.position = position;
+            levelEditerNoteManager.noteClass.beat = realBeat;
+            levelEditerNoteManager.noteClass.type = "hold";
+            saveManager.notes.Add(levelEditerNoteManager.noteClass);
+        }
+        if (noteType == "Up")
+        {
+            GameObject instantiateObject = Instantiate(upPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+            levelEditerNoteManager.noteClass.position = position;
+            levelEditerNoteManager.noteClass.beat = realBeat;
+            levelEditerNoteManager.noteClass.type = "up";
+            saveManager.notes.Add(levelEditerNoteManager.noteClass);
+        }
     }
 
     private void OnDropdownValueChanged(int index)
@@ -1049,6 +1180,37 @@ public class LevelEditer : MonoBehaviour
                 gridFolder.transform.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, "test-test", "LevelEditorTest.json"), BPM, artist, title);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            isRemoving = !isRemoving;
+            Debug.Log(isRemoving);
+        }
+    }
+
+    public void SetBPM(string inputed)
+    {
+        float.TryParse(inputed, out BPM);
+    }
+
+    public void SetNoteType(string type)
+    {
+        noteType = type;
+    }
+
+    public void SetArtist(string inputed)
+    {
+        artist = inputed;
+    }
+
+    public void SetTitle(string inputed)
+    {
+        title = inputed;
     }
 
 
