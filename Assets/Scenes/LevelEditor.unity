@@ -277,6 +277,7 @@ RectTransform:
   - {fileID: 1646450865}
   - {fileID: 1042372995}
   - {fileID: 348405378}
+  - {fileID: 441247593}
   - {fileID: 1040338000}
   m_Father: {fileID: 1443415422}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -937,8 +938,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1/4
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 62b03bbaa290644eaa8e1d07c4b08a22, type: 2}
+  m_sharedMaterial: {fileID: 892520072279131969, guid: 62b03bbaa290644eaa8e1d07c4b08a22, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1014,6 +1015,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 414245631}
   m_CullTransparentMesh: 1
+--- !u!1 &441247592
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 441247593}
+  m_Layer: 0
+  m_Name: Notes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &441247593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 441247592}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 168869044}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &451982102
 GameObject:
   m_ObjectHideFlags: 0
@@ -2705,8 +2737,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Option A
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 62b03bbaa290644eaa8e1d07c4b08a22, type: 2}
+  m_sharedMaterial: {fileID: 892520072279131969, guid: 62b03bbaa290644eaa8e1d07c4b08a22, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -3463,6 +3495,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaaffa0b703a481b99ccede91741d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  normalPrefab: {fileID: 3833513963185199395, guid: b4b6c0e370ece4836a5e738fc6c71d5d, type: 3}
+  notesFolder: {fileID: 441247592}
   parentFolder13: {fileID: 1202611135}
   parentFolder14: {fileID: 198149271}
   parentFolder16: {fileID: 1479446931}

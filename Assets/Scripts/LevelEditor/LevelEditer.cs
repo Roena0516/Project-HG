@@ -9,6 +9,10 @@ public class LevelEditer : MonoBehaviour
 
     private SaveManager saveManager;
 
+    public GameObject normalPrefab;
+
+    public GameObject notesFolder;
+
     private GameObject beat13;
     private GameObject beat14;
     private GameObject beat16;
@@ -95,7 +99,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum13));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum13, instantiateObject.transform));
                 }
                 else
                 {
@@ -112,7 +116,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum13));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum13, instantiateObject.transform));
                 }
                 else
                 {
@@ -129,7 +133,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum13));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum13, instantiateObject.transform));
                 }
                 else
                 {
@@ -146,7 +150,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum13));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum13, instantiateObject.transform));
                 }
                 else
                 {
@@ -170,7 +174,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum14));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum14, instantiateObject.transform));
                 }
                 else
                 {
@@ -187,7 +191,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum14));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum14, instantiateObject.transform));
                 }
                 else
                 {
@@ -204,7 +208,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum14));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum14, instantiateObject.transform));
                 }
                 else
                 {
@@ -221,7 +225,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum14));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum14, instantiateObject.transform));
                 }
                 else
                 {
@@ -245,7 +249,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum16));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum16, instantiateObject.transform));
                 }
                 else
                 {
@@ -262,7 +266,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum16));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum16, instantiateObject.transform));
                 }
                 else
                 {
@@ -279,7 +283,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum16));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum16, instantiateObject.transform));
                 }
                 else
                 {
@@ -296,7 +300,7 @@ public class LevelEditer : MonoBehaviour
                 Button buttonComponent = buttonTransform.GetComponent<Button>();
                 if (buttonComponent != null)
                 {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum16));
+                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum16, instantiateObject.transform));
                 }
                 else
                 {
@@ -313,9 +317,35 @@ public class LevelEditer : MonoBehaviour
         Debug.Log($"{rect14.position.y} {rect14.sizeDelta.y} {rect14.position.y + rect14.sizeDelta.y}");
     }
 
-    private void ButtonClickHandler(int position, int beat)
+    private void ButtonClickHandler(int position, int beat, Transform buttonT)
     {
+        canvas.transform.localScale = Vector3.one;
+
         Debug.Log($"Position : {position}, Beat : {beat}");
+
+        float positionX = 0f;
+        if (position == 1)
+        {
+            positionX = -158f;
+        }
+        if (position == 2)
+        {
+            positionX = 158f / 3f * -1f;
+        }
+        if (position == 3f)
+        {
+            positionX = 158f / 3f;
+        }
+        if (position == 4f)
+        {
+            positionX = 158f;
+        }
+
+        float positionY = buttonT.position.y;
+
+        Debug.Log(positionY);
+
+        Instantiate(normalPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
     }
 
     private void OnDropdownValueChanged(int index)
@@ -367,7 +397,7 @@ public class LevelEditer : MonoBehaviour
         }
     }
 
-    
+
 
     //public void LoadFromJson()
     //{
