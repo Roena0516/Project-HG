@@ -147,7 +147,7 @@ public class JudgementManager : MonoBehaviour
                 AddCombo(1);
                 break;
             }
-            if (notAbsDiff > 60 && notAbsDiff <= 100  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff > 40 && notAbsDiff <= 100  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Great", currentTimeMs);
                 AddCombo(1);
@@ -176,7 +176,7 @@ public class JudgementManager : MonoBehaviour
 
     public void UpdateJudgeCountText()
     {
-        judgeCountText.text = $"{judgeCount["Perfect"]} / {judgeCount["Great"]} / {judgeCount["Good"]} / {judgeCount["Bad"]} / {judgeCount["Miss"]}";
+        judgeCountText.text = $"{judgeCount["Miss"]}/{judgeCount["Bad"]}/{judgeCount["Good"]}/{judgeCount["Great"]}/{judgeCount["Perfect"]}";
     }
 
     public void PerformAction(NoteClass note, string judgement, float currentTimeMs)

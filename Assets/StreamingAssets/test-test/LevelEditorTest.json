@@ -1,0 +1,400 @@
+{
+    "notes": [
+        {
+            "beat": 0.0,
+            "ms": 0.0,
+            "position": 1,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 0.5,
+            "ms": 0.0,
+            "position": 1,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 1.0,
+            "ms": 0.0,
+            "position": 1,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 1.5,
+            "ms": 0.0,
+            "position": 1,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 2.0,
+            "ms": 0.0,
+            "position": 4,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 2.5,
+            "ms": 0.0,
+            "position": 3,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 3.0,
+            "ms": 0.0,
+            "position": 2,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 3.5,
+            "ms": 0.0,
+            "position": 1,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 4.0,
+            "ms": 0.0,
+            "position": 1,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 4.333333492279053,
+            "ms": 0.0,
+            "position": 2,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 4.666666507720947,
+            "ms": 0.0,
+            "position": 3,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 5.0,
+            "ms": 0.0,
+            "position": 2,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 5.333333492279053,
+            "ms": 0.0,
+            "position": 3,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 5.666666507720947,
+            "ms": 0.0,
+            "position": 4,
+            "type": "hold",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 6.0,
+            "ms": 0.0,
+            "position": 1,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 6.333333492279053,
+            "ms": 0.0,
+            "position": 2,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 6.666666507720947,
+            "ms": 0.0,
+            "position": 3,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 7.0,
+            "ms": 0.0,
+            "position": 2,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 7.333333492279053,
+            "ms": 0.0,
+            "position": 4,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 7.666666507720947,
+            "ms": 0.0,
+            "position": 3,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 8.0,
+            "ms": 0.0,
+            "position": 2,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 8.333333015441895,
+            "ms": 0.0,
+            "position": 3,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 8.666666984558106,
+            "ms": 0.0,
+            "position": 1,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 8.666666984558106,
+            "ms": 0.0,
+            "position": 2,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 8.666666984558106,
+            "ms": 0.0,
+            "position": 4,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 8.666666984558106,
+            "ms": 0.0,
+            "position": 3,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.0,
+            "ms": 0.0,
+            "position": 1,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.0,
+            "ms": 0.0,
+            "position": 2,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.0,
+            "ms": 0.0,
+            "position": 3,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.0,
+            "ms": 0.0,
+            "position": 4,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.25,
+            "ms": 0.0,
+            "position": 1,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.25,
+            "ms": 0.0,
+            "position": 1,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.25,
+            "ms": 0.0,
+            "position": 2,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.25,
+            "ms": 0.0,
+            "position": 3,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.25,
+            "ms": 0.0,
+            "position": 4,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.5,
+            "ms": 0.0,
+            "position": 1,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.5,
+            "ms": 0.0,
+            "position": 2,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.5,
+            "ms": 0.0,
+            "position": 3,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 9.5,
+            "ms": 0.0,
+            "position": 4,
+            "type": "up",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        }
+    ],
+    "info": {
+        "title": "testTitle",
+        "artist": "testArtist",
+        "bpm": 120.0,
+        "songFile": "asdf"
+    }
+}
