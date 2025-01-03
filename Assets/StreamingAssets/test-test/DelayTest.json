@@ -1,0 +1,50 @@
+{
+    "notes": [
+        {
+            "beat": 4.0,
+            "ms": 0.0,
+            "position": 4,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 4.0,
+            "ms": 0.0,
+            "position": 1,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 4.5,
+            "ms": 0.0,
+            "position": 1,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        },
+        {
+            "beat": 4.5,
+            "ms": 0.0,
+            "position": 4,
+            "type": "normal",
+            "isInputed": false,
+            "noteObject": {
+                "instanceID": 0
+            }
+        }
+    ],
+    "info": {
+        "title": "asdf",
+        "artist": "asdf",
+        "bpm": 120.0,
+        "songFile": "asdf"
+    }
+}

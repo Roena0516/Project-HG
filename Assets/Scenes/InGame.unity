@@ -722,7 +722,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfaf151f317d4419fafb8e3af75ea35d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sync: 0.13
+  sync: 0.5
 --- !u!4 &669266813
 Transform:
   m_ObjectHideFlags: 0

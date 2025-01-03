@@ -7,8 +7,12 @@ public class MenuManager : MonoBehaviour
     private bool isSet;
 
     public GameObject fileNameInputField;
+    public GameObject syncInputField;
+    public GameObject speedInputField;
 
     public string fileName;
+    public float sync;
+    public float speed;
 
     private void Start()
     {
@@ -29,6 +33,8 @@ public class MenuManager : MonoBehaviour
             if (!isMenuSet && isSet)
             {
                 fileNameInputField.SetActive(true);
+                syncInputField.SetActive(true);
+                speedInputField.SetActive(true);
                 isMenuSet = true;
             }
         }
@@ -36,7 +42,9 @@ public class MenuManager : MonoBehaviour
         {
             if (isMenuSet && isSet)
             {
-                fileNameInputField.SetActive(true);
+                fileNameInputField.SetActive(false);
+                syncInputField.SetActive(false);
+                speedInputField.SetActive(false);
                 isMenuSet = false;
             }
         }
@@ -45,5 +53,15 @@ public class MenuManager : MonoBehaviour
     public void SetFileName(string inputed)
     {
         fileName = inputed;
+    }
+
+    public void SetSync(string inputed)
+    {
+        float.TryParse(inputed, out sync);
+    }
+
+    public void SetSpeed(string inputed)
+    {
+        float.TryParse(inputed, out speed);
     }
 }

@@ -29,6 +29,8 @@ public class NoteGenerator : MonoBehaviour
     private LoadManager loadManager;
     private LineInputChecker checker;
     private JudgementManager judgement;
+    private MusicPlayer musicPlayer;
+    private MenuManager menu;
 
     public List<NoteClass> notes;
     public SongInfoClass info;
@@ -43,11 +45,16 @@ public class NoteGenerator : MonoBehaviour
         spawnPosition4 = new Vector3(Lines[3].transform.position.x, transform.position.y, 0);
         spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
+        menu = FindObjectOfType<MenuManager>();
+
+        speed = menu.speed;
+
         fallTime = distance / speed * 1000f;
 
         loadManager = FindObjectOfType<LoadManager>();
         checker = FindObjectOfType<LineInputChecker>();
         judgement = FindObjectOfType<JudgementManager>();
+        musicPlayer = FindObjectOfType<MusicPlayer>();
 
         noteTypeCounts["normal"] = 0;
         noteTypeCounts["hold"] = 0;
@@ -64,13 +71,23 @@ public class NoteGenerator : MonoBehaviour
         info = loadManager.info;
         BPM = info.bpm;
 
+        StartCoroutine(NoteSpawnerSpawner());
+
         foreach (NoteClass note in notes)
         {
-            NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
             noteTypeCounts[note.type]++;
         }
 
         judgement.CalcRate();
+    }
+
+    IEnumerator NoteSpawnerSpawner()
+    {
+        foreach (NoteClass note in notes)
+        {
+            NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
+            yield return new WaitForSeconds(0.1f);
+        }
     }
 
     public void NoteSpawner(NoteClass noteClass, int position, string type, float beat, Quaternion R)
@@ -122,10 +139,9 @@ public class NoteGenerator : MonoBehaviour
 
         noteClass.ms = ms;
 
-        yield return new WaitForSeconds(beatDuration / 1000f);
-
-        noteScript.SetNote();
         noteScript.noteClass = noteClass;
         noteScript.ms = ms;
+
+        yield break;
     }
 }
