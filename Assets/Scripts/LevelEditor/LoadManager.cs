@@ -28,9 +28,13 @@ public class LoadManager : MonoBehaviour
     public SongInfoClass info;
     public List<NoteClass> notes;
 
+    private MenuManager menu;
+
+    [System.Obsolete]
     private void Start()
     {
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", "LevelEditorTest.json"));
+        menu = FindObjectOfType<MenuManager>();
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", menu.fileName + ".json"));
     }
 
     public void LoadFromJson(string filePath)

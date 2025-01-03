@@ -26,6 +26,7 @@ public class LevelEditer : MonoBehaviour
     public float BPM;
     public string artist;
     public string title;
+    public string fileName;
 
     public string noteType;
 
@@ -1183,7 +1184,7 @@ public class LevelEditer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, "test-test", "LevelEditorTest.json"), BPM, artist, title);
+            saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, "test-test", fileName + ".json"), BPM, artist, title);
         }
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -1211,6 +1212,11 @@ public class LevelEditer : MonoBehaviour
     public void SetTitle(string inputed)
     {
         title = inputed;
+    }
+
+    public void SetFileName(string inputed)
+    {
+        fileName = inputed;
     }
 
 
