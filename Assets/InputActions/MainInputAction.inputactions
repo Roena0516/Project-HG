@@ -1,0 +1,94 @@
+{
+    "name": "MainInputAction",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "7f98fd74-a655-4245-b9f9-6ad744dcfef3",
+            "actions": [
+                {
+                    "name": "Line1Action",
+                    "type": "Button",
+                    "id": "8e6cf81a-f340-45bb-bfc5-edfe870be25f",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Line2Action",
+                    "type": "Button",
+                    "id": "8a6a2e68-97b8-45ed-98e6-cc98719dce98",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Line3Action",
+                    "type": "Button",
+                    "id": "c1d059d6-cde5-4626-8875-68e370ef2e10",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Line4Action",
+                    "type": "Button",
+                    "id": "56008391-72e3-4af1-93f2-81e1165a0676",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "989d39c6-5372-4e5c-9515-589be42b8282",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Line1Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "fc44ae47-cc47-437b-93cb-a7a1c8323111",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Line2Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2dfa200c-e3fb-4708-bb03-5fb6e355fa78",
+                    "path": "<Keyboard>/l",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Line3Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7ad6e538-9796-4428-90be-b5876cd8a91f",
+                    "path": "<Keyboard>/semicolon",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Line4Action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

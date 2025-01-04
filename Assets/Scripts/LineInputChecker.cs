@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class LineInputChecker : MonoBehaviour
 {
@@ -12,6 +13,123 @@ public class LineInputChecker : MonoBehaviour
 
     private JudgementManager judgementManager;
     private NoteGenerator noteGenerator;
+
+    public MainInputAction action;
+    private InputAction Line1Action;
+    private InputAction Line2Action;
+    private InputAction Line3Action;
+    private InputAction Line4Action;
+
+    private void Awake()
+    {
+        action = new MainInputAction();
+        Line1Action = action.Player.Line1Action;
+        Line2Action = action.Player.Line2Action;
+        Line3Action = action.Player.Line3Action;
+        Line4Action = action.Player.Line4Action;
+    }
+
+    private void OnEnable()
+    {
+        Line1Action.Enable();
+        Line1Action.started += Started;
+        Line1Action.performed += Performed;
+        Line1Action.canceled += Canceled;
+
+        Line2Action.Enable();
+        Line2Action.started += Started;
+        Line2Action.performed += Performed;
+        Line2Action.canceled += Canceled;
+
+        Line3Action.Enable();
+        Line3Action.started += Started;
+        Line3Action.performed += Performed;
+        Line3Action.canceled += Canceled;
+
+        Line4Action.Enable();
+        Line4Action.started += Started;
+        Line4Action.performed += Performed;
+        Line4Action.canceled += Canceled;
+    }
+
+    private void OnDisable()
+    {
+        Line1Action.Disable();
+        Line1Action.started -= Started;
+        Line1Action.performed -= Performed;
+        Line1Action.canceled -= Canceled;
+
+        Line2Action.Disable();
+        Line2Action.started -= Started;
+        Line2Action.performed -= Performed;
+        Line2Action.canceled -= Canceled;
+
+        Line3Action.Disable();
+        Line3Action.started -= Started;
+        Line3Action.performed -= Performed;
+        Line3Action.canceled -= Canceled;
+
+        Line4Action.Disable();
+        Line4Action.started -= Started;
+        Line4Action.performed -= Performed;
+        Line4Action.canceled -= Canceled;
+    }
+
+    void Started(InputAction.CallbackContext context)
+    {
+        string pressed = context.control.name;
+        string actionName = context.action.name;
+
+        Debug.Log($"Start {pressed} {actionName}");
+
+        switch (actionName)
+        {
+            case "Line1Action":
+                DownInput(0);
+                break;
+            case "Line2Action":
+                DownInput(1);
+                break;
+            case "Line3Action":
+                DownInput(2);
+                break;
+            case "Line4Action":
+                DownInput(3);
+                break;
+        }
+    }
+
+    void Performed(InputAction.CallbackContext context)
+    {
+        string pressed = context.control.name;
+        string actionName = context.action.name;
+
+        Debug.Log($"Perform {pressed} {actionName}");
+    }
+
+    void Canceled(InputAction.CallbackContext context)
+    {
+        string pressed = context.control.name;
+        string actionName = context.action.name;
+
+        Debug.Log($"Cancel {pressed} {actionName}");
+
+        switch (actionName)
+        {
+            case "Line1Action":
+                UpInput(0);
+                break;
+            case "Line2Action":
+                UpInput(1);
+                break;
+            case "Line3Action":
+                UpInput(2);
+                break;
+            case "Line4Action":
+                UpInput(3);
+                break;
+        }
+    }
 
     [System.Obsolete]
     private void Start()
@@ -26,23 +144,6 @@ public class LineInputChecker : MonoBehaviour
     void Update()
     {
         currentTime = Time.time - startTime;
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            DownInput(0);
-        }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            DownInput(1);
-        }
-        if (Input.GetKeyDown(KeyCode.L))
-        {
-            DownInput(2);
-        }
-        if (Input.GetKeyDown(KeyCode.Semicolon))
-        {
-            DownInput(3);
-        }
-
 
         if (Input.GetKey(KeyCode.S))
         {
@@ -60,25 +161,6 @@ public class LineInputChecker : MonoBehaviour
         {
             CheckHold(3);
         }
-
-
-
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            UpInput(0);
-        }
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            UpInput(1);
-        }
-        if (Input.GetKeyUp(KeyCode.L))
-        {
-            UpInput(2);
-        }
-        if (Input.GetKeyUp(KeyCode.Semicolon))
-        {
-            UpInput(3);
-        }
     }
 
     private void CheckHold(int raneNumber)
@@ -89,7 +171,7 @@ public class LineInputChecker : MonoBehaviour
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000) <= 3 && note.ms - (currentTime * 1000) >= -120))
+            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000f) <= 3 && note.ms - (currentTime * 1000f) >= -120))
             {
                 judgementManager.PerformAction(note, "Perfect", note.ms);
                 judgementManager.AddCombo(1);
