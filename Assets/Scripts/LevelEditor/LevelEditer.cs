@@ -961,7 +961,14 @@ public class LevelEditer : MonoBehaviour
         if (isRemoving)
         {
             saveManager.notes.Remove(saveManager.notes.Find(note => note.beat == realBeat && note.position == position));
-            //Destroy
+            foreach (Transform child in notesFolder.transform)
+            {
+                LevelEditerNoteManager levelEditerNoteManager = child.GetComponent<LevelEditerNoteManager>();
+                if (levelEditerNoteManager.noteClass.beat == realBeat && levelEditerNoteManager.noteClass.position == position)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
             return;
         }
 
