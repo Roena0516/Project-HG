@@ -9,6 +9,8 @@ public class Note : MonoBehaviour
 
     private LineInputChecker line;
     private JudgementManager judgement;
+    private NoteGenerator noteGenerator;
+
     public NoteClass noteClass;
 
     [System.Obsolete]
@@ -17,10 +19,16 @@ public class Note : MonoBehaviour
         isSet = false;
         line = FindObjectOfType<LineInputChecker>();
         judgement = FindObjectOfType<JudgementManager>();
+        noteGenerator = FindObjectOfType<NoteGenerator>();
     }
 
     void FixedUpdate()
     {
+        if (ShouldSetNote())
+        {
+            SetNote();
+        }
+
         if (isSet)
         {
             transform.Translate(Vector2.down * speed * Time.deltaTime);
@@ -32,9 +40,15 @@ public class Note : MonoBehaviour
         }
     }
 
+    private bool ShouldSetNote()
+    {
+        float targetTime = (ms - noteGenerator.fallTime * 1) / 1000f;
+        return line.currentTime >= targetTime;
+    }
+
     public void SetNote()
     {
-        isSet = !isSet;
+        isSet = true;
     }
 
     public void SetSpeed(float spd)

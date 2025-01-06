@@ -16,6 +16,9 @@ public class LevelEditer : MonoBehaviour
     public GameObject notesFolder;
     public GameObject gridFolder;
 
+    public GameObject addIndicator;
+    public GameObject removeIndicator;
+
     public int madi;
     public int madi2;
 
@@ -26,6 +29,7 @@ public class LevelEditer : MonoBehaviour
     public float BPM;
     public string artist;
     public string title;
+    public string fileName;
 
     public string noteType;
 
@@ -960,7 +964,14 @@ public class LevelEditer : MonoBehaviour
         if (isRemoving)
         {
             saveManager.notes.Remove(saveManager.notes.Find(note => note.beat == realBeat && note.position == position));
-            //Destroy
+            foreach (Transform child in notesFolder.transform)
+            {
+                LevelEditerNoteManager levelEditerNoteManager = child.GetComponent<LevelEditerNoteManager>();
+                if (levelEditerNoteManager.noteClass.beat == realBeat && levelEditerNoteManager.noteClass.position == position)
+                {
+                    Destroy(child.gameObject);
+                }
+            }
             return;
         }
 
@@ -1162,34 +1173,37 @@ public class LevelEditer : MonoBehaviour
         {
             if (Input.GetKey(KeyCode.E))
             {
-                gridFolder.transform.Translate(Vector2.down * scrollSpeed * 2f * Time.deltaTime);
+                gridFolder.transform.Translate(2f * scrollSpeed * Time.deltaTime * Vector2.down);
             }
             else
             {
-                gridFolder.transform.Translate(Vector2.down * scrollSpeed * Time.deltaTime);
+                gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.down);
             }
         }
         if (Input.GetKey(KeyCode.S))
         {
             if (Input.GetKey(KeyCode.E))
             {
-                gridFolder.transform.Translate(Vector2.up * scrollSpeed * 2f * Time.deltaTime);
+                gridFolder.transform.Translate(2f * scrollSpeed * Time.deltaTime * Vector2.up);
             }
             else
             {
-                gridFolder.transform.Translate(Vector2.up * scrollSpeed * Time.deltaTime);
+                gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.up);
             }
         }
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, "test-test", "LevelEditorTest.json"), BPM, artist, title);
+            saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, "test-test", fileName + ".json"), BPM, artist, title);
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            isRemoving = !isRemoving;
-            Debug.Log(isRemoving);
+            SetIsRemoving("Add");
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            SetIsRemoving("Remove");
         }
     }
 
@@ -1211,6 +1225,28 @@ public class LevelEditer : MonoBehaviour
     public void SetTitle(string inputed)
     {
         title = inputed;
+    }
+
+    public void SetFileName(string inputed)
+    {
+        fileName = inputed;
+    }
+
+    public void SetIsRemoving(string inputed)
+    {
+        if (inputed == "Remove")
+        {
+            isRemoving = true;
+            removeIndicator.SetActive(true);
+            addIndicator.SetActive(false);
+        }
+
+        if (inputed == "Add")
+        {
+            isRemoving = false;
+            removeIndicator.SetActive(false);
+            addIndicator.SetActive(true);
+        }
     }
 
 

@@ -7,8 +7,11 @@ public class MusicPlayer : MonoBehaviour
 {
     EventInstance eventInstance;
 
-    public float sync = 0f;
+    public float sync;
 
+    private MenuManager menu;
+
+    [System.Obsolete]
     void Start()
     {
         eventInstance = RuntimeManager.CreateInstance("event:/umiyurikaiteitan 3");
@@ -17,12 +20,15 @@ public class MusicPlayer : MonoBehaviour
 
         eventInstance.setVolume(1.0f);
 
+        menu = FindObjectOfType<MenuManager>();
+        sync = menu.sync;
+
         StartCoroutine(StartSong());
     }
 
     IEnumerator StartSong()
     {
-        yield return new WaitForSeconds(1.0f + sync);
+        yield return new WaitForSecondsRealtime(sync);
         eventInstance.start();
     }
 
