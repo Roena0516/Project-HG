@@ -69,15 +69,15 @@ public class JudgementManager : MonoBehaviour
         //}
     }
 
-    public void Judge(int raneNumber, float currentTimeMs)
+    public void Judge(int raneNumber, double currentTimeMs)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs(note.ms - currentTimeMs) <= 1000)
+        .Where(note => Mathf.Abs((float)(note.ms - currentTimeMs)) <= 1000)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)
         {
-            float timeDifference = Mathf.Abs(note.ms - currentTimeMs);
+            float timeDifference = Mathf.Abs((float)(note.ms - currentTimeMs));
 
             if (timeDifference <= bad && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
             {
@@ -112,16 +112,16 @@ public class JudgementManager : MonoBehaviour
         }
     }
 
-    public void UpJudge(int raneNumber, float currentTimeMs)
+    public void UpJudge(int raneNumber, double currentTimeMs)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs(note.ms - currentTimeMs) <= 1000)
+        .Where(note => Mathf.Abs((float)(note.ms - currentTimeMs)) <= 1000)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)
         {
-            float timeDifference = Mathf.Abs(note.ms - currentTimeMs);
-            float notAbsDiff = note.ms - currentTimeMs;
+            float timeDifference = Mathf.Abs((float)(note.ms - currentTimeMs));
+            double notAbsDiff = note.ms - currentTimeMs;
 
             if (timeDifference <= perfect && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
@@ -179,7 +179,7 @@ public class JudgementManager : MonoBehaviour
         judgeCountText.text = $"{judgeCount["Miss"]}/{judgeCount["Bad"]}/{judgeCount["Good"]}/{judgeCount["Great"]}/{judgeCount["Perfect"]}";
     }
 
-    public void PerformAction(NoteClass note, string judgement, float currentTimeMs)
+    public void PerformAction(NoteClass note, string judgement, double currentTimeMs)
     {
         Debug.Log($"{judgement}: {note.ms}, input: {currentTimeMs}");
         note.isInputed = true;
@@ -201,7 +201,7 @@ public class JudgementManager : MonoBehaviour
         {
             ChangeRate(noteTypeRate[note.type], 1f);
         }
-        float Ms = note.ms - currentTimeMs;
+        double Ms = note.ms - currentTimeMs;
         judgeCount[judgement]++;
         UpdateJudgeCountText();
         StartCoroutine(JudegementTextShower(judgement, Ms));
@@ -213,7 +213,7 @@ public class JudgementManager : MonoBehaviour
         rateText.text = $"{rate:F2}%";
     }
 
-    IEnumerator JudegementTextShower(string judgement, float Ms)
+    IEnumerator JudegementTextShower(string judgement, double Ms)
     {
         if (currentJudgementRoutine != null)
         {
@@ -223,7 +223,7 @@ public class JudgementManager : MonoBehaviour
         yield break;
     }
 
-    private IEnumerator ShowJudgementTextRoutine(string judgement, float Ms)
+    private IEnumerator ShowJudgementTextRoutine(string judgement, double Ms)
     {
         Color tempColor = judgeText.color;
         tempColor.a = 1f;

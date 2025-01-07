@@ -34,7 +34,7 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
         menu = FindObjectOfType<MenuManager>();
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", menu.fileName + ".json"));
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, menu.fileName + ".json"));
     }
 
     public void LoadFromJson(string filePath)

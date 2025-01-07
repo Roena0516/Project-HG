@@ -20,8 +20,7 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            Destroy(menu.gameObject);
-            SceneManager.LoadScene("Menu");
+            SceneManager.LoadScene("FreePlay");
         }
     }
 }

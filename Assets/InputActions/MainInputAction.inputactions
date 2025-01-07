@@ -88,6 +88,127 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "FreePlay",
+            "id": "590c925e-18c3-46f9-8766-d2c8a355479d",
+            "actions": [
+                {
+                    "name": "ListUp",
+                    "type": "Button",
+                    "id": "ac9f6b25-c588-4d9e-84e3-ac1327f6a869",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ListDown",
+                    "type": "Button",
+                    "id": "d77afe69-8bdb-4cd2-883c-fd08141f3cc6",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SongSelect",
+                    "type": "Button",
+                    "id": "ad4de43e-da71-41d5-9b4b-2005d6f77db8",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "ExitSongList",
+                    "type": "Button",
+                    "id": "4efbf6f8-6044-4898-97a9-09e10f067fde",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "ac8d6b32-4144-48de-a9fb-aa67bf43d8a8",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ListUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "2d2c44ed-0797-456b-b4ed-29ec16566fbe",
+                    "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ListUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "db34ef2a-036a-4cbc-bf0e-68b0e0b012c2",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ListDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "367544d0-cf5c-4c8a-9329-744fa009b4a0",
+                    "path": "<Keyboard>/downArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ListDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eae3494f-74ab-4c6e-bd0d-fdefc32c20c5",
+                    "path": "<Keyboard>/enter",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SongSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "77d24bc5-5941-4b06-8ad9-ecb637d46e94",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SongSelect",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "68c5b8e7-36a9-483d-b260-9dcafff38d48",
+                    "path": "<Keyboard>/escape",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ExitSongList",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

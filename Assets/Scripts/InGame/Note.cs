@@ -5,7 +5,7 @@ public class Note : MonoBehaviour
     private float speed;
 
     private bool isSet;
-    public float ms;
+    public double ms;
 
     private LineInputChecker line;
     private JudgementManager judgement;
@@ -42,7 +42,7 @@ public class Note : MonoBehaviour
 
     private bool ShouldSetNote()
     {
-        float targetTime = (ms - noteGenerator.fallTime * 1) / 1000f;
+        double targetTime = (ms - noteGenerator.fallTime * 1d) / 1000d;
         return line.currentTime >= targetTime;
     }
 
