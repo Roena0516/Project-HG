@@ -15,13 +15,15 @@ public class LoadAllJSONs : MonoBehaviour
     {
         shower = FindObjectOfType<SongListShower>();
 
-        string[] jsonFiles = Directory.GetFiles(Application.streamingAssetsPath, "*.json");
+        string[] jsonFiles = Directory.GetFiles(Application.streamingAssetsPath, "*.roena");
 
         foreach (string filePath in jsonFiles)
         {
             string json = File.ReadAllText(filePath);
 
-            SongContainer container = JsonUtility.FromJson<SongContainer>(json);
+            string decrypted = EncryptionHelper.Decrypt(json);
+
+            SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
 
             tempSongInfoClass = container.info;
 

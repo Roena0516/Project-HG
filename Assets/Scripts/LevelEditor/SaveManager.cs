@@ -30,8 +30,10 @@ public class SaveManager : MonoBehaviour
         // JSON 문자열로 변환
         string json = JsonUtility.ToJson(wrapper, true); // prettyPrint를 true로 설정
 
+        string encrypted = EncryptionHelper.Encrypt(json);
+
         // 파일로 저장
-        File.WriteAllText(filePath, json);
+        File.WriteAllText(filePath, encrypted);
         Debug.Log("Chart saved to: " + filePath);
     }
 
