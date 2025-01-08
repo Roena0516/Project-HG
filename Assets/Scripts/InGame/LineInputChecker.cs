@@ -171,7 +171,7 @@ public class LineInputChecker : MonoBehaviour
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000f) <= 3 && note.ms - (currentTime * 1000f) >= -120))
+            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -120))
             {
                 judgementManager.PerformAction(note, "Perfect", note.ms);
                 judgementManager.AddCombo(1);
