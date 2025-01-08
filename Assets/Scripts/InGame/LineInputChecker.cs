@@ -6,9 +6,9 @@ using UnityEngine.InputSystem;
 
 public class LineInputChecker : MonoBehaviour
 {
-    public float currentTimeMs;
-    public float startTime;
-    public float currentTime;
+    public double currentTimeMs;
+    public double startTime;
+    public double currentTime;
     public List<GameObject> Lines;
 
     private JudgementManager judgementManager;
@@ -134,7 +134,7 @@ public class LineInputChecker : MonoBehaviour
     [System.Obsolete]
     private void Start()
     {
-        currentTimeMs = 0f;
+        currentTimeMs = 0d;
         startTime = Time.time;
         Debug.Log($"Start Time : {startTime}");
         judgementManager = GetComponent<JudgementManager>();
@@ -166,7 +166,7 @@ public class LineInputChecker : MonoBehaviour
     private void CheckHold(int raneNumber)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs(note.ms - (currentTime * 1000)) <= 40)
+        .Where(note => Mathf.Abs((float)(note.ms - (currentTime * 1000))) <= 40)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)

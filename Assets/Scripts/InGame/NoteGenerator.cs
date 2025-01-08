@@ -86,7 +86,7 @@ public class NoteGenerator : MonoBehaviour
         foreach (NoteClass note in notes)
         {
             NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
-            yield return new WaitForSeconds(0.1f);
+            yield return new WaitForSeconds(0.03625f);
         }
     }
 

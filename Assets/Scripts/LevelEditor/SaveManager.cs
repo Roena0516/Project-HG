@@ -17,6 +17,8 @@ public class SaveManager : MonoBehaviour
 
     public void SaveToJson(string filePath, float BPM, string artist, string title)
     {
+        notes.Sort((note1, note2) => note1.beat.CompareTo(note2.beat));
+
         // NoteDataWrapper의 인스턴스를 생성하고 데이터 할당
         NoteDataWrapper wrapper = new NoteDataWrapper();
         wrapper.notes = notes;
@@ -30,8 +32,10 @@ public class SaveManager : MonoBehaviour
         // JSON 문자열로 변환
         string json = JsonUtility.ToJson(wrapper, true); // prettyPrint를 true로 설정
 
+        string encrypted = EncryptionHelper.Encrypt(json);
+
         // 파일로 저장
-        File.WriteAllText(filePath, json);
+        File.WriteAllText(filePath, encrypted);
         Debug.Log("Chart saved to: " + filePath);
     }
 

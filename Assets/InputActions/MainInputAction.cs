@@ -110,6 +110,127 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""FreePlay"",
+            ""id"": ""590c925e-18c3-46f9-8766-d2c8a355479d"",
+            ""actions"": [
+                {
+                    ""name"": ""ListUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""ac9f6b25-c588-4d9e-84e3-ac1327f6a869"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ListDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""d77afe69-8bdb-4cd2-883c-fd08141f3cc6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SongSelect"",
+                    ""type"": ""Button"",
+                    ""id"": ""ad4de43e-da71-41d5-9b4b-2005d6f77db8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitSongList"",
+                    ""type"": ""Button"",
+                    ""id"": ""4efbf6f8-6044-4898-97a9-09e10f067fde"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""ac8d6b32-4144-48de-a9fb-aa67bf43d8a8"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2d2c44ed-0797-456b-b4ed-29ec16566fbe"",
+                    ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""db34ef2a-036a-4cbc-bf0e-68b0e0b012c2"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""367544d0-cf5c-4c8a-9329-744fa009b4a0"",
+                    ""path"": ""<Keyboard>/downArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""eae3494f-74ab-4c6e-bd0d-fdefc32c20c5"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SongSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""77d24bc5-5941-4b06-8ad9-ecb637d46e94"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SongSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""68c5b8e7-36a9-483d-b260-9dcafff38d48"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitSongList"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -120,11 +241,18 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_Player_Line2Action = m_Player.FindAction("Line2Action", throwIfNotFound: true);
         m_Player_Line3Action = m_Player.FindAction("Line3Action", throwIfNotFound: true);
         m_Player_Line4Action = m_Player.FindAction("Line4Action", throwIfNotFound: true);
+        // FreePlay
+        m_FreePlay = asset.FindActionMap("FreePlay", throwIfNotFound: true);
+        m_FreePlay_ListUp = m_FreePlay.FindAction("ListUp", throwIfNotFound: true);
+        m_FreePlay_ListDown = m_FreePlay.FindAction("ListDown", throwIfNotFound: true);
+        m_FreePlay_SongSelect = m_FreePlay.FindAction("SongSelect", throwIfNotFound: true);
+        m_FreePlay_ExitSongList = m_FreePlay.FindAction("ExitSongList", throwIfNotFound: true);
     }
 
     ~@MainInputAction()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, MainInputAction.Player.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_FreePlay.enabled, "This will cause a leak and performance issues, MainInputAction.FreePlay.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -252,11 +380,88 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActions @Player => new PlayerActions(this);
+
+    // FreePlay
+    private readonly InputActionMap m_FreePlay;
+    private List<IFreePlayActions> m_FreePlayActionsCallbackInterfaces = new List<IFreePlayActions>();
+    private readonly InputAction m_FreePlay_ListUp;
+    private readonly InputAction m_FreePlay_ListDown;
+    private readonly InputAction m_FreePlay_SongSelect;
+    private readonly InputAction m_FreePlay_ExitSongList;
+    public struct FreePlayActions
+    {
+        private @MainInputAction m_Wrapper;
+        public FreePlayActions(@MainInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ListUp => m_Wrapper.m_FreePlay_ListUp;
+        public InputAction @ListDown => m_Wrapper.m_FreePlay_ListDown;
+        public InputAction @SongSelect => m_Wrapper.m_FreePlay_SongSelect;
+        public InputAction @ExitSongList => m_Wrapper.m_FreePlay_ExitSongList;
+        public InputActionMap Get() { return m_Wrapper.m_FreePlay; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(FreePlayActions set) { return set.Get(); }
+        public void AddCallbacks(IFreePlayActions instance)
+        {
+            if (instance == null || m_Wrapper.m_FreePlayActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_FreePlayActionsCallbackInterfaces.Add(instance);
+            @ListUp.started += instance.OnListUp;
+            @ListUp.performed += instance.OnListUp;
+            @ListUp.canceled += instance.OnListUp;
+            @ListDown.started += instance.OnListDown;
+            @ListDown.performed += instance.OnListDown;
+            @ListDown.canceled += instance.OnListDown;
+            @SongSelect.started += instance.OnSongSelect;
+            @SongSelect.performed += instance.OnSongSelect;
+            @SongSelect.canceled += instance.OnSongSelect;
+            @ExitSongList.started += instance.OnExitSongList;
+            @ExitSongList.performed += instance.OnExitSongList;
+            @ExitSongList.canceled += instance.OnExitSongList;
+        }
+
+        private void UnregisterCallbacks(IFreePlayActions instance)
+        {
+            @ListUp.started -= instance.OnListUp;
+            @ListUp.performed -= instance.OnListUp;
+            @ListUp.canceled -= instance.OnListUp;
+            @ListDown.started -= instance.OnListDown;
+            @ListDown.performed -= instance.OnListDown;
+            @ListDown.canceled -= instance.OnListDown;
+            @SongSelect.started -= instance.OnSongSelect;
+            @SongSelect.performed -= instance.OnSongSelect;
+            @SongSelect.canceled -= instance.OnSongSelect;
+            @ExitSongList.started -= instance.OnExitSongList;
+            @ExitSongList.performed -= instance.OnExitSongList;
+            @ExitSongList.canceled -= instance.OnExitSongList;
+        }
+
+        public void RemoveCallbacks(IFreePlayActions instance)
+        {
+            if (m_Wrapper.m_FreePlayActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IFreePlayActions instance)
+        {
+            foreach (var item in m_Wrapper.m_FreePlayActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_FreePlayActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public FreePlayActions @FreePlay => new FreePlayActions(this);
     public interface IPlayerActions
     {
         void OnLine1Action(InputAction.CallbackContext context);
         void OnLine2Action(InputAction.CallbackContext context);
         void OnLine3Action(InputAction.CallbackContext context);
         void OnLine4Action(InputAction.CallbackContext context);
+    }
+    public interface IFreePlayActions
+    {
+        void OnListUp(InputAction.CallbackContext context);
+        void OnListDown(InputAction.CallbackContext context);
+        void OnSongSelect(InputAction.CallbackContext context);
+        void OnExitSongList(InputAction.CallbackContext context);
     }
 }

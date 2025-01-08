@@ -34,7 +34,7 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
         menu = FindObjectOfType<MenuManager>();
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, "test-test", menu.fileName + ".json"));
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, menu.fileName + ".roena"));
     }
 
     public void LoadFromJson(string filePath)
@@ -43,7 +43,9 @@ public class LoadManager : MonoBehaviour
         {
             string json = File.ReadAllText(filePath);
 
-            NotesContainer container = JsonUtility.FromJson<NotesContainer>(json);
+            string decrypted = EncryptionHelper.Decrypt(json);
+
+            NotesContainer container = JsonUtility.FromJson<NotesContainer>(decrypted);
 
             info = container.info;
             notes = container.notes;

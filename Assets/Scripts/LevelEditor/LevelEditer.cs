@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+//using SFB;
 
 public class LevelEditer : MonoBehaviour
 {
@@ -30,6 +31,8 @@ public class LevelEditer : MonoBehaviour
     public string artist;
     public string title;
     public string fileName;
+
+    //private string[] paths;
 
     public string noteType;
 
@@ -127,7 +130,7 @@ public class LevelEditer : MonoBehaviour
         canvas.transform.localScale = Vector3.one;
 
         int beatNum13 = 3;
-        float sizeDelta = 640 / beatNum13;
+        float sizeDelta = 640f / (float)beatNum13;
         for (int i = 0; i < madi * beatNum13; i++)
         {
             GameObject instantiateObject = Instantiate(beat13, new Vector3(0, rect13.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder13.transform);
@@ -203,7 +206,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum14 = 4;
-        sizeDelta = 640 / beatNum14;
+        sizeDelta = 640f / (float)beatNum14;
         for (int i = 0; i < madi * beatNum14; i++)
         {
             GameObject instantiateObject = Instantiate(beat14, new Vector3(0, rect14.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder14.transform);
@@ -279,7 +282,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum16 = 6;
-        sizeDelta = 640 / beatNum16;
+        sizeDelta = 640f / (float)beatNum16;
         for (int i = 0; i < madi * beatNum16; i++)
         {
             GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect16.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder16.transform);
@@ -355,7 +358,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum18 = 8;
-        sizeDelta = 640 / beatNum18;
+        sizeDelta = 640f / (float)beatNum18;
         for (int i = 0; i < madi * beatNum18; i++)
         {
             GameObject instantiateObject = Instantiate(beat18, new Vector3(0, rect18.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder18.transform);
@@ -431,7 +434,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum112 = 12;
-        sizeDelta = 640 / beatNum112;
+        sizeDelta = 640f / (float)beatNum112;
         for (int i = 0; i < madi * beatNum112; i++)
         {
             GameObject instantiateObject = Instantiate(beat112, new Vector3(0, rect112.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder112.transform);
@@ -507,7 +510,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum116 = 16;
-        sizeDelta = 640 / beatNum116;
+        sizeDelta = 640f / (float)beatNum116;
         for (int i = 0; i < madi * beatNum116; i++)
         {
             GameObject instantiateObject = Instantiate(beat116, new Vector3(0, rect116.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder116.transform);
@@ -583,7 +586,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum124 = 24;
-        sizeDelta = 640 / beatNum124;
+        sizeDelta = 640f / (float)beatNum124;
         for (int i = 0; i < madi * beatNum124; i++)
         {
             GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect124.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder124.transform);
@@ -659,7 +662,7 @@ public class LevelEditer : MonoBehaviour
         }
 
         int beatNum132 = 32;
-        sizeDelta = 640 / beatNum132;
+        sizeDelta = 640f / (float)beatNum132;
         for (int i = 0; i < madi * beatNum132; i++)
         {
             GameObject instantiateObject = Instantiate(beat132, new Vector3(0, rect132.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder132.transform);
@@ -1194,7 +1197,7 @@ public class LevelEditer : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.X))
         {
-            saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, "test-test", fileName + ".json"), BPM, artist, title);
+            SaveLevel();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -1205,6 +1208,103 @@ public class LevelEditer : MonoBehaviour
         {
             SetIsRemoving("Remove");
         }
+    }
+
+    public void SaveLevel()
+    {
+        saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, $"{artist}-{title}.roena"), BPM, artist, title);
+    }
+
+    public void LoadLevel()
+    {
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, $"{fileName}.roena"));
+    }
+
+    private void LoadFromJson(string filePath)
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+
+            string decrypted = EncryptionHelper.Decrypt(json);
+
+            NotesContainer container = JsonUtility.FromJson<NotesContainer>(decrypted);
+
+            saveManager.notes = container.notes;
+
+            Debug.Log("Chart loaded successfully!");
+
+            PlaceNotesFromLoadedFile();
+        }
+        else
+        {
+            Debug.LogError("File not found at: " + filePath);
+        }
+    }
+
+    private void PlaceNotesFromLoadedFile()
+    {
+        foreach (NoteClass note in saveManager.notes)
+        {
+            canvas.transform.localScale = Vector3.one;
+
+            float positionX = 0f;
+            if (note.position == 1)
+            {
+                positionX = -158f;
+            }
+            if (note.position == 2)
+            {
+                positionX = 158f / 3f * -1f;
+            }
+            if (note.position == 3f)
+            {
+                positionX = 158f / 3f;
+            }
+            if (note.position == 4f)
+            {
+                positionX = 158f;
+            }
+
+            float positionY = -211f + (320f * note.beat);
+
+            if (note.type == "normal")
+            {
+                GameObject instantiateObject = Instantiate(normalPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+                LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+                levelEditerNoteManager.noteClass.position = note.position;
+                levelEditerNoteManager.noteClass.beat = note.beat;
+                levelEditerNoteManager.noteClass.type = "normal";
+            }
+            if (note.type == "hold")
+            {
+                GameObject instantiateObject = Instantiate(holdPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+                LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+                levelEditerNoteManager.noteClass.position = note.position;
+                levelEditerNoteManager.noteClass.beat = note.beat;
+                levelEditerNoteManager.noteClass.type = "hold";
+            }
+            if (note.type == "up")
+            {
+                GameObject instantiateObject = Instantiate(upPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+                LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+                levelEditerNoteManager.noteClass.position = note.position;
+                levelEditerNoteManager.noteClass.beat = note.beat;
+                levelEditerNoteManager.noteClass.type = "up";
+            }
+        }
+    }
+
+    [System.Serializable]
+    private class NotesContainer
+    {
+        public SongInfoClass info;
+        public List<NoteClass> notes;
+    }
+
+    public void SetFileName(string inputed)
+    {
+        fileName = inputed;
     }
 
     public void SetBPM(string inputed)
@@ -1227,10 +1327,14 @@ public class LevelEditer : MonoBehaviour
         title = inputed;
     }
 
-    public void SetFileName(string inputed)
-    {
-        fileName = inputed;
-    }
+    //public void SetFilePath()
+    //{
+    //    paths = StandaloneFileBrowser.OpenFolderPanel("Select Folder", "", false);
+    //    if (paths.Length > 0)
+    //    {
+    //        Debug.Log(paths[0]);
+    //    }
+    //}
 
     public void SetIsRemoving(string inputed)
     {
