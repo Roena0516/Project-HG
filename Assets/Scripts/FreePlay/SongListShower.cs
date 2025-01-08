@@ -15,6 +15,7 @@ public class SongListShower : MonoBehaviour
     public GameObject songListFolder;
     public GameObject songPrefab;
     public GameObject canvas;
+    public TextMeshProUGUI speedText;
 
     public GameObject syncInput;
     public GameObject speedInput;
@@ -39,6 +40,8 @@ public class SongListShower : MonoBehaviour
         originX = contentFolder.transform.position.x;
 
         listNum = 0;
+
+        speedText.text = $"{menu.speed:F1}";
     }
 
     public void Shower()
@@ -64,6 +67,8 @@ public class SongListShower : MonoBehaviour
     private InputAction listDown;
     private InputAction songSelect;
     private InputAction exitSongList;
+    private InputAction speedUp;
+    private InputAction speedDown;
 
     private void Awake()
     {
@@ -72,6 +77,8 @@ public class SongListShower : MonoBehaviour
         listDown = action.FreePlay.ListDown;
         songSelect = action.FreePlay.SongSelect;
         exitSongList = action.FreePlay.ExitSongList;
+        speedUp = action.FreePlay.SpeedUp;
+        speedDown = action.FreePlay.SpeedDown;
     }
 
     [System.Obsolete]
@@ -88,6 +95,12 @@ public class SongListShower : MonoBehaviour
 
         exitSongList.Enable();
         exitSongList.started += Started;
+
+        speedUp.Enable();
+        speedUp.started += Started;
+
+        speedDown.Enable();
+        speedDown.started += Started;
     }
 
     [System.Obsolete]
@@ -104,6 +117,12 @@ public class SongListShower : MonoBehaviour
 
         exitSongList.Disable();
         exitSongList.started -= Started;
+
+        speedUp.Disable();
+        speedUp.started -= Started;
+
+        speedDown.Disable();
+        speedDown.started -= Started;
     }
 
     [System.Obsolete]
@@ -126,7 +145,24 @@ public class SongListShower : MonoBehaviour
                 Destroy(menu.gameObject);
                 SceneManager.LoadScene("Menu");
                 break;
+            case "SpeedUp":
+                SpeedOneUp();
+                break;
+            case "SpeedDown":
+                SpeedOneDown();
+                break;
         }
+    }
+
+    public void SpeedOneUp()
+    {
+        menu.speed += 0.1f;
+        speedText.text = $"{menu.speed:F1}";
+    }
+    public void SpeedOneDown()
+    {
+        menu.speed -= 0.1f;
+        speedText.text = $"{menu.speed:F1}";
     }
 
     [System.Obsolete]

@@ -150,6 +150,24 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpeedUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""d99ac480-4e45-4522-8501-e6c8657ce879"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpeedDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""d18f693e-172f-4798-b3f9-7a0261e331e4"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -229,6 +247,28 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""action"": ""ExitSongList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""cfc2d4a4-5e15-4725-8053-cad11d3c6550"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpeedUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e5041ebb-d604-4380-a608-634825715d0c"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpeedDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -247,6 +287,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_FreePlay_ListDown = m_FreePlay.FindAction("ListDown", throwIfNotFound: true);
         m_FreePlay_SongSelect = m_FreePlay.FindAction("SongSelect", throwIfNotFound: true);
         m_FreePlay_ExitSongList = m_FreePlay.FindAction("ExitSongList", throwIfNotFound: true);
+        m_FreePlay_SpeedUp = m_FreePlay.FindAction("SpeedUp", throwIfNotFound: true);
+        m_FreePlay_SpeedDown = m_FreePlay.FindAction("SpeedDown", throwIfNotFound: true);
     }
 
     ~@MainInputAction()
@@ -388,6 +430,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_FreePlay_ListDown;
     private readonly InputAction m_FreePlay_SongSelect;
     private readonly InputAction m_FreePlay_ExitSongList;
+    private readonly InputAction m_FreePlay_SpeedUp;
+    private readonly InputAction m_FreePlay_SpeedDown;
     public struct FreePlayActions
     {
         private @MainInputAction m_Wrapper;
@@ -396,6 +440,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         public InputAction @ListDown => m_Wrapper.m_FreePlay_ListDown;
         public InputAction @SongSelect => m_Wrapper.m_FreePlay_SongSelect;
         public InputAction @ExitSongList => m_Wrapper.m_FreePlay_ExitSongList;
+        public InputAction @SpeedUp => m_Wrapper.m_FreePlay_SpeedUp;
+        public InputAction @SpeedDown => m_Wrapper.m_FreePlay_SpeedDown;
         public InputActionMap Get() { return m_Wrapper.m_FreePlay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -417,6 +463,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @ExitSongList.started += instance.OnExitSongList;
             @ExitSongList.performed += instance.OnExitSongList;
             @ExitSongList.canceled += instance.OnExitSongList;
+            @SpeedUp.started += instance.OnSpeedUp;
+            @SpeedUp.performed += instance.OnSpeedUp;
+            @SpeedUp.canceled += instance.OnSpeedUp;
+            @SpeedDown.started += instance.OnSpeedDown;
+            @SpeedDown.performed += instance.OnSpeedDown;
+            @SpeedDown.canceled += instance.OnSpeedDown;
         }
 
         private void UnregisterCallbacks(IFreePlayActions instance)
@@ -433,6 +485,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @ExitSongList.started -= instance.OnExitSongList;
             @ExitSongList.performed -= instance.OnExitSongList;
             @ExitSongList.canceled -= instance.OnExitSongList;
+            @SpeedUp.started -= instance.OnSpeedUp;
+            @SpeedUp.performed -= instance.OnSpeedUp;
+            @SpeedUp.canceled -= instance.OnSpeedUp;
+            @SpeedDown.started -= instance.OnSpeedDown;
+            @SpeedDown.performed -= instance.OnSpeedDown;
+            @SpeedDown.canceled -= instance.OnSpeedDown;
         }
 
         public void RemoveCallbacks(IFreePlayActions instance)
@@ -463,5 +521,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         void OnListDown(InputAction.CallbackContext context);
         void OnSongSelect(InputAction.CallbackContext context);
         void OnExitSongList(InputAction.CallbackContext context);
+        void OnSpeedUp(InputAction.CallbackContext context);
+        void OnSpeedDown(InputAction.CallbackContext context);
     }
 }

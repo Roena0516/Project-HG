@@ -12,6 +12,7 @@ public class MenuManager : MonoBehaviour
     private void Start()
     {
         isSet = true;
+        speed = 4.0f;
     }
 
     private void Update()
