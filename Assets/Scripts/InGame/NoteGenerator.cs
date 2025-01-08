@@ -13,7 +13,7 @@ public class NoteGenerator : MonoBehaviour
 
     public float distance;
     public float fallTime;
-    public float speed = 12f;
+    public float speed;
 
     public List<GameObject> Lines;
 
@@ -38,6 +38,7 @@ public class NoteGenerator : MonoBehaviour
     [System.Obsolete]
     void Start()
     {
+        speed = 4.5f;
         distance = 9f;
         spawnPosition1 = new Vector3(Lines[0].transform.position.x, transform.position.y, 0);
         spawnPosition2 = new Vector3(Lines[1].transform.position.x, transform.position.y, 0);
@@ -47,7 +48,7 @@ public class NoteGenerator : MonoBehaviour
 
         menu = FindObjectOfType<MenuManager>();
 
-        speed = menu.speed;
+        speed *= menu.speed;
 
         fallTime = distance / speed * 1000f;
 
@@ -79,6 +80,8 @@ public class NoteGenerator : MonoBehaviour
         }
 
         judgement.CalcRate();
+
+        yield break;
     }
 
     IEnumerator NoteSpawnerSpawner()
@@ -128,6 +131,7 @@ public class NoteGenerator : MonoBehaviour
         noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
         oneBeatDuration = 60f / BPM * 1000f;
         beatDuration = oneBeatDuration * beat;
+
         StartCoroutine(NoteSetter(noteClass, note, beatDuration));
     }
 
@@ -135,7 +139,7 @@ public class NoteGenerator : MonoBehaviour
     {
         Note noteScript = note.GetComponent<Note>();
 
-        float ms = beatDuration + fallTime + 1000f;
+        float ms = beatDuration + 3000f;
 
         noteClass.ms = ms;
 

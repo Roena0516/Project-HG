@@ -21,7 +21,7 @@ public class MusicPlayer : MonoBehaviour
         eventInstance.setVolume(1.0f);
 
         menu = FindObjectOfType<MenuManager>();
-        sync = menu.sync;
+        sync = menu.sync + 2f;
 
         StartCoroutine(StartSong());
     }

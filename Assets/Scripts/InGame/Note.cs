@@ -10,6 +10,7 @@ public class Note : MonoBehaviour
     private LineInputChecker line;
     private JudgementManager judgement;
     private NoteGenerator noteGenerator;
+    private MusicPlayer music; 
 
     public NoteClass noteClass;
 
@@ -20,6 +21,7 @@ public class Note : MonoBehaviour
         line = FindObjectOfType<LineInputChecker>();
         judgement = FindObjectOfType<JudgementManager>();
         noteGenerator = FindObjectOfType<NoteGenerator>();
+        music = FindObjectOfType<MusicPlayer>();
     }
 
     void FixedUpdate()
