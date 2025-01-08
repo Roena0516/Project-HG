@@ -12,7 +12,7 @@ public class SongListShower : MonoBehaviour
     private LoadAllJSONs loader;
 
     public GameObject contentFolder;
-    public GameObject SongListFolder;
+    public GameObject songListFolder;
     public GameObject songPrefab;
     public GameObject canvas;
 
@@ -34,7 +34,7 @@ public class SongListShower : MonoBehaviour
         loader = FindObjectOfType<LoadAllJSONs>();
         menu = FindObjectOfType<MenuManager>();
 
-        contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (SongListFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
+        contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (songListFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
         originX = contentFolder.transform.position.x;
 
@@ -74,6 +74,7 @@ public class SongListShower : MonoBehaviour
         exitSongList = action.FreePlay.ExitSongList;
     }
 
+    [System.Obsolete]
     private void OnEnable()
     {
         listUp.Enable();
@@ -89,6 +90,7 @@ public class SongListShower : MonoBehaviour
         exitSongList.started += Started;
     }
 
+    [System.Obsolete]
     private void OnDisable()
     {
         listUp.Disable();
@@ -104,6 +106,7 @@ public class SongListShower : MonoBehaviour
         exitSongList.started -= Started;
     }
 
+    [System.Obsolete]
     void Started(InputAction.CallbackContext context)
     {
         string actionName = context.action.name;
@@ -126,6 +129,7 @@ public class SongListShower : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     private void SetList(int n)
     {
         int targetIndex = n - listNum;
@@ -135,10 +139,14 @@ public class SongListShower : MonoBehaviour
         //contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, contentFolder.transform.position.y + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * targetIndex), 0f);
         if (currentSetSongRoutine == null)
         {
-            listNum = n;
+            //Debug.Log(contentFolder.transform.GetChildCount());
+            if (targetIndex + listNum >= 0 && targetIndex + listNum <= contentFolder.transform.GetChildCount() - 1)
+            {
+                listNum = n;
 
-            Debug.Log(n);
-            currentSetSongRoutine = StartCoroutine(SetSong(targetIndex));
+                Debug.Log(n);
+                currentSetSongRoutine = StartCoroutine(SetSong(targetIndex));
+            }
         }
 
         //if (currentSetSongIndexRoutine == null)
@@ -189,7 +197,7 @@ public class SongListShower : MonoBehaviour
 
         float elapsedTime = 0f;
         Vector3 startPos = new Vector3(T.position.x, T.position.y, 0f);
-        float duration = 0.25f;
+        float duration = 0.15f;
         Vector3 targetPos = new Vector3(originX, T.position.y + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * index), 0f);
 
         while (elapsedTime < duration)
