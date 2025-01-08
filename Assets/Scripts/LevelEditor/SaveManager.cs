@@ -17,6 +17,8 @@ public class SaveManager : MonoBehaviour
 
     public void SaveToJson(string filePath, float BPM, string artist, string title)
     {
+        notes.Sort((note1, note2) => note1.beat.CompareTo(note2.beat));
+
         // NoteDataWrapper의 인스턴스를 생성하고 데이터 할당
         NoteDataWrapper wrapper = new NoteDataWrapper();
         wrapper.notes = notes;
