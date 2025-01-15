@@ -694,11 +694,11 @@ MonoBehaviour:
   CollisionTag: 
   EventReference:
     Guid:
-      Data1: 333188660
-      Data2: 1074712603
-      Data3: -1964979559
-      Data4: -2065263840
-    Path: event:/umiyurikaiteitan 3
+      Data1: 693808494
+      Data2: 1154731083
+      Data3: 969998516
+      Data4: 203515987
+    Path: event:/mimukauwanicetry
   Event: 
   EventPlayTrigger: 0
   EventStopTrigger: 0
@@ -723,6 +723,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sync: 0.5
+  eventName: 
 --- !u!4 &669266813
 Transform:
   m_ObjectHideFlags: 0
@@ -1189,6 +1190,7 @@ MonoBehaviour:
     artist: 
     bpm: 0
     songFile: 
+    eventName: 
 --- !u!1 &1244622319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1348,6 +1350,7 @@ MonoBehaviour:
     artist: 
     bpm: 0
     songFile: 
+    eventName: 
   notes: []
 --- !u!114 &1299961085
 MonoBehaviour:

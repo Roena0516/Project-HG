@@ -9,6 +9,7 @@ public class SongInfoClass
     public string artist;
     public float bpm;
     public string songFile;
+    public string eventName;
 }
 
 [System.Serializable]
@@ -49,6 +50,10 @@ public class LoadManager : MonoBehaviour
 
             info = container.info;
             notes = container.notes;
+
+            menu.eventName = info.eventName;
+
+            Debug.Log($"1{menu.eventName}");
 
             Debug.Log("Chart loaded successfully!");
             Debug.Log($"{info.artist}");

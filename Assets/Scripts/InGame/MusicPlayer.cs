@@ -9,25 +9,33 @@ public class MusicPlayer : MonoBehaviour
 
     public float sync;
 
+    public string eventName;
+
     private MenuManager menu;
 
     [System.Obsolete]
     void Start()
     {
-        eventInstance = RuntimeManager.CreateInstance("event:/umiyurikaiteitan 3");
-
-        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-
-        eventInstance.setVolume(1.0f);
-
         menu = FindObjectOfType<MenuManager>();
-        sync = menu.sync + 2f;
+
+        sync = menu.sync + 2f - 0.1f;
 
         StartCoroutine(StartSong());
     }
 
     IEnumerator StartSong()
     {
+        yield return new WaitForSecondsRealtime(0.1f);
+
+        eventName = menu.eventName;
+        eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
+
+        Debug.Log($"2{eventName}");
+
+        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+
+        eventInstance.setVolume(0.5f);
+
         yield return new WaitForSecondsRealtime(sync);
         eventInstance.start();
     }

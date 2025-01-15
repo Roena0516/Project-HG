@@ -8,6 +8,7 @@ public class MenuManager : MonoBehaviour
     public string fileName;
     public float sync;
     public float speed;
+    public string eventName;
 
     private void Start()
     {
