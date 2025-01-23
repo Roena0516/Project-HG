@@ -7,6 +7,8 @@ public class Note : MonoBehaviour
     private bool isSet;
     public double ms;
 
+    public bool isEndNote;
+
     private LineInputChecker line;
     private JudgementManager judgement;
     private NoteGenerator noteGenerator;
@@ -18,6 +20,7 @@ public class Note : MonoBehaviour
     void Start()
     {
         isSet = false;
+        isEndNote = false;
         line = FindObjectOfType<LineInputChecker>();
         judgement = FindObjectOfType<JudgementManager>();
         noteGenerator = FindObjectOfType<NoteGenerator>();

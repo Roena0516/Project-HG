@@ -15,6 +15,8 @@ public class NoteGenerator : MonoBehaviour
     public float fallTime;
     public float speed;
 
+    private int noteCount;
+
     public List<GameObject> Lines;
 
     public Dictionary<string, int> noteTypeCounts = new Dictionary<string, int>();
@@ -72,6 +74,9 @@ public class NoteGenerator : MonoBehaviour
         info = loadManager.info;
         BPM = info.bpm;
 
+        noteCount = notes.Count;
+        notes[noteCount - 1].isEndNote = true;
+
         StartCoroutine(NoteSpawnerSpawner());
 
         foreach (NoteClass note in notes)
@@ -126,6 +131,11 @@ public class NoteGenerator : MonoBehaviour
         if (type == "up")
         {
             note = Instantiate(upPrefab, ranePosition, R);
+        }
+
+        if (noteClass.isEndNote == true)
+        {
+            note.GetComponent<Note>().isEndNote = true;
         }
         noteClass.noteObject = note;
         noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);

@@ -16,12 +16,17 @@ public class JudgementManager : MonoBehaviour
     public float rate;
 
     private NoteGenerator noteGenerator;
+    private GameManager gameManager;
+
+    public bool isAP;
+    public bool isFC;
 
     public TextMeshProUGUI judgeText;
     public TextMeshProUGUI fastSlow;
     public TextMeshProUGUI comboText;
     public TextMeshProUGUI rateText;
     public TextMeshProUGUI judgeCountText;
+    public TextMeshProUGUI FCAPText;
 
     private Coroutine currentJudgementRoutine;
 
@@ -36,7 +41,11 @@ public class JudgementManager : MonoBehaviour
         judgeText.color = tempColor;
         fastSlow.color = tempColor;
         noteGenerator = FindObjectOfType<NoteGenerator>();
+        gameManager = FindObjectOfType<GameManager>();
         rate = 100f;
+
+        isAP = false;
+        isFC = false;
 
         noteTypeRate["normal"] = 0f;
         noteTypeRate["hold"] = 0f;
@@ -211,6 +220,22 @@ public class JudgementManager : MonoBehaviour
         double Ms = note.ms - currentTimeMs;
         judgeCount[judgement]++;
         UpdateJudgeCountText();
+
+        if (note.isEndNote == true)
+        {
+            if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0)
+            {
+                FCAPText.text = "FULL COMBO";
+                isFC = true;
+            }
+            if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0 && judgeCount["Good"] == 0 && judgeCount["Great"] == 0)
+            {
+                FCAPText.text = "ALL PERFECT";
+                isAP = true;
+            }
+
+            gameManager.isLevelEnd = true;
+        }
         StartCoroutine(JudegementTextShower(judgement, Ms));
     }
 

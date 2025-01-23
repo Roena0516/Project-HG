@@ -13,6 +13,7 @@ public class LineInputChecker : MonoBehaviour
 
     private JudgementManager judgementManager;
     private NoteGenerator noteGenerator;
+    private GameManager gameManager;
 
     public MainInputAction action;
     private InputAction Line1Action;
@@ -139,6 +140,7 @@ public class LineInputChecker : MonoBehaviour
         Debug.Log($"Start Time : {startTime}");
         judgementManager = GetComponent<JudgementManager>();
         noteGenerator = FindObjectOfType<NoteGenerator>();
+        gameManager = FindObjectOfType<GameManager>();
     }
 
     void Update()

@@ -21,6 +21,7 @@ public class NoteClass
     public string type;
 
     public bool isInputed = false;
+    public bool isEndNote = false;
     public GameObject noteObject;
 }
 
