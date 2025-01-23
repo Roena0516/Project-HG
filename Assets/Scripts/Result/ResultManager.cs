@@ -47,7 +47,7 @@ public class ResultManager : MonoBehaviour
         BadCount.text = $"{judgementManager.judgeCount["Bad"]}";
         MissCount.text = $"{judgementManager.judgeCount["Miss"]}";
 
-        Rate.text = $"{judgementManager.rate}";
+        Rate.text = $"{judgementManager.rate:F2}%";
 
         if (judgementManager.isFC)
         {

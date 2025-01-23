@@ -400,6 +400,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 371779187}
+  - component: {fileID: 371779188}
   m_Layer: 0
   m_Name: ResultManager
   m_TagString: Untagged
@@ -422,6 +423,27 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &371779188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371779186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47a2ffaa49f283a4a8279d336414d0d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Artist: {fileID: 1313556508}
+  Title: {fileID: 208410286}
+  PerfectCount: {fileID: 684272656}
+  GreatCount: {fileID: 1985321205}
+  GoodCount: {fileID: 1799643933}
+  BadCount: {fileID: 647954421}
+  MissCount: {fileID: 2051309777}
+  Rate: {fileID: 1146829548}
+  FCAP: {fileID: 1013858086}
 --- !u!1 &606607686
 GameObject:
   m_ObjectHideFlags: 0
@@ -1282,7 +1304,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: ALL PERFECT
+  m_text: Clear
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 62b03bbaa290644eaa8e1d07c4b08a22, type: 2}
   m_sharedMaterial: {fileID: 892520072279131969, guid: 62b03bbaa290644eaa8e1d07c4b08a22, type: 2}
