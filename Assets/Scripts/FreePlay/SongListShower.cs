@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class SongListShower : MonoBehaviour
 {
-    private MenuManager menu;
+    private SettingsManager settings;
 
     private LoadAllJSONs loader;
 
@@ -33,7 +33,7 @@ public class SongListShower : MonoBehaviour
         canvas.transform.localScale = Vector3.one;
 
         loader = FindObjectOfType<LoadAllJSONs>();
-        menu = FindObjectOfType<MenuManager>();
+        settings = FindObjectOfType<SettingsManager>();
 
         contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (songListFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
@@ -41,7 +41,7 @@ public class SongListShower : MonoBehaviour
 
         listNum = 0;
 
-        speedText.text = $"{menu.speed:F1}";
+        speedText.text = $"{settings.speed:F1}";
     }
 
     public void Shower()
@@ -142,7 +142,6 @@ public class SongListShower : MonoBehaviour
                 SelectSong(listNum);
                 break;
             case "ExitSongList":
-                Destroy(menu.gameObject);
                 SceneManager.LoadScene("Menu");
                 break;
             case "SpeedUp":
@@ -156,13 +155,13 @@ public class SongListShower : MonoBehaviour
 
     public void SpeedOneUp()
     {
-        menu.speed += 0.1f;
-        speedText.text = $"{menu.speed:F1}";
+        settings.speed += 0.1f;
+        speedText.text = $"{settings.speed:F1}";
     }
     public void SpeedOneDown()
     {
-        menu.speed -= 0.1f;
-        speedText.text = $"{menu.speed:F1}";
+        settings.speed -= 0.1f;
+        speedText.text = $"{settings.speed:F1}";
     }
 
     [System.Obsolete]
@@ -262,17 +261,17 @@ public class SongListShower : MonoBehaviour
         Debug.Log(n);
         SongListInfoSetter setter = contentFolder.transform.GetChild(n).GetComponent<SongListInfoSetter>();
 
-        menu.SetFileName($"{setter.artist}-{setter.title}");
+        settings.SetFileName($"{setter.artist}-{setter.title}");
 
         SceneManager.LoadScene("InGame");
     }
 
     public void SetSync(string inputed)
     {
-        menu.SetSync(inputed);
+        settings.SetSync(inputed);
     }
     public void SetSpeed(string inputed)
     {
-        menu.SetSpeed(inputed);
+        settings.SetSpeed(inputed);
     }
 }

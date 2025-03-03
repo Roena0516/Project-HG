@@ -11,14 +11,14 @@ public class MusicPlayer : MonoBehaviour
 
     public string eventName;
 
-    private MenuManager menu;
+    private SettingsManager settings;
 
     [System.Obsolete]
     void Start()
     {
-        menu = FindObjectOfType<MenuManager>();
+        settings = FindObjectOfType<SettingsManager>();
 
-        sync = menu.sync + 2f - 0.1f + 0.7f;
+        sync = settings.sync + 2f - 0.1f + 0.7f;
 
         StartCoroutine(StartSong());
     }
@@ -27,7 +27,7 @@ public class MusicPlayer : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.1f);
 
-        eventName = menu.eventName;
+        eventName = settings.eventName;
         eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
 
         Debug.Log($"2{eventName}");

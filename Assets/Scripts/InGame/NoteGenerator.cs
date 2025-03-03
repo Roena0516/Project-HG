@@ -32,7 +32,7 @@ public class NoteGenerator : MonoBehaviour
     private LineInputChecker checker;
     private JudgementManager judgement;
     private MusicPlayer musicPlayer;
-    private MenuManager menu;
+    private SettingsManager settings;
 
     public List<NoteClass> notes;
     public SongInfoClass info;
@@ -48,9 +48,9 @@ public class NoteGenerator : MonoBehaviour
         spawnPosition4 = new Vector3(Lines[3].transform.position.x, transform.position.y, 0);
         spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
-        menu = FindObjectOfType<MenuManager>();
+        settings = FindObjectOfType<SettingsManager>();
 
-        speed *= menu.speed;
+        speed *= settings.speed;
 
         fallTime = distance / speed * 1000f;
 

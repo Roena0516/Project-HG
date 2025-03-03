@@ -30,13 +30,13 @@ public class LoadManager : MonoBehaviour
     public SongInfoClass info;
     public List<NoteClass> notes;
 
-    private MenuManager menu;
+    private SettingsManager settings;
 
     [System.Obsolete]
     private void Start()
     {
-        menu = FindObjectOfType<MenuManager>();
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, menu.fileName + ".roena"));
+        settings = FindObjectOfType<SettingsManager>();
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, settings.fileName + ".roena"));
     }
 
     public void LoadFromJson(string filePath)
@@ -52,9 +52,9 @@ public class LoadManager : MonoBehaviour
             info = container.info;
             notes = container.notes;
 
-            menu.eventName = info.eventName;
+            settings.eventName = info.eventName;
 
-            Debug.Log($"1{menu.eventName}");
+            Debug.Log($"1{settings.eventName}");
 
             Debug.Log("Chart loaded successfully!");
             Debug.Log($"{info.artist}");

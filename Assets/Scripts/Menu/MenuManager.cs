@@ -7,12 +7,9 @@ public class MenuManager : MonoBehaviour
 {
     private bool isSet;
 
-    public string fileName;
-    public float sync;
-    public float speed;
-    public string eventName;
-
     public GameObject menuFolder;
+
+    private SettingsManager settingsManager;
 
     private int selectedMenu;
     public int menuCount;
@@ -119,7 +116,7 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(settingsManager.gameObject);
                 SceneManager.LoadScene("FreePlay");
             }
         }
@@ -135,23 +132,9 @@ public class MenuManager : MonoBehaviour
         isSet = true;
         selectedMenu = 1;
         menuCount = menuFolder.transform.childCount;
-        sync = 0f;
-        speed = 4.0f;
+
+        settingsManager = FindObjectOfType<SettingsManager>();
+        
         SetMenu(1);
-    }
-
-    public void SetFileName(string inputed)
-    {
-        fileName = inputed;
-    }
-
-    public void SetSync(string inputed)
-    {
-        float.TryParse(inputed, out sync);
-    }
-
-    public void SetSpeed(string inputed)
-    {
-        float.TryParse(inputed, out speed);
     }
 }
