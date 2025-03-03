@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using TMPro;
 
 public class MenuManager : MonoBehaviour
@@ -11,6 +12,8 @@ public class MenuManager : MonoBehaviour
 
     private SettingsManager settingsManager;
 
+    public GameObject settingsPanel;
+
     private int selectedMenu;
     public int menuCount;
 
@@ -19,6 +22,8 @@ public class MenuManager : MonoBehaviour
     private InputAction listDown;
     private InputAction menuSelect;
     private InputAction exit;
+
+    public TextMeshProUGUI musicDelayValue;
 
     private void Awake()
     {
@@ -79,6 +84,11 @@ public class MenuManager : MonoBehaviour
                 break;
             case "Exit":
                 Debug.Log("Exited");
+                if (!isSet)
+                {
+                    settingsPanel.SetActive(false);
+                    isSet = true;
+                }
                 break;
         }
     }
@@ -116,14 +126,24 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                DontDestroyOnLoad(settingsManager.gameObject);
                 SceneManager.LoadScene("FreePlay");
             }
         }
         if (index == 2)
         {
             Debug.Log("Settings");
+            if (isSet)
+            {
+                isSet = false;
+                SetSettingsPanel();
+            }
         }
+    }
+
+    private void SetSettingsPanel()
+    {
+        settingsPanel.SetActive(true);
+        musicDelayValue.text = $"{settingsManager.sync}";
     }
 
     [System.Obsolete]
