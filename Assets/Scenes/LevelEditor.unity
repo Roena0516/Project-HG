@@ -7470,6 +7470,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaaffa0b703a481b99ccede91741d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineRenderer: {fileID: 0}
+  fmodEvent:
+    Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
+  heightMultiplier: 10
+  numPoints: 512
   normalPrefab: {fileID: 3833513963185199395, guid: b4b6c0e370ece4836a5e738fc6c71d5d, type: 3}
   holdPrefab: {fileID: 1126479216665261760, guid: 6b267d24f499544d39fa02933109b05d, type: 3}
   upPrefab: {fileID: 3906634997580113130, guid: fb13007c7c5c345eda0e8078075a8300, type: 3}

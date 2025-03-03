@@ -18,7 +18,7 @@ public class MusicPlayer : MonoBehaviour
     {
         menu = FindObjectOfType<MenuManager>();
 
-        sync = menu.sync + 2f - 0.1f;
+        sync = menu.sync + 2f - 0.1f + 0.7f;
 
         StartCoroutine(StartSong());
     }

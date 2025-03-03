@@ -3,10 +3,19 @@ using System.IO;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System.Runtime.InteropServices;
+using System;
+using FMODUnity;
+using FMOD.Studio;
+using static UnityEngine.UI.Image;
+using System.Collections;
 //using SFB;
 
 public class LevelEditer : MonoBehaviour
 {
+    public int currentMusicTime = 0;
+
+    public EventInstance eventInstance;
 
     private SaveManager saveManager;
 
@@ -20,10 +29,13 @@ public class LevelEditer : MonoBehaviour
     public GameObject addIndicator;
     public GameObject removeIndicator;
 
+    private Coroutine currentMoveSliderer;
+
     public int madi;
     public int madi2;
 
     private bool isRemoving;
+    public bool isMusicPlaying;
 
     private float scrollSpeed;
 
@@ -117,6 +129,7 @@ public class LevelEditer : MonoBehaviour
         noteType = "Normal";
 
         isRemoving = false;
+        isMusicPlaying = false;
 
         scrollSpeed = 10f;
 
@@ -1183,6 +1196,7 @@ public class LevelEditer : MonoBehaviour
             {
                 gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.down);
             }
+            //OnSliderChanged();
         }
         if (Input.GetKey(KeyCode.S))
         {
@@ -1194,6 +1208,7 @@ public class LevelEditer : MonoBehaviour
             {
                 gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.up);
             }
+            //OnSliderChanged();
         }
 
         if (Input.GetKeyDown(KeyCode.X))
@@ -1209,7 +1224,113 @@ public class LevelEditer : MonoBehaviour
         {
             SetIsRemoving("Remove");
         }
+
+        /*if (Input.GetKeyDown(KeyCode.E))
+        {
+            isMusicPlaying = !isMusicPlaying;
+            eventInstance.setPaused(!isMusicPlaying);
+        }*/
+
+        /*if (Input.GetKeyDown(KeyCode.H))
+        {
+            eventInstance.start();
+            eventInstance.setPaused(true);
+        }
+
+        UpdateMusicTime();
+        UpdateSlider();*/
     }
+
+    /*private void UpdateMusicTime()
+    {
+        if (eventInstance.isValid())
+        {
+            eventInstance.getTimelinePosition(out currentMusicTime);
+        }
+    }
+
+    private void UpdateSlider()
+    {
+        int length;
+        eventInstance.getDescription(out var description);
+        description.getLength(out length);
+
+        if (length > 0)
+        {
+            if (isMusicPlaying)
+            {
+                if (currentMoveSliderer == null)
+                {
+                    currentMoveSliderer = StartCoroutine(MoveSliderer());
+                }
+                
+            }
+            else
+            {
+                if (currentMoveSliderer != null)
+                {
+                    StopCoroutine(currentMoveSliderer);
+                    currentMoveSliderer = null;
+                }
+            }
+        }
+    }
+
+    IEnumerator MoveSliderer()
+    {
+        while(true)
+        {
+            float moveTime = 30f / BPM;
+            StartCoroutine(MoveSlider(moveTime));
+
+            yield return new WaitForSeconds(moveTime);
+        }
+    }
+
+    IEnumerator MoveSlider(float moveTime)
+    {
+        canvas.transform.localScale = Vector3.one;
+
+        Transform T = gridFolder.transform;
+
+        float elapsedTime = 0f;
+        Vector3 startPos = new Vector3(T.position.x, T.position.y, 0f);
+        float duration = moveTime;
+        Vector3 targetPos = new Vector3(T.position.x, T.position.y - 160f, 0f);
+
+        while (elapsedTime < duration)
+        {
+            canvas.transform.localScale = Vector3.one;
+
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+
+            T.position = Vector3.Lerp(startPos, targetPos, t);
+
+            yield return null;
+        }
+
+        canvas.transform.localScale = Vector3.one;
+        T.position = targetPos;
+
+        yield break;
+    }
+
+    public void OnSliderChanged()
+    {
+        int length;
+        eventInstance.getDescription(out var description);
+        description.getLength(out length);
+
+        float moveTime = 30f / BPM;
+
+        float temp = moveTime * 160f;
+
+        float value = -gridFolder.transform.position.y / temp;
+
+        int newTime = (int)(value * length);
+        eventInstance.setTimelinePosition(newTime);
+    }*/
 
     public void SaveLevel()
     {
@@ -1331,6 +1452,13 @@ public class LevelEditer : MonoBehaviour
     public void SetEventName(string inputed)
     {
         eventName = inputed;
+        /*eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
+
+        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+
+        eventInstance.setVolume(0.5f);
+        eventInstance.start();
+        eventInstance.setPaused(true);*/
     }
 
     //public void SetFilePath()
