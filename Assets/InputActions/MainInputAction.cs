@@ -271,6 +271,116 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""8c010e7f-3da1-4f12-8799-7720b45ccd4f"",
+            ""actions"": [
+                {
+                    ""name"": ""ListUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""eb683d89-a100-438e-987d-906310c639a9"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ListDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""deaca0ec-e5b1-4c1c-920d-6289d1a1f882"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""MenuSelect"",
+                    ""type"": ""Button"",
+                    ""id"": ""6104eb08-58b1-433a-be5e-605a4ec87b0e"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Exit"",
+                    ""type"": ""Button"",
+                    ""id"": ""d2edbac9-da17-43f1-a554-c335d1105559"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""3c663219-368e-47da-af7f-344ef5c79415"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""abb10ef5-a1d4-4cb3-8301-c63f9bec65e9"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""867f5caa-ec39-4300-979c-62828ebbf443"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5bc95a23-40b8-4deb-8818-c4bc1616897f"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""652dc011-2c93-430a-9210-da2a349ba1c3"",
+                    ""path"": ""<Keyboard>/enter"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""MenuSelect"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""36d80e53-95be-4c2b-9779-87ab85a27844"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Exit"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -289,12 +399,19 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_FreePlay_ExitSongList = m_FreePlay.FindAction("ExitSongList", throwIfNotFound: true);
         m_FreePlay_SpeedUp = m_FreePlay.FindAction("SpeedUp", throwIfNotFound: true);
         m_FreePlay_SpeedDown = m_FreePlay.FindAction("SpeedDown", throwIfNotFound: true);
+        // Menu
+        m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+        m_Menu_ListUp = m_Menu.FindAction("ListUp", throwIfNotFound: true);
+        m_Menu_ListDown = m_Menu.FindAction("ListDown", throwIfNotFound: true);
+        m_Menu_MenuSelect = m_Menu.FindAction("MenuSelect", throwIfNotFound: true);
+        m_Menu_Exit = m_Menu.FindAction("Exit", throwIfNotFound: true);
     }
 
     ~@MainInputAction()
     {
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, MainInputAction.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_FreePlay.enabled, "This will cause a leak and performance issues, MainInputAction.FreePlay.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Menu.enabled, "This will cause a leak and performance issues, MainInputAction.Menu.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -508,6 +625,76 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         }
     }
     public FreePlayActions @FreePlay => new FreePlayActions(this);
+
+    // Menu
+    private readonly InputActionMap m_Menu;
+    private List<IMenuActions> m_MenuActionsCallbackInterfaces = new List<IMenuActions>();
+    private readonly InputAction m_Menu_ListUp;
+    private readonly InputAction m_Menu_ListDown;
+    private readonly InputAction m_Menu_MenuSelect;
+    private readonly InputAction m_Menu_Exit;
+    public struct MenuActions
+    {
+        private @MainInputAction m_Wrapper;
+        public MenuActions(@MainInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ListUp => m_Wrapper.m_Menu_ListUp;
+        public InputAction @ListDown => m_Wrapper.m_Menu_ListDown;
+        public InputAction @MenuSelect => m_Wrapper.m_Menu_MenuSelect;
+        public InputAction @Exit => m_Wrapper.m_Menu_Exit;
+        public InputActionMap Get() { return m_Wrapper.m_Menu; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+        public void AddCallbacks(IMenuActions instance)
+        {
+            if (instance == null || m_Wrapper.m_MenuActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Add(instance);
+            @ListUp.started += instance.OnListUp;
+            @ListUp.performed += instance.OnListUp;
+            @ListUp.canceled += instance.OnListUp;
+            @ListDown.started += instance.OnListDown;
+            @ListDown.performed += instance.OnListDown;
+            @ListDown.canceled += instance.OnListDown;
+            @MenuSelect.started += instance.OnMenuSelect;
+            @MenuSelect.performed += instance.OnMenuSelect;
+            @MenuSelect.canceled += instance.OnMenuSelect;
+            @Exit.started += instance.OnExit;
+            @Exit.performed += instance.OnExit;
+            @Exit.canceled += instance.OnExit;
+        }
+
+        private void UnregisterCallbacks(IMenuActions instance)
+        {
+            @ListUp.started -= instance.OnListUp;
+            @ListUp.performed -= instance.OnListUp;
+            @ListUp.canceled -= instance.OnListUp;
+            @ListDown.started -= instance.OnListDown;
+            @ListDown.performed -= instance.OnListDown;
+            @ListDown.canceled -= instance.OnListDown;
+            @MenuSelect.started -= instance.OnMenuSelect;
+            @MenuSelect.performed -= instance.OnMenuSelect;
+            @MenuSelect.canceled -= instance.OnMenuSelect;
+            @Exit.started -= instance.OnExit;
+            @Exit.performed -= instance.OnExit;
+            @Exit.canceled -= instance.OnExit;
+        }
+
+        public void RemoveCallbacks(IMenuActions instance)
+        {
+            if (m_Wrapper.m_MenuActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IMenuActions instance)
+        {
+            foreach (var item in m_Wrapper.m_MenuActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_MenuActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public MenuActions @Menu => new MenuActions(this);
     public interface IPlayerActions
     {
         void OnLine1Action(InputAction.CallbackContext context);
@@ -523,5 +710,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         void OnExitSongList(InputAction.CallbackContext context);
         void OnSpeedUp(InputAction.CallbackContext context);
         void OnSpeedDown(InputAction.CallbackContext context);
+    }
+    public interface IMenuActions
+    {
+        void OnListUp(InputAction.CallbackContext context);
+        void OnListDown(InputAction.CallbackContext context);
+        void OnMenuSelect(InputAction.CallbackContext context);
+        void OnExit(InputAction.CallbackContext context);
     }
 }
