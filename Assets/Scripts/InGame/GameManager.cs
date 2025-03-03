@@ -29,6 +29,7 @@ public class GameManager : MonoBehaviour
 
         if (isLevelEnd)
         {
+            isLevelEnd = false;
             StartCoroutine(ChangeToResult());
         }
     }
@@ -39,5 +40,7 @@ public class GameManager : MonoBehaviour
 
         DontDestroyOnLoad(gameObject);
         SceneManager.LoadScene("Result");
+
+        yield break;
     }
 }
