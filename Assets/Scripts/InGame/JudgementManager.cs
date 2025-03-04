@@ -132,7 +132,7 @@ public class JudgementManager : MonoBehaviour
             float timeDifference = Mathf.Abs((float)(note.ms - currentTimeMs));
             double notAbsDiff = note.ms - currentTimeMs;
 
-            if (timeDifference <= great && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
+            if (timeDifference <= perfect && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Perfect", note.ms);
                 AddCombo(1);

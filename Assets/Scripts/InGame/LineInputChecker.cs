@@ -21,6 +21,8 @@ public class LineInputChecker : MonoBehaviour
     private InputAction Line3Action;
     private InputAction Line4Action;
 
+    public List<bool> isHolding;
+
     private void Awake()
     {
         action = new MainInputAction();
@@ -141,25 +143,30 @@ public class LineInputChecker : MonoBehaviour
         judgementManager = GetComponent<JudgementManager>();
         noteGenerator = FindObjectOfType<NoteGenerator>();
         gameManager = FindObjectOfType<GameManager>();
+
+        for (int i = 0; i < 4; i++)
+        {
+            isHolding.Add(false);
+        }
     }
 
     void Update()
     {
         currentTime = Time.time - startTime;
 
-        if (Input.GetKey(KeyCode.S))
+        if (isHolding[0])
         {
             CheckHold(0);
         }
-        if (Input.GetKey(KeyCode.D))
+        if (isHolding[1])
         {
             CheckHold(1);
         }
-        if (Input.GetKey(KeyCode.L))
+        if (isHolding[2])
         {
             CheckHold(2);
         }
-        if (Input.GetKey(KeyCode.Semicolon))
+        if (isHolding[3])
         {
             CheckHold(3);
         }
@@ -185,6 +192,9 @@ public class LineInputChecker : MonoBehaviour
     private void DownInput(int raneNumber)
     {
         currentTimeMs = currentTime * 1000f;
+
+        isHolding[raneNumber] = true;
+
         judgementManager.Judge(raneNumber, currentTimeMs);
 
         StartCoroutine(DownLines(raneNumber));
@@ -192,6 +202,9 @@ public class LineInputChecker : MonoBehaviour
     private void UpInput(int raneNumber)
     {
         currentTimeMs = currentTime * 1000f;
+
+        isHolding[raneNumber] = false;
+
         judgementManager.UpJudge(raneNumber, currentTimeMs);
 
         StartCoroutine(UpLines(raneNumber));
