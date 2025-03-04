@@ -146,6 +146,11 @@ public class MenuManager : MonoBehaviour
         musicDelayValue.text = $"{settingsManager.sync}";
     }
 
+    public void SetKeyBindsInput(int rane)
+    {
+        Debug.Log(rane);
+    }
+
     [System.Obsolete]
     private void Start()
     {
