@@ -148,12 +148,18 @@ public class MenuManager : MonoBehaviour
     private void SetSettingsPanel()
     {
         settingsPanel.SetActive(true);
-        musicDelayValue.text = $"{settingsManager.sync}";
+        musicDelayValue.text = $"{settingsManager.sync}ms";
 
         RaneButtonText[0].text = $"{settingsManager.Line1Action.bindings[0].ToDisplayString()}";
         RaneButtonText[1].text = $"{settingsManager.Line2Action.bindings[0].ToDisplayString()}";
         RaneButtonText[2].text = $"{settingsManager.Line3Action.bindings[0].ToDisplayString()}";
         RaneButtonText[3].text = $"{settingsManager.Line4Action.bindings[0].ToDisplayString()}";
+    }
+
+    public void ChangeSync(float duration)
+    {
+        settingsManager.sync += duration;
+        musicDelayValue.text = $"{settingsManager.sync}ms";
     }
 
     public void SetKeyBindsInput(int rane)
@@ -176,6 +182,7 @@ public class MenuManager : MonoBehaviour
                     Debug.Log($"{settingsManager.Line1Action.bindings[0].effectivePath}");
                     operation.Dispose(); // 메모리 해제
                     settingsManager.Line1Action.Enable(); // 다시 활성화
+                    RaneButtonText[rane - 1].text = $"{settingsManager.Line1Action.bindings[0].ToDisplayString()}";
                 })
                 .Start(); // 리바인딩 시작
                 settedButtonInputRane = 0;
@@ -189,6 +196,7 @@ public class MenuManager : MonoBehaviour
                     Debug.Log($"{settingsManager.Line2Action.bindings[0].effectivePath}");
                     operation.Dispose();
                     settingsManager.Line2Action.Enable();
+                    RaneButtonText[rane - 1].text = $"{settingsManager.Line2Action.bindings[0].ToDisplayString()}";
                 })
                 .Start();
                 settedButtonInputRane = 0;
@@ -202,6 +210,7 @@ public class MenuManager : MonoBehaviour
                     Debug.Log($"{settingsManager.Line3Action.bindings[0].effectivePath}");
                     operation.Dispose();
                     settingsManager.Line3Action.Enable();
+                    RaneButtonText[rane - 1].text = $"{settingsManager.Line3Action.bindings[0].ToDisplayString()}";
                 })
                 .Start();
                 settedButtonInputRane = 0;
@@ -215,6 +224,7 @@ public class MenuManager : MonoBehaviour
                     Debug.Log($"{settingsManager.Line4Action.bindings[0].effectivePath}");
                     operation.Dispose();
                     settingsManager.Line4Action.Enable();
+                    RaneButtonText[rane - 1].text = $"{settingsManager.Line4Action.bindings[0].ToDisplayString()}";
                 })
                 .Start();
                 settedButtonInputRane = 0;
