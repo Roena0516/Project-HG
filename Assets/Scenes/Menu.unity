@@ -651,7 +651,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1848836449}
+  m_TargetGraphic: {fileID: 1610696299}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -1739,7 +1739,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1848836449}
+  m_TargetGraphic: {fileID: 1818928857}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -2709,7 +2709,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 175, y: -0}
+  m_AnchoredPosition: {x: 175, y: 0}
   m_SizeDelta: {x: 350, y: 460}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1479820613
@@ -3461,7 +3461,7 @@ MonoBehaviour:
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
   m_Interactable: 1
-  m_TargetGraphic: {fileID: 1848836449}
+  m_TargetGraphic: {fileID: 817014737}
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
@@ -4466,6 +4466,12 @@ MonoBehaviour:
   settingsPanel: {fileID: 1894505897}
   menuCount: 0
   musicDelayValue: {fileID: 1293142901}
+  RaneButtonText:
+  - {fileID: 1848836449}
+  - {fileID: 1818928857}
+  - {fileID: 817014737}
+  - {fileID: 1610696299}
+  settedButtonInputRane: 0
 --- !u!1 &1894505897
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
+using System.Collections.Generic;
 
 public class MenuManager : MonoBehaviour
 {
@@ -24,6 +25,10 @@ public class MenuManager : MonoBehaviour
     private InputAction exit;
 
     public TextMeshProUGUI musicDelayValue;
+
+    public List<TextMeshProUGUI> RaneButtonText;
+
+    public int settedButtonInputRane;
 
     private void Awake()
     {
@@ -144,17 +149,46 @@ public class MenuManager : MonoBehaviour
     {
         settingsPanel.SetActive(true);
         musicDelayValue.text = $"{settingsManager.sync}";
+
+        RaneButtonText[0].text = $"{settingsManager.Line1Action.bindings[0].ToDisplayString()}";
+        RaneButtonText[1].text = $"{settingsManager.Line2Action.bindings[0].ToDisplayString()}";
+        RaneButtonText[2].text = $"{settingsManager.Line3Action.bindings[0].ToDisplayString()}";
+        RaneButtonText[3].text = $"{settingsManager.Line4Action.bindings[0].ToDisplayString()}";
     }
 
     public void SetKeyBindsInput(int rane)
     {
         Debug.Log(rane);
+        settedButtonInputRane = rane;
+        Rebind(settedButtonInputRane);
+    }
+
+    private void Rebind(int rane)
+    {
+        switch(rane)
+        {
+            case 1:
+                settingsManager.Line1Action.Disable();
+                settingsManager.Line1Action.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnComplete(operation => // 리바인딩 완료 시 실행
+                {
+                    Debug.Log($"새로운 키: {settingsManager.Line1Action.bindings[0].effectivePath}");
+                    operation.Dispose(); // 메모리 해제
+                    settingsManager.Line1Action.Enable(); // 다시 활성화
+                })
+                .Start(); // 리바인딩 시작
+                settedButtonInputRane = 0;
+                break;
+        }
     }
 
     [System.Obsolete]
     private void Start()
     {
         isSet = true;
+        settedButtonInputRane = 0;
+
         selectedMenu = 1;
         menuCount = menuFolder.transform.childCount;
 

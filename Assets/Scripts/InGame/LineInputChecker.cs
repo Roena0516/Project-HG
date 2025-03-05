@@ -14,6 +14,7 @@ public class LineInputChecker : MonoBehaviour
     private JudgementManager judgementManager;
     private NoteGenerator noteGenerator;
     private GameManager gameManager;
+    private SettingsManager settings;
 
     public MainInputAction action;
     private InputAction Line1Action;
@@ -23,13 +24,16 @@ public class LineInputChecker : MonoBehaviour
 
     public List<bool> isHolding;
 
+    [System.Obsolete]
     private void Awake()
     {
         action = new MainInputAction();
-        Line1Action = action.Player.Line1Action;
-        Line2Action = action.Player.Line2Action;
-        Line3Action = action.Player.Line3Action;
-        Line4Action = action.Player.Line4Action;
+        settings = FindObjectOfType<SettingsManager>();
+
+        Line1Action = settings.Line1Action;
+        Line2Action = settings.Line2Action;
+        Line3Action = settings.Line3Action;
+        Line4Action = settings.Line4Action;
     }
 
     private void OnEnable()
