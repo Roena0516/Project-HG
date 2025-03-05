@@ -17,10 +17,8 @@ public class LineInputChecker : MonoBehaviour
     private SettingsManager settings;
 
     public MainInputAction action;
-    private InputAction Line1Action;
-    private InputAction Line2Action;
-    private InputAction Line3Action;
-    private InputAction Line4Action;
+
+    private List<InputAction> LineActions;
 
     public List<bool> isHolding;
 
@@ -30,56 +28,29 @@ public class LineInputChecker : MonoBehaviour
         action = new MainInputAction();
         settings = FindObjectOfType<SettingsManager>();
 
-        Line1Action = settings.Line1Action;
-        Line2Action = settings.Line2Action;
-        Line3Action = settings.Line3Action;
-        Line4Action = settings.Line4Action;
+        LineActions = settings.LineActions.ToList();
     }
 
     private void OnEnable()
     {
-        Line1Action.Enable();
-        Line1Action.started += Started;
-        Line1Action.performed += Performed;
-        Line1Action.canceled += Canceled;
-
-        Line2Action.Enable();
-        Line2Action.started += Started;
-        Line2Action.performed += Performed;
-        Line2Action.canceled += Canceled;
-
-        Line3Action.Enable();
-        Line3Action.started += Started;
-        Line3Action.performed += Performed;
-        Line3Action.canceled += Canceled;
-
-        Line4Action.Enable();
-        Line4Action.started += Started;
-        Line4Action.performed += Performed;
-        Line4Action.canceled += Canceled;
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].Enable();
+            LineActions[i].started += Started;
+            LineActions[i].performed += Performed;
+            LineActions[i].canceled += Canceled;
+        }
     }
 
     private void OnDisable()
     {
-        Line1Action.Disable();
-        Line1Action.started -= Started;
-        Line1Action.performed -= Performed;
-        Line1Action.canceled -= Canceled;
-
-        Line2Action.Disable();
-        Line2Action.started -= Started;
-        Line2Action.performed -= Performed;
-        Line2Action.canceled -= Canceled;
-
-        Line3Action.Disable();
-        Line3Action.started -= Started;
-        Line3Action.performed -= Performed;
-        Line3Action.canceled -= Canceled;
-
-        Line4Action.Disable();
-        Line4Action.started -= Started;
-        Line4Action.performed -= Performed;
-        Line4Action.canceled -= Canceled;
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].Disable();
+            LineActions[i].started -= Started;
+            LineActions[i].performed -= Performed;
+            LineActions[i].canceled -= Canceled;
+        }
     }
 
     void Started(InputAction.CallbackContext context)

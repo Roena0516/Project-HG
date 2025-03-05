@@ -150,10 +150,10 @@ public class MenuManager : MonoBehaviour
         settingsPanel.SetActive(true);
         musicDelayValue.text = $"{settingsManager.sync}ms";
 
-        RaneButtonText[0].text = $"{settingsManager.Line1Action.bindings[0].ToDisplayString()}";
-        RaneButtonText[1].text = $"{settingsManager.Line2Action.bindings[0].ToDisplayString()}";
-        RaneButtonText[2].text = $"{settingsManager.Line3Action.bindings[0].ToDisplayString()}";
-        RaneButtonText[3].text = $"{settingsManager.Line4Action.bindings[0].ToDisplayString()}";
+        for (int i = 0; i < 4; i++)
+        {
+            RaneButtonText[i].text = $"{settingsManager.LineActions[i].bindings[0].ToDisplayString()}";
+        }
     }
 
     public void ChangeSync(float duration)
@@ -171,65 +171,18 @@ public class MenuManager : MonoBehaviour
 
     private void Rebind(int rane)
     {
-        switch(rane)
-        {
-            case 1:
-                settingsManager.Line1Action.Disable();
-                settingsManager.Line1Action.PerformInteractiveRebinding()
-                .WithControlsExcluding("Mouse")
-                .OnComplete(operation => // 리바인딩 완료 시 실행
+        settingsManager.LineActions[rane - 1].Disable();
+        settingsManager.LineActions[rane - 1].PerformInteractiveRebinding()
+        .WithControlsExcluding("Mouse")
+        .OnComplete(operation => // 리바인딩 완료 시 실행
                 {
-                    Debug.Log($"{settingsManager.Line1Action.bindings[0].effectivePath}");
-                    operation.Dispose(); // 메모리 해제
-                    settingsManager.Line1Action.Enable(); // 다시 활성화
-                    RaneButtonText[rane - 1].text = $"{settingsManager.Line1Action.bindings[0].ToDisplayString()}";
-                })
-                .Start(); // 리바인딩 시작
-                settedButtonInputRane = 0;
-                break;
-            case 2:
-                settingsManager.Line2Action.Disable();
-                settingsManager.Line2Action.PerformInteractiveRebinding()
-                .WithControlsExcluding("Mouse")
-                .OnComplete(operation =>
-                {
-                    Debug.Log($"{settingsManager.Line2Action.bindings[0].effectivePath}");
-                    operation.Dispose();
-                    settingsManager.Line2Action.Enable();
-                    RaneButtonText[rane - 1].text = $"{settingsManager.Line2Action.bindings[0].ToDisplayString()}";
-                })
-                .Start();
-                settedButtonInputRane = 0;
-                break;
-            case 3:
-                settingsManager.Line3Action.Disable();
-                settingsManager.Line3Action.PerformInteractiveRebinding()
-                .WithControlsExcluding("Mouse")
-                .OnComplete(operation =>
-                {
-                    Debug.Log($"{settingsManager.Line3Action.bindings[0].effectivePath}");
-                    operation.Dispose();
-                    settingsManager.Line3Action.Enable();
-                    RaneButtonText[rane - 1].text = $"{settingsManager.Line3Action.bindings[0].ToDisplayString()}";
-                })
-                .Start();
-                settedButtonInputRane = 0;
-                break;
-            case 4:
-                settingsManager.Line4Action.Disable();
-                settingsManager.Line4Action.PerformInteractiveRebinding()
-                .WithControlsExcluding("Mouse")
-                .OnComplete(operation =>
-                {
-                    Debug.Log($"{settingsManager.Line4Action.bindings[0].effectivePath}");
-                    operation.Dispose();
-                    settingsManager.Line4Action.Enable();
-                    RaneButtonText[rane - 1].text = $"{settingsManager.Line4Action.bindings[0].ToDisplayString()}";
-                })
-                .Start();
-                settedButtonInputRane = 0;
-                break;
-        }
+            Debug.Log($"{settingsManager.LineActions[rane - 1].bindings[0].effectivePath}");
+            operation.Dispose(); // 메모리 해제
+                    settingsManager.LineActions[rane - 1].Enable(); // 다시 활성화
+                    RaneButtonText[rane - 1].text = $"{settingsManager.LineActions[rane - 1].bindings[0].ToDisplayString()}";
+        })
+        .Start(); // 리바인딩 시작
+        settedButtonInputRane = 0;
     }
 
     [System.Obsolete]

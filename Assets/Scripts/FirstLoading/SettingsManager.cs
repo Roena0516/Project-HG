@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -12,37 +13,34 @@ public class SettingsManager : MonoBehaviour
 
     public MainInputAction action;
 
-    public InputAction Line1Action;
-    public InputAction Line2Action;
-    public InputAction Line3Action;
-    public InputAction Line4Action;
+    public List<InputAction> LineActions;
 
     private void Awake()
     {
         action = new MainInputAction();
 
-        Line1Action = action.Player.Line1Action;
-        Line2Action = action.Player.Line2Action;
-        Line3Action = action.Player.Line3Action;
-        Line4Action = action.Player.Line4Action;
+        LineActions.Add(action.Player.Line1Action);
+        LineActions.Add(action.Player.Line2Action);
+        LineActions.Add(action.Player.Line3Action);
+        LineActions.Add(action.Player.Line4Action);
     }
 
     [System.Obsolete]
     private void OnEnable()
     {
-        Line1Action.Enable();
-        Line2Action.Enable();
-        Line3Action.Enable();
-        Line4Action.Enable();
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].Enable();
+        }
     }
 
     [System.Obsolete]
     private void OnDisable()
     {
-        Line1Action.Disable();
-        Line2Action.Disable();
-        Line3Action.Disable();
-        Line4Action.Disable();
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].Disable();
+        }
     }
 
     public void SetFileName(string inputed)
