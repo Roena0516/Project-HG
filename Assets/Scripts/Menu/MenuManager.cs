@@ -173,11 +173,50 @@ public class MenuManager : MonoBehaviour
                 .WithControlsExcluding("Mouse")
                 .OnComplete(operation => // 리바인딩 완료 시 실행
                 {
-                    Debug.Log($"새로운 키: {settingsManager.Line1Action.bindings[0].effectivePath}");
+                    Debug.Log($"{settingsManager.Line1Action.bindings[0].effectivePath}");
                     operation.Dispose(); // 메모리 해제
                     settingsManager.Line1Action.Enable(); // 다시 활성화
                 })
                 .Start(); // 리바인딩 시작
+                settedButtonInputRane = 0;
+                break;
+            case 2:
+                settingsManager.Line2Action.Disable();
+                settingsManager.Line2Action.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnComplete(operation =>
+                {
+                    Debug.Log($"{settingsManager.Line2Action.bindings[0].effectivePath}");
+                    operation.Dispose();
+                    settingsManager.Line2Action.Enable();
+                })
+                .Start();
+                settedButtonInputRane = 0;
+                break;
+            case 3:
+                settingsManager.Line3Action.Disable();
+                settingsManager.Line3Action.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnComplete(operation =>
+                {
+                    Debug.Log($"{settingsManager.Line3Action.bindings[0].effectivePath}");
+                    operation.Dispose();
+                    settingsManager.Line3Action.Enable();
+                })
+                .Start();
+                settedButtonInputRane = 0;
+                break;
+            case 4:
+                settingsManager.Line4Action.Disable();
+                settingsManager.Line4Action.PerformInteractiveRebinding()
+                .WithControlsExcluding("Mouse")
+                .OnComplete(operation =>
+                {
+                    Debug.Log($"{settingsManager.Line4Action.bindings[0].effectivePath}");
+                    operation.Dispose();
+                    settingsManager.Line4Action.Enable();
+                })
+                .Start();
                 settedButtonInputRane = 0;
                 break;
         }
