@@ -18,7 +18,6 @@ public class SettingsManager : MonoBehaviour
     private void Awake()
     {
         action = new MainInputAction();
-
         LineActions.Add(action.Player.Line1Action);
         LineActions.Add(action.Player.Line2Action);
         LineActions.Add(action.Player.Line3Action);
