@@ -284,7 +284,7 @@ public class JudgementManager : MonoBehaviour
         if (Ms > 0)
         {
             tempColor = fastSlow.color;
-            tempColor.a = 0;
+            tempColor.a = 1f;
             fastSlow.color = tempColor;
             fastSlow.text = $"+{(int)Ms}";
 
@@ -296,14 +296,14 @@ public class JudgementManager : MonoBehaviour
         if (Ms == 0)
         {
             tempColor = fastSlow.color;
-            tempColor.a = 0;
+            tempColor.a = 1f;
             fastSlow.color = tempColor;
             fastSlow.text = $"";
         }
         if (Ms < 0)
         {
             tempColor = fastSlow.color;
-            tempColor.a = 0;
+            tempColor.a = 1f;
             fastSlow.color = tempColor;
             fastSlow.text = $"{(int)Ms}";
 
