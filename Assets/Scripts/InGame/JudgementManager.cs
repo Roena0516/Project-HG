@@ -28,6 +28,9 @@ public class JudgementManager : MonoBehaviour
     public TextMeshProUGUI judgeCountText;
     public TextMeshProUGUI FCAPText;
 
+    public List<SpriteRenderer> fastIndicators;
+    public List<SpriteRenderer> slowIndicators;
+
     private Coroutine currentJudgementRoutine;
 
     public Dictionary<string, float> noteTypeRate = new Dictionary<string, float>();
@@ -57,8 +60,24 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Bad"] = 0;
         judgeCount["Miss"] = 0;
 
+        StartCoroutine(IndicatorSetter());
         ClearCombo();
         UpdateJudgeCountText();
+    }
+
+    private IEnumerator IndicatorSetter()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            Color temp = fastIndicators[i].color;
+            temp.a = 0f;
+            fastIndicators[i].color = temp;
+            temp = slowIndicators[i].color;
+            temp.a = 0f;
+            slowIndicators[i].color = temp;
+        }
+
+        yield break;
     }
 
     public void CalcRate()
@@ -236,7 +255,7 @@ public class JudgementManager : MonoBehaviour
 
             gameManager.isLevelEnd = true;
         }
-        StartCoroutine(JudegementTextShower(judgement, Ms));
+        StartCoroutine(JudegementTextShower(judgement, Ms, note.position));
     }
 
     private void ChangeRate(float typeRate, float ratio)
@@ -245,36 +264,53 @@ public class JudgementManager : MonoBehaviour
         rateText.text = $"{rate:F2}%";
     }
 
-    IEnumerator JudegementTextShower(string judgement, double Ms)
+    IEnumerator JudegementTextShower(string judgement, double Ms, int position)
     {
         if (currentJudgementRoutine != null)
         {
             StopCoroutine(currentJudgementRoutine);
         }
-        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement, Ms));
+        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement, Ms, position));
         yield break;
     }
 
-    private IEnumerator ShowJudgementTextRoutine(string judgement, double Ms)
+    private IEnumerator ShowJudgementTextRoutine(string judgement, double Ms, int position)
     {
         Color tempColor = judgeText.color;
+        int index = position - 1;
         tempColor.a = 1f;
         judgeText.color = tempColor;
         judgeText.text = $"{judgement}";
         if (Ms > 0)
         {
+            tempColor = fastSlow.color;
+            tempColor.a = 0;
             fastSlow.color = tempColor;
             fastSlow.text = $"+{(int)Ms}";
+
+            if (judgement != "Perfect")
+            {
+                StartCoroutine(IndicatorShower(index, true));
+            }           
         }
         if (Ms == 0)
         {
+            tempColor = fastSlow.color;
+            tempColor.a = 0;
             fastSlow.color = tempColor;
             fastSlow.text = $"";
         }
         if (Ms < 0)
         {
+            tempColor = fastSlow.color;
+            tempColor.a = 0;
             fastSlow.color = tempColor;
             fastSlow.text = $"{(int)Ms}";
+
+            if (judgement != "Perfect")
+            {
+                StartCoroutine(IndicatorShower(index, false));
+            }
         }
 
         yield return new WaitForSeconds(2f);
@@ -282,8 +318,39 @@ public class JudgementManager : MonoBehaviour
         tempColor = judgeText.color;
         tempColor.a = 0;
         judgeText.color = tempColor;
+
+        tempColor = fastSlow.color;
+        tempColor.a = 0;
         fastSlow.color = tempColor;
         currentJudgementRoutine = null;
+    }
+
+    private IEnumerator IndicatorShower(int index, bool isFast)
+    {
+        Color tempColor;
+
+        if (isFast)
+        {
+            tempColor = fastIndicators[index].color;
+            tempColor.a = 1f;
+            fastIndicators[index].color = tempColor;
+
+            yield return new WaitForSeconds(1f);
+
+            tempColor.a = 0f;
+            fastIndicators[index].color = tempColor;
+        }
+        else
+        {
+            tempColor = slowIndicators[index].color;
+            tempColor.a = 1f;
+            slowIndicators[index].color = tempColor;
+
+            yield return new WaitForSeconds(1f);
+
+            tempColor.a = 0f;
+            slowIndicators[index].color = tempColor;
+        }
     }
 
 }
