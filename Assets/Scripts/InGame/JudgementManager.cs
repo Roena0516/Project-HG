@@ -17,6 +17,7 @@ public class JudgementManager : MonoBehaviour
 
     private NoteGenerator noteGenerator;
     private GameManager gameManager;
+    private SyncRoomManager syncRoomManager;
 
     public bool isAP;
     public bool isFC;
@@ -45,6 +46,7 @@ public class JudgementManager : MonoBehaviour
         fastSlow.color = tempColor;
         noteGenerator = FindObjectOfType<NoteGenerator>();
         gameManager = FindObjectOfType<GameManager>();
+        syncRoomManager = FindObjectOfType<SyncRoomManager>();
         rate = 100f;
 
         isAP = false;
@@ -256,6 +258,13 @@ public class JudgementManager : MonoBehaviour
             gameManager.isLevelEnd = true;
         }
         StartCoroutine(JudegementTextShower(judgement, Ms, note.position));
+
+        if (gameManager.isSyncRoom)
+        {
+            syncRoomManager.inputConut++;
+            syncRoomManager.msCount += (int)Ms;
+            syncRoomManager.CalcAvg();
+        }
     }
 
     private void ChangeRate(float typeRate, float ratio)
