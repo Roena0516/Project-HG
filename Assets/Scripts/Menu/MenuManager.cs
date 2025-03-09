@@ -30,6 +30,14 @@ public class MenuManager : MonoBehaviour
 
     public int settedButtonInputRane;
 
+    private Transform freePlayTransform;
+    private Transform settingsTransform;
+    private Transform syncRoomTransform;
+
+    private TextMeshProUGUI freePlay;
+    private TextMeshProUGUI settings;
+    private TextMeshProUGUI syncRoom;
+
     private void Awake()
     {
         action = new MainInputAction();
@@ -103,15 +111,11 @@ public class MenuManager : MonoBehaviour
     {
         if (toIndex > 0 && toIndex <= menuCount)
         {
-            selectedMenu = toIndex;
-            Transform freePlayTransform = menuFolder.transform.FindChild("FreePlay");
-            Transform settingsTransform = menuFolder.transform.FindChild("Settings");
-
-            TextMeshProUGUI freePlay = freePlayTransform.gameObject.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI settings = settingsTransform.gameObject.GetComponent<TextMeshProUGUI>();
+            selectedMenu = toIndex;   
 
             freePlay.color = Color.white;
             settings.color = Color.white;
+            syncRoom.color = Color.white;
 
             if (selectedMenu == 1)
             {
@@ -120,6 +124,10 @@ public class MenuManager : MonoBehaviour
             if (selectedMenu == 2)
             {
                 settings.color = Color.yellow;
+            }
+            if (selectedMenu == 3)
+            {
+                syncRoom.color = Color.yellow;
             }
         }
     }
@@ -141,6 +149,16 @@ public class MenuManager : MonoBehaviour
             {
                 isSet = false;
                 SetSettingsPanel();
+            }
+        }
+        if (index == 3)
+        {
+            if (isSet)
+            {
+                isSet = false;
+                settingsManager.SetFileName($"SyncRoom-Level");
+
+                SceneManager.LoadScene("SyncRoom");
             }
         }
     }
@@ -195,7 +213,15 @@ public class MenuManager : MonoBehaviour
         menuCount = menuFolder.transform.childCount;
 
         settingsManager = FindObjectOfType<SettingsManager>();
-        
+
+        freePlayTransform = menuFolder.transform.FindChild("FreePlay");
+        settingsTransform = menuFolder.transform.FindChild("Settings");
+        syncRoomTransform = menuFolder.transform.FindChild("SyncRoom");
+
+        freePlay = freePlayTransform.gameObject.GetComponent<TextMeshProUGUI>();
+        settings = settingsTransform.gameObject.GetComponent<TextMeshProUGUI>();
+        syncRoom = syncRoomTransform.gameObject.GetComponent<TextMeshProUGUI>();
+
         SetMenu(1);
     }
 }

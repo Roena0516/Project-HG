@@ -22,6 +22,9 @@ public class NoteClass
 
     public bool isInputed = false;
     public bool isEndNote = false;
+
+    public bool isSyncRoom;
+
     public GameObject noteObject;
 }
 
@@ -36,7 +39,8 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
         settings = FindObjectOfType<SettingsManager>();
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, settings.fileName + ".roena"));
+
+        LoadFromJson(Path.Combine(Application.streamingAssetsPath, settings.fileName + ".roena"));   
     }
 
     public void LoadFromJson(string filePath)
