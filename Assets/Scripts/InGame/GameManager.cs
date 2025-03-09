@@ -7,11 +7,13 @@ public class GameManager : MonoBehaviour
     private MenuManager menu;
 
     public bool isLevelEnd;
+    public bool isSyncRoom;
 
     [System.Obsolete]
     private void Start()
     {
         isLevelEnd = false;
+        isSyncRoom = SceneManager.GetSceneByName("SyncRoom").isLoaded;
         menu = FindObjectOfType<MenuManager>();
     }
 
