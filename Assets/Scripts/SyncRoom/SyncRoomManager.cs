@@ -6,7 +6,7 @@ public class SyncRoomManager : MonoBehaviour
     public int inputConut;
     public int msCount;
 
-    private int avg;
+    public int avg;
 
     public TextMeshProUGUI avgText;
     public TextMeshProUGUI infoText;

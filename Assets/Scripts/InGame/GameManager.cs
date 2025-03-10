@@ -26,7 +26,14 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            SceneManager.LoadScene("FreePlay");
+            if (isSyncRoom)
+            {
+                SceneManager.LoadScene("Menu");
+            }
+            else
+            {
+                SceneManager.LoadScene("FreePlay");
+            }
         }
 
         if (isLevelEnd)
@@ -41,7 +48,15 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         DontDestroyOnLoad(gameObject);
-        SceneManager.LoadScene("Result");
+
+        if (isSyncRoom)
+        {
+            SceneManager.LoadScene("SyncRoomResult");
+        }
+        else
+        {
+            SceneManager.LoadScene("Result");
+        }
 
         yield break;
     }
