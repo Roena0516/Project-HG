@@ -21,12 +21,14 @@ public class SongListShower : MonoBehaviour
     public GameObject speedInput;
 
     private float originX;
-    private float tagetY;
     private float originY;
 
     public int listNum;
 
+    private bool isHold;
+
     private Coroutine currentSetSongRoutine;
+    private Coroutine repeatCoroutine;
     //private Coroutine currentSetSongIndexRoutine;
 
     [System.Obsolete]
@@ -41,6 +43,8 @@ public class SongListShower : MonoBehaviour
 
         originX = contentFolder.transform.position.x;
         originY = contentFolder.transform.position.y;
+
+        isHold = false;
 
         listNum = 1;
 
@@ -91,24 +95,30 @@ public class SongListShower : MonoBehaviour
     {
         listUp.Enable();
         listUp.started += Started;
+        listUp.canceled += Canceled;
 
         listDown.Enable();
         listDown.started += Started;
+        listDown.canceled += Canceled;
 
         scrollList.Enable();
         scrollList.performed += OnScroll;
 
         songSelect.Enable();
         songSelect.started += Started;
+        songSelect.canceled += Canceled;
 
         exitSongList.Enable();
         exitSongList.started += Started;
+        exitSongList.canceled += Canceled;
 
         speedUp.Enable();
         speedUp.started += Started;
+        speedUp.canceled += Canceled;
 
         speedDown.Enable();
         speedDown.started += Started;
+        speedDown.canceled += Canceled;
     }
 
     [System.Obsolete]
@@ -116,24 +126,30 @@ public class SongListShower : MonoBehaviour
     {
         listUp.Disable();
         listUp.started -= Started;
+        listUp.canceled -= Canceled;
 
         listDown.Disable();
         listDown.started -= Started;
+        listDown.canceled -= Canceled;
 
         scrollList.Disable();
         scrollList.performed -= OnScroll;
 
         songSelect.Disable();
         songSelect.started -= Started;
+        songSelect.canceled -= Canceled;
 
         exitSongList.Disable();
         exitSongList.started -= Started;
+        exitSongList.canceled -= Canceled;
 
         speedUp.Disable();
         speedUp.started -= Started;
+        speedUp.canceled -= Canceled;
 
         speedDown.Disable();
         speedDown.started -= Started;
+        speedDown.canceled -= Canceled;
     }
 
     [System.Obsolete]
@@ -156,26 +172,46 @@ public class SongListShower : MonoBehaviour
     {
         string actionName = context.action.name;
 
-        switch (actionName)
+        if(!isHold)
         {
-            case "ListUp":
-                SetList(listNum - 1);
-                break;
-            case "ListDown":
-                SetList(listNum + 1);
-                break;
-            case "SongSelect":
-                SelectSong(listNum - 1);
-                break;
-            case "ExitSongList":
-                SceneManager.LoadScene("Menu");
-                break;
-            case "SpeedUp":
-                SpeedOneUp();
-                break;
-            case "SpeedDown":
-                SpeedOneDown();
-                break;
+            isHold = true;
+
+            switch (actionName)
+            {
+                case "ListUp":
+                    SetList(listNum - 1);
+                    repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
+                    break;
+                case "ListDown":
+                    SetList(listNum + 1);
+                    repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
+                    break;
+                case "SongSelect":
+                    SelectSong(listNum - 1);
+                    break;
+                case "ExitSongList":
+                    SceneManager.LoadScene("Menu");
+                    break;
+                case "SpeedUp":
+                    SpeedOneUp();
+                    repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
+                    break;
+                case "SpeedDown":
+                    SpeedOneDown();
+                    repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
+                    break;
+            }
+        }
+    }
+
+    void Canceled(InputAction.CallbackContext context)
+    {
+        isHold = false;
+
+        if (repeatCoroutine != null)
+        {
+            StopCoroutine(repeatCoroutine);
+            repeatCoroutine = null;
         }
     }
 
@@ -277,6 +313,33 @@ public class SongListShower : MonoBehaviour
         currentSetSongRoutine = null;
 
         yield break;
+    }
+
+    [System.Obsolete]
+    private IEnumerator RepeatKeyPress(string actionName)
+    {
+        yield return new WaitForSeconds(0.5f);
+
+        while (isHold)
+        {
+            switch(actionName)
+            {
+                case "ListUp":
+                    SetList(listNum - 1);
+                    break;
+                case "ListDown":
+                    SetList(listNum + 1);
+                    break;
+                case "SpeedUp":
+                    SpeedOneUp();
+                    break;
+                case "SpeedDown":
+                    SpeedOneDown();
+                    break;
+
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 
     public void SelectSong(int n)
