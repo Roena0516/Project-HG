@@ -134,6 +134,15 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""ScrollList"",
+                    ""type"": ""Value"",
+                    ""id"": ""c2fd598c-1dac-4414-a1e4-a272c24a4255"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
                     ""name"": ""SongSelect"",
                     ""type"": ""Button"",
                     ""id"": ""ad4de43e-da71-41d5-9b4b-2005d6f77db8"",
@@ -186,6 +195,17 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""2d2c44ed-0797-456b-b4ed-29ec16566fbe"",
                     ""path"": ""<Keyboard>/upArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ListUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ae2272d2-a717-4e53-97d1-dac2c6e4d191"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -267,6 +287,17 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""SpeedDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""330bec25-6bdc-435c-a35c-bed1fc22f307"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ScrollList"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -395,6 +426,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_FreePlay = asset.FindActionMap("FreePlay", throwIfNotFound: true);
         m_FreePlay_ListUp = m_FreePlay.FindAction("ListUp", throwIfNotFound: true);
         m_FreePlay_ListDown = m_FreePlay.FindAction("ListDown", throwIfNotFound: true);
+        m_FreePlay_ScrollList = m_FreePlay.FindAction("ScrollList", throwIfNotFound: true);
         m_FreePlay_SongSelect = m_FreePlay.FindAction("SongSelect", throwIfNotFound: true);
         m_FreePlay_ExitSongList = m_FreePlay.FindAction("ExitSongList", throwIfNotFound: true);
         m_FreePlay_SpeedUp = m_FreePlay.FindAction("SpeedUp", throwIfNotFound: true);
@@ -545,6 +577,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
     private List<IFreePlayActions> m_FreePlayActionsCallbackInterfaces = new List<IFreePlayActions>();
     private readonly InputAction m_FreePlay_ListUp;
     private readonly InputAction m_FreePlay_ListDown;
+    private readonly InputAction m_FreePlay_ScrollList;
     private readonly InputAction m_FreePlay_SongSelect;
     private readonly InputAction m_FreePlay_ExitSongList;
     private readonly InputAction m_FreePlay_SpeedUp;
@@ -555,6 +588,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         public FreePlayActions(@MainInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @ListUp => m_Wrapper.m_FreePlay_ListUp;
         public InputAction @ListDown => m_Wrapper.m_FreePlay_ListDown;
+        public InputAction @ScrollList => m_Wrapper.m_FreePlay_ScrollList;
         public InputAction @SongSelect => m_Wrapper.m_FreePlay_SongSelect;
         public InputAction @ExitSongList => m_Wrapper.m_FreePlay_ExitSongList;
         public InputAction @SpeedUp => m_Wrapper.m_FreePlay_SpeedUp;
@@ -574,6 +608,9 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @ListDown.started += instance.OnListDown;
             @ListDown.performed += instance.OnListDown;
             @ListDown.canceled += instance.OnListDown;
+            @ScrollList.started += instance.OnScrollList;
+            @ScrollList.performed += instance.OnScrollList;
+            @ScrollList.canceled += instance.OnScrollList;
             @SongSelect.started += instance.OnSongSelect;
             @SongSelect.performed += instance.OnSongSelect;
             @SongSelect.canceled += instance.OnSongSelect;
@@ -596,6 +633,9 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @ListDown.started -= instance.OnListDown;
             @ListDown.performed -= instance.OnListDown;
             @ListDown.canceled -= instance.OnListDown;
+            @ScrollList.started -= instance.OnScrollList;
+            @ScrollList.performed -= instance.OnScrollList;
+            @ScrollList.canceled -= instance.OnScrollList;
             @SongSelect.started -= instance.OnSongSelect;
             @SongSelect.performed -= instance.OnSongSelect;
             @SongSelect.canceled -= instance.OnSongSelect;
@@ -706,6 +746,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
     {
         void OnListUp(InputAction.CallbackContext context);
         void OnListDown(InputAction.CallbackContext context);
+        void OnScrollList(InputAction.CallbackContext context);
         void OnSongSelect(InputAction.CallbackContext context);
         void OnExitSongList(InputAction.CallbackContext context);
         void OnSpeedUp(InputAction.CallbackContext context);
