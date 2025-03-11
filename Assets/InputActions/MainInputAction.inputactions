@@ -112,6 +112,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "ScrollList",
+                    "type": "Value",
+                    "id": "c2fd598c-1dac-4414-a1e4-a272c24a4255",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
                     "name": "SongSelect",
                     "type": "Button",
                     "id": "ad4de43e-da71-41d5-9b4b-2005d6f77db8",
@@ -164,6 +173,17 @@
                     "name": "",
                     "id": "2d2c44ed-0797-456b-b4ed-29ec16566fbe",
                     "path": "<Keyboard>/upArrow",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ListUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "ae2272d2-a717-4e53-97d1-dac2c6e4d191",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -245,6 +265,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "SpeedDown",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "330bec25-6bdc-435c-a35c-bed1fc22f307",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ScrollList",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

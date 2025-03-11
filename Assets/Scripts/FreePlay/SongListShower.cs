@@ -42,7 +42,7 @@ public class SongListShower : MonoBehaviour
         originX = contentFolder.transform.position.x;
         originY = contentFolder.transform.position.y;
 
-        listNum = 0;
+        listNum = 1;
 
         speedText.text = $"{settings.speed:F1}";
     }
@@ -68,6 +68,7 @@ public class SongListShower : MonoBehaviour
     public MainInputAction action;
     private InputAction listUp;
     private InputAction listDown;
+    private InputAction scrollList;
     private InputAction songSelect;
     private InputAction exitSongList;
     private InputAction speedUp;
@@ -78,6 +79,7 @@ public class SongListShower : MonoBehaviour
         action = new MainInputAction();
         listUp = action.FreePlay.ListUp;
         listDown = action.FreePlay.ListDown;
+        scrollList = action.FreePlay.ScrollList;
         songSelect = action.FreePlay.SongSelect;
         exitSongList = action.FreePlay.ExitSongList;
         speedUp = action.FreePlay.SpeedUp;
@@ -92,6 +94,9 @@ public class SongListShower : MonoBehaviour
 
         listDown.Enable();
         listDown.started += Started;
+
+        scrollList.Enable();
+        scrollList.performed += OnScroll;
 
         songSelect.Enable();
         songSelect.started += Started;
@@ -115,6 +120,9 @@ public class SongListShower : MonoBehaviour
         listDown.Disable();
         listDown.started -= Started;
 
+        scrollList.Disable();
+        scrollList.performed -= OnScroll;
+
         songSelect.Disable();
         songSelect.started -= Started;
 
@@ -126,6 +134,21 @@ public class SongListShower : MonoBehaviour
 
         speedDown.Disable();
         speedDown.started -= Started;
+    }
+
+    [System.Obsolete]
+    private void OnScroll(InputAction.CallbackContext context)
+    {
+        Vector2 scrollDelta = context.ReadValue<Vector2>();
+
+        if (scrollDelta.y > 0)
+        {
+            SetList(listNum - 1);
+        }
+        if (scrollDelta.y < 0)
+        {
+            SetList(listNum + 1);
+        }
     }
 
     [System.Obsolete]
@@ -142,7 +165,7 @@ public class SongListShower : MonoBehaviour
                 SetList(listNum + 1);
                 break;
             case "SongSelect":
-                SelectSong(listNum);
+                SelectSong(listNum - 1);
                 break;
             case "ExitSongList":
                 SceneManager.LoadScene("Menu");
@@ -171,16 +194,17 @@ public class SongListShower : MonoBehaviour
     private void SetList(int toIndex)
     {
         //contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, contentFolder.transform.position.y + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * targetIndex), 0f);
-        if (currentSetSongRoutine == null)
-        {
             //Debug.Log(contentFolder.transform.GetChildCount());
-            if (toIndex > 0 && toIndex <= contentFolder.transform.GetChildCount())
-            {
-                listNum = toIndex;
+        if (toIndex > 0 && toIndex <= contentFolder.transform.GetChildCount())
+        {
+            listNum = toIndex;
 
-                Debug.Log(toIndex);
-                currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
+            Debug.Log(toIndex);
+            if (currentSetSongRoutine != null)
+            {
+                StopCoroutine(currentSetSongRoutine);
             }
+            currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
         }
 
         //if (currentSetSongIndexRoutine == null)
