@@ -23,6 +23,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 163e7a3c47cb83045a59889ba47623de
+  - enabled: 1
+    path: Assets/Scenes/SyncRoomResult.unity
+    guid: 0c0613089800c49f6aa190f7f44a41c0
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 2bcd2660ca9b64942af0de543d8d7100, type: 3}
   m_UseUCBPForAssetBundles: 0
