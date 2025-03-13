@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class LoadAllJSONs : MonoBehaviour
 {
     public List<SongInfoClass> songList = new List<SongInfoClass>();
+    public Dictionary<string, List<SongInfoClass>> songDictionary = new Dictionary<string, List<SongInfoClass>>();
 
     private SongInfoClass tempSongInfoClass;
 
@@ -15,19 +16,31 @@ public class LoadAllJSONs : MonoBehaviour
     {
         shower = FindObjectOfType<SongListShower>();
 
-        string[] jsonFiles = Directory.GetFiles(Application.streamingAssetsPath, "*.roena");
+        string[] directories = Directory.GetDirectories(Application.streamingAssetsPath, "*");
 
-        foreach (string filePath in jsonFiles)
+        foreach (string folderPath in directories)
         {
-            string json = File.ReadAllText(filePath);
+            string[] jsonFiles = Directory.GetFiles(folderPath, "*.roena");
 
-            string decrypted = EncryptionHelper.Decrypt(json);
+            foreach (string filePath in jsonFiles)
+            {
+                string json = File.ReadAllText(filePath);
+                string decrypted = EncryptionHelper.Decrypt(json);
 
-            SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
+                SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
+                tempSongInfoClass = container.info;
 
-            tempSongInfoClass = container.info;
+                songList.Add(tempSongInfoClass);
 
-            songList.Add(tempSongInfoClass);
+                string key = tempSongInfoClass.artist + "-" + tempSongInfoClass.title;
+                if (!songDictionary.ContainsKey(key))
+                {
+                    songDictionary[key] = new List<SongInfoClass>();
+                }
+                songDictionary[key].Add(tempSongInfoClass);
+                Debug.Log(songDictionary[key][0].title);
+                Debug.Log(key);
+            }
         }
 
         shower.Shower();
