@@ -44,6 +44,8 @@ public class LevelEditer : MonoBehaviour
     public string title;
     public string fileName;
     public string eventName;
+    public float level;
+    public string difficulty;
 
     //private string[] paths;
 
@@ -1334,7 +1336,7 @@ public class LevelEditer : MonoBehaviour
 
     public void SaveLevel()
     {
-        saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, $"{artist}-{title}.roena"), BPM, artist, title, eventName);
+        saveManager.SaveToJson(Path.Combine(Application.streamingAssetsPath, $"{artist}-{title}.roena"), BPM, artist, title, eventName, level, difficulty);
     }
 
     public void LoadLevel()
@@ -1422,6 +1424,16 @@ public class LevelEditer : MonoBehaviour
     {
         public SongInfoClass info;
         public List<NoteClass> notes;
+    }
+
+    public void SetLevel(string inputed)
+    {
+        float.TryParse(inputed, out level);
+    }
+
+    public void SetDifficulty(string inputed)
+    {
+        difficulty = inputed;
     }
 
     public void SetFileName(string inputed)
