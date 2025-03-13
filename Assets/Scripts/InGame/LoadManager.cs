@@ -10,6 +10,8 @@ public class SongInfoClass
     public float bpm;
     public string songFile;
     public string eventName;
+    public float level;
+    public string difficulty;
 }
 
 [System.Serializable]

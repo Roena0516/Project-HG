@@ -15,7 +15,7 @@ public class SaveManager : MonoBehaviour
 
     public SongInfoClass info;
 
-    public void SaveToJson(string filePath, float BPM, string artist, string title, string eventName)
+    public void SaveToJson(string filePath, float BPM, string artist, string title, string eventName, float level, string difficulty)
     {
         notes.Sort((note1, note2) => note1.beat.CompareTo(note2.beat));
 
@@ -28,6 +28,8 @@ public class SaveManager : MonoBehaviour
         info.songFile = "asdf";
         info.title = title;
         info.eventName = eventName;
+        info.level = level;
+        info.difficulty = difficulty;
         wrapper.info = info;
 
         // JSON 문자열로 변환
