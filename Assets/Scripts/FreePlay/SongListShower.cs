@@ -4,6 +4,7 @@ using TMPro;
 using System.Collections;
 using System.IO;
 using UnityEngine.SceneManagement;
+using System.Collections.Generic;
 
 public class SongListShower : MonoBehaviour
 {
@@ -15,7 +16,9 @@ public class SongListShower : MonoBehaviour
     public GameObject songListFolder;
     public GameObject songPrefab;
     public GameObject canvas;
+
     public TextMeshProUGUI speedText;
+    public List<TextMeshProUGUI> difficultyText;
 
     public GameObject syncInput;
     public GameObject speedInput;
@@ -49,23 +52,36 @@ public class SongListShower : MonoBehaviour
         listNum = 1;
 
         speedText.text = $"{settings.speed:F1}";
+
+        for (int i = 0; i < 4; i++)
+        {
+            Color temp = difficultyText[i].color;
+            temp.a = 0;
+            difficultyText[i].color = temp;
+        }
     }
 
     public void Shower()
     {
-        foreach (SongInfoClass info in loader.songList)
+        foreach (var pair in loader.songDictionary)
         {
-            Debug.Log($"{info.artist} {info.title} {info.bpm}");
+            string key = pair.Key;
+            List<SongInfoClass> songList = pair.Value;
 
-            GameObject song = Instantiate(songPrefab, contentFolder.transform);
-            Transform artistTitle = song.transform.Find("Artist-TitlePanel");
-            artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
-            artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
+            foreach (SongInfoClass info in songList)
+            {
+                Debug.Log($"{info.artist} {info.title} {info.bpm}");
 
-            song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
+                GameObject song = Instantiate(songPrefab, contentFolder.transform);
+                Transform artistTitle = song.transform.Find("Artist-TitlePanel");
+                artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
+                artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
 
-            song.GetComponent<SongListInfoSetter>().artist = info.artist;
-            song.GetComponent<SongListInfoSetter>().title = info.title;
+                song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
+
+                song.GetComponent<SongListInfoSetter>().artist = info.artist;
+                song.GetComponent<SongListInfoSetter>().title = info.title;
+            }
         }
     }
 
