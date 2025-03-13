@@ -318,7 +318,7 @@ public class SongListShower : MonoBehaviour
     [System.Obsolete]
     private IEnumerator RepeatKeyPress(string actionName)
     {
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.3f);
 
         while (isHold)
         {
