@@ -35,6 +35,8 @@ public class SongListShower : MonoBehaviour
 
     private Coroutine currentSetSongRoutine;
     private Coroutine repeatCoroutine;
+
+    public SongInfoClass selectedSongInfo;
     //private Coroutine currentSetSongIndexRoutine;
 
     //public static SongListShower Instance { get; private set; }
@@ -62,9 +64,13 @@ public class SongListShower : MonoBehaviour
         foreach (var pair in loader.songDictionary)
         {
             string key = pair.Key;
-            List<SongInfoClass> songList = loader.songDictionary[key];
 
             SongInfoClass info = loader.songDictionary[key][0];
+
+            if (selectedSongInfo == null)
+            {
+                SetSelectedSongInfo(info);
+            }
 
             Debug.Log($"{info.artist} {info.title} {info.bpm}");
 
@@ -76,10 +82,44 @@ public class SongListShower : MonoBehaviour
 
             song.GetComponent<SongListInfoSetter>().artist = info.artist;
             song.GetComponent<SongListInfoSetter>().title = info.title;
+        }
+    }
 
-            foreach (SongInfoClass infos in songList)
+    private void SetSelectedSongInfo(SongInfoClass info)
+    {
+        selectedSongInfo = info;
+        difficultySetter(info.artist + "-" + info.title);
+    }
+
+    private void difficultySetter(string key)
+    {
+        List<SongInfoClass> songList = loader.songDictionary[key];
+        foreach (SongInfoClass infos in songList)
+        {
+            if (infos.difficulty == "Basic")
             {
-                
+                basicText.color = basicText.color.SetAlpha(1f);
+                basicText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == "Advanced")
+            {
+                advancedText.color = advancedText.color.SetAlpha(1f);
+                advancedText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == "Expert")
+            {
+                expertText.color = expertText.color.SetAlpha(1f);
+                expertText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == "Master")
+            {
+                masterText.color = masterText.color.SetAlpha(1f);
+                masterText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == null)
+            {
+                masterText.color = masterText.color.SetAlpha(0f);
+                masterText.text = $"{infos.level}";
             }
         }
     }
@@ -270,6 +310,9 @@ public class SongListShower : MonoBehaviour
                 StopCoroutine(currentSetSongRoutine);
             }
             currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
+
+            SongListInfoSetter setter = contentFolder.transform.GetChild(listNum - 1).GetComponent<SongListInfoSetter>();
+            difficultySetter(setter.artist + "-" + setter.title);
         }
 
         //if (currentSetSongIndexRoutine == null)
