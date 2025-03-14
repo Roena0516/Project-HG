@@ -17,7 +17,7 @@ public class LevelEditer : MonoBehaviour
 
     public EventInstance eventInstance;
 
-    private SaveManager saveManager;
+    public SaveManager saveManager;
 
     public GameObject normalPrefab;
     public GameObject holdPrefab;
@@ -111,10 +111,8 @@ public class LevelEditer : MonoBehaviour
         beat164 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat164");
     }
 
-    [System.Obsolete]
     private void Start()
     {
-        saveManager = FindObjectOfType<SaveManager>();
         rect13 = beat13.GetComponent<RectTransform>();
         rect14 = beat14.GetComponent<RectTransform>();
         rect16 = beat16.GetComponent<RectTransform>();

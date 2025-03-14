@@ -10,7 +10,7 @@ public class SongListShower : MonoBehaviour
 {
     private SettingsManager settings;
 
-    private LoadAllJSONs loader;
+    public LoadAllJSONs loader;
 
     public GameObject contentFolder;
     public GameObject songListFolder;
@@ -18,7 +18,10 @@ public class SongListShower : MonoBehaviour
     public GameObject canvas;
 
     public TextMeshProUGUI speedText;
-    public List<TextMeshProUGUI> difficultyText;
+    public TextMeshProUGUI basicText;
+    public TextMeshProUGUI advancedText;
+    public TextMeshProUGUI expertText;
+    public TextMeshProUGUI masterText;
 
     public GameObject syncInput;
     public GameObject speedInput;
@@ -34,13 +37,13 @@ public class SongListShower : MonoBehaviour
     private Coroutine repeatCoroutine;
     //private Coroutine currentSetSongIndexRoutine;
 
-    [System.Obsolete]
+    //public static SongListShower Instance { get; private set; }
+
     private void Start()
     {
         canvas.transform.localScale = Vector3.one;
 
-        loader = FindObjectOfType<LoadAllJSONs>();
-        settings = FindObjectOfType<SettingsManager>();
+        settings = SettingsManager.Instance;
 
         contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (songListFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
@@ -52,13 +55,6 @@ public class SongListShower : MonoBehaviour
         listNum = 1;
 
         speedText.text = $"{settings.speed:F1}";
-
-        for (int i = 0; i < 4; i++)
-        {
-            Color temp = difficultyText[i].color;
-            temp.a = 0;
-            difficultyText[i].color = temp;
-        }
     }
 
     public void Shower()
@@ -66,21 +62,24 @@ public class SongListShower : MonoBehaviour
         foreach (var pair in loader.songDictionary)
         {
             string key = pair.Key;
-            List<SongInfoClass> songList = pair.Value;
+            List<SongInfoClass> songList = loader.songDictionary[key];
 
-            foreach (SongInfoClass info in songList)
+            SongInfoClass info = loader.songDictionary[key][0];
+
+            Debug.Log($"{info.artist} {info.title} {info.bpm}");
+
+            GameObject song = Instantiate(songPrefab, contentFolder.transform);
+            Transform artistTitle = song.transform.Find("Artist-TitlePanel");
+            artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
+            artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
+            song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
+
+            song.GetComponent<SongListInfoSetter>().artist = info.artist;
+            song.GetComponent<SongListInfoSetter>().title = info.title;
+
+            foreach (SongInfoClass infos in songList)
             {
-                Debug.Log($"{info.artist} {info.title} {info.bpm}");
-
-                GameObject song = Instantiate(songPrefab, contentFolder.transform);
-                Transform artistTitle = song.transform.Find("Artist-TitlePanel");
-                artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
-                artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
-
-                song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
-
-                song.GetComponent<SongListInfoSetter>().artist = info.artist;
-                song.GetComponent<SongListInfoSetter>().title = info.title;
+                
             }
         }
     }
@@ -104,6 +103,20 @@ public class SongListShower : MonoBehaviour
         exitSongList = action.FreePlay.ExitSongList;
         speedUp = action.FreePlay.SpeedUp;
         speedDown = action.FreePlay.SpeedDown;
+
+        basicText.color = basicText.color.SetAlpha(0f);
+        advancedText.color = advancedText.color.SetAlpha(0f);
+        expertText.color = expertText.color.SetAlpha(0f);
+        masterText.color = masterText.color.SetAlpha(0f);
+
+        //if (Instance == null)
+        //{
+        //    Instance = this;
+        //}
+        //else
+        //{
+        //    Destroy(gameObject);
+        //}
     }
 
     [System.Obsolete]

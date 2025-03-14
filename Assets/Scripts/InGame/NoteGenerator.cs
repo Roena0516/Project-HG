@@ -28,16 +28,29 @@ public class NoteGenerator : MonoBehaviour
 
     Quaternion spawnRotation;
 
-    private LoadManager loadManager;
-    private LineInputChecker checker;
-    private JudgementManager judgement;
-    private MusicPlayer musicPlayer;
+    public LoadManager loadManager;
+    public LineInputChecker checker;
+    public JudgementManager judgement;
+    public MusicPlayer musicPlayer;
     private SettingsManager settings;
 
     public List<NoteClass> notes;
     public SongInfoClass info;
 
-    [System.Obsolete]
+    public static NoteGenerator Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
         speed = 4.5f;
@@ -48,16 +61,11 @@ public class NoteGenerator : MonoBehaviour
         spawnPosition4 = new Vector3(Lines[3].transform.position.x, transform.position.y, 0);
         spawnRotation = Quaternion.Euler(0f, 0f, 0f);
 
-        settings = FindObjectOfType<SettingsManager>();
+        settings = SettingsManager.Instance;
 
         speed *= settings.speed;
 
         fallTime = distance / speed * 1000f;
-
-        loadManager = FindObjectOfType<LoadManager>();
-        checker = FindObjectOfType<LineInputChecker>();
-        judgement = FindObjectOfType<JudgementManager>();
-        musicPlayer = FindObjectOfType<MusicPlayer>();
 
         noteTypeCounts["normal"] = 0;
         noteTypeCounts["hold"] = 0;

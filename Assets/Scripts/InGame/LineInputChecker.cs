@@ -11,9 +11,9 @@ public class LineInputChecker : MonoBehaviour
     public double currentTime;
     public List<GameObject> Lines;
 
-    private JudgementManager judgementManager;
-    private NoteGenerator noteGenerator;
-    private GameManager gameManager;
+    public JudgementManager judgementManager;
+    public NoteGenerator noteGenerator;
+    public GameManager gameManager;
     private SettingsManager settings;
 
     public MainInputAction action;
@@ -22,13 +22,23 @@ public class LineInputChecker : MonoBehaviour
 
     public List<bool> isHolding;
 
-    [System.Obsolete]
+    public static LineInputChecker Instance { get; private set; }
+
     private void Awake()
     {
         action = new MainInputAction();
-        settings = FindObjectOfType<SettingsManager>();
+        settings = SettingsManager.Instance;
 
         LineActions = settings.LineActions.ToList();
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void OnEnable()
@@ -109,15 +119,11 @@ public class LineInputChecker : MonoBehaviour
         }
     }
 
-    [System.Obsolete]
     private void Start()
     {
         currentTimeMs = 0d;
         startTime = Time.time;
         Debug.Log($"Start Time : {startTime}");
-        judgementManager = GetComponent<JudgementManager>();
-        noteGenerator = FindObjectOfType<NoteGenerator>();
-        gameManager = FindObjectOfType<GameManager>();
 
         for (int i = 0; i < 4; i++)
         {

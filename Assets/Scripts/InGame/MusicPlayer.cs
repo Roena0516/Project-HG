@@ -13,10 +13,23 @@ public class MusicPlayer : MonoBehaviour
 
     private SettingsManager settings;
 
-    [System.Obsolete]
+    public static MusicPlayer Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Start()
     {
-        settings = FindObjectOfType<SettingsManager>();
+        settings = SettingsManager.Instance;
 
         sync = (settings.sync / 1000f) + 2.6f; // + 2f - 0.1f + 0.7f
 
