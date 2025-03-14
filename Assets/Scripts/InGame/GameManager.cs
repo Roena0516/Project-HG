@@ -4,17 +4,28 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    private MenuManager menu;
 
     public bool isLevelEnd;
     public bool isSyncRoom;
 
-    [System.Obsolete]
+    public static GameManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         isLevelEnd = false;
         isSyncRoom = SceneManager.GetSceneByName("SyncRoom").isLoaded;
-        menu = FindObjectOfType<MenuManager>();
     }
 
     private void Update()

@@ -5,10 +5,9 @@ public class CompleteLoading : MonoBehaviour
 {
     private SettingsManager settingsManager;
 
-    [System.Obsolete]
     private void Start()
     {
-        settingsManager = FindObjectOfType<SettingsManager>();
+        settingsManager = SettingsManager.Instance;
         settingsManager.sync = 0f;
         settingsManager.speed = 4.0f;
 

@@ -15,6 +15,8 @@ public class SettingsManager : MonoBehaviour
 
     public List<InputAction> LineActions;
 
+    public static SettingsManager Instance { get; private set; }
+
     private void Awake()
     {
         action = new MainInputAction();
@@ -22,6 +24,15 @@ public class SettingsManager : MonoBehaviour
         LineActions.Add(action.Player.Line2Action);
         LineActions.Add(action.Player.Line3Action);
         LineActions.Add(action.Player.Line4Action);
+
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     [System.Obsolete]

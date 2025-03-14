@@ -289,6 +289,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   songList: []
+  shower: {fileID: 1779595401}
 --- !u!1 &64882762
 GameObject:
   m_ObjectHideFlags: 0
@@ -2669,8 +2670,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1779595403}
-  - component: {fileID: 1779595402}
   - component: {fileID: 1779595401}
+  - component: {fileID: 1779595402}
   m_Layer: 0
   m_Name: ListManager
   m_TagString: Untagged
@@ -2690,16 +2691,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fcf97e3fd3d7e4e0db6d3e6c8b81a7f8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  loader: {fileID: 1779595402}
   contentFolder: {fileID: 44610318}
   songListFolder: {fileID: 1916045515}
   songPrefab: {fileID: 7203529609370929433, guid: f80fdd38f230a4a50ba6ad1c5ad1f5dd, type: 3}
   canvas: {fileID: 1585021326}
   speedText: {fileID: 1217696122}
-  difficultyText:
-  - {fileID: 558621959}
-  - {fileID: 872404388}
-  - {fileID: 936512663}
-  - {fileID: 1141639066}
+  basicText: {fileID: 558621959}
+  advancedText: {fileID: 872404388}
+  expertText: {fileID: 936512663}
+  masterText: {fileID: 1141639066}
   syncInput: {fileID: 1534599114}
   speedInput: {fileID: 509688064}
   listNum: 0
@@ -2716,6 +2717,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   songList: []
+  shower: {fileID: 1779595401}
 --- !u!4 &1779595403
 Transform:
   m_ObjectHideFlags: 0

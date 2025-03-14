@@ -18,11 +18,10 @@ public class ResultManager : MonoBehaviour
     public TextMeshProUGUI Rate;
     public TextMeshProUGUI FCAP;
 
-    [System.Obsolete]
     private void Start()
     {
-        judgementManager = FindObjectOfType<JudgementManager>();
-        loadManager = FindObjectOfType<LoadManager>();
+        judgementManager = JudgementManager.Instance;
+        loadManager = LoadManager.Instance;
 
         SetResult();
     }

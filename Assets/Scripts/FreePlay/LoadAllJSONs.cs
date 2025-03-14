@@ -9,13 +9,25 @@ public class LoadAllJSONs : MonoBehaviour
 
     private SongInfoClass tempSongInfoClass;
 
-    private SongListShower shower;
+    public SongListShower shower;
+
+    //public static LoadAllJSONs Instance { get; private set; }
+
+    //private void Awake()
+    //{
+    //    if (Instance == null)
+    //    {
+    //        Instance = this;
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
     [System.Obsolete]
     private void Start()
     {
-        shower = FindObjectOfType<SongListShower>();
-
         string[] directories = Directory.GetDirectories(Application.streamingAssetsPath, "*");
 
         foreach (string folderPath in directories)
@@ -29,8 +41,6 @@ public class LoadAllJSONs : MonoBehaviour
 
                 SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
                 tempSongInfoClass = container.info;
-
-                songList.Add(tempSongInfoClass);
 
                 string key = tempSongInfoClass.artist + "-" + tempSongInfoClass.title;
                 if (!songDictionary.ContainsKey(key))

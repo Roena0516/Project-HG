@@ -106,7 +106,6 @@ public class MenuManager : MonoBehaviour
         }
     }
 
-    [System.Obsolete]
     private void SetMenu(int toIndex)
     {
         if (toIndex > 0 && toIndex <= menuCount)
@@ -203,7 +202,6 @@ public class MenuManager : MonoBehaviour
         settedButtonInputRane = 0;
     }
 
-    [System.Obsolete]
     private void Start()
     {
         isSet = true;
@@ -212,11 +210,11 @@ public class MenuManager : MonoBehaviour
         selectedMenu = 1;
         menuCount = menuFolder.transform.childCount;
 
-        settingsManager = FindObjectOfType<SettingsManager>();
+        settingsManager = SettingsManager.Instance;
 
-        freePlayTransform = menuFolder.transform.FindChild("FreePlay");
-        settingsTransform = menuFolder.transform.FindChild("Settings");
-        syncRoomTransform = menuFolder.transform.FindChild("SyncRoom");
+        freePlayTransform = menuFolder.transform.Find("FreePlay");
+        settingsTransform = menuFolder.transform.Find("Settings");
+        syncRoomTransform = menuFolder.transform.Find("SyncRoom");
 
         freePlay = freePlayTransform.gameObject.GetComponent<TextMeshProUGUI>();
         settings = settingsTransform.gameObject.GetComponent<TextMeshProUGUI>();

@@ -37,10 +37,23 @@ public class LoadManager : MonoBehaviour
 
     private SettingsManager settings;
 
-    [System.Obsolete]
+    public static LoadManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
-        settings = FindObjectOfType<SettingsManager>();
+        settings = SettingsManager.Instance;
 
         LoadFromJson(Path.Combine(Application.streamingAssetsPath, settings.fileName + ".roena"));   
     }

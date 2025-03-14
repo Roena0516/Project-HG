@@ -15,9 +15,9 @@ public class JudgementManager : MonoBehaviour
     public int combo;
     public float rate;
 
-    private NoteGenerator noteGenerator;
-    private GameManager gameManager;
-    private SyncRoomManager syncRoomManager;
+    public NoteGenerator noteGenerator;
+    public GameManager gameManager;
+    public SyncRoomManager syncRoomManager;
 
     public bool isAP;
     public bool isFC;
@@ -37,16 +37,26 @@ public class JudgementManager : MonoBehaviour
     public Dictionary<string, float> noteTypeRate = new Dictionary<string, float>();
     public Dictionary<string, int> judgeCount = new Dictionary<string, int>();
 
-    [System.Obsolete]
+    public static JudgementManager Instance { get; private set; }
+
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     private void Start()
     {
         Color tempColor = judgeText.color;
         tempColor.a = 0f;
         judgeText.color = tempColor;
         fastSlow.color = tempColor;
-        noteGenerator = FindObjectOfType<NoteGenerator>();
-        gameManager = FindObjectOfType<GameManager>();
-        syncRoomManager = FindObjectOfType<SyncRoomManager>();
         rate = 100f;
 
         isAP = false;

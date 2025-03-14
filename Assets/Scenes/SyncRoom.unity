@@ -1848,6 +1848,10 @@ MonoBehaviour:
   - {fileID: 1509514657}
   - {fileID: 1155442951}
   - {fileID: 2104346033}
+  loadManager: {fileID: 1299961084}
+  checker: {fileID: 1299961083}
+  judgement: {fileID: 1299961085}
+  musicPlayer: {fileID: 669266812}
   notes: []
   info:
     title: 
@@ -1855,6 +1859,8 @@ MonoBehaviour:
     bpm: 0
     songFile: 
     eventName: 
+    level: 0
+    difficulty: 
 --- !u!1 &1244622319
 GameObject:
   m_ObjectHideFlags: 0
@@ -1998,6 +2004,9 @@ MonoBehaviour:
   - {fileID: 1509514657}
   - {fileID: 1155442951}
   - {fileID: 2104346033}
+  judgementManager: {fileID: 1299961085}
+  noteGenerator: {fileID: 1238613732}
+  gameManager: {fileID: 1299961086}
   isHolding: 
 --- !u!114 &1299961084
 MonoBehaviour:
@@ -2017,6 +2026,8 @@ MonoBehaviour:
     bpm: 0
     songFile: 
     eventName: 
+    level: 0
+    difficulty: 
   notes: []
 --- !u!114 &1299961085
 MonoBehaviour:
@@ -2032,6 +2043,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   combo: 0
   rate: 0
+  noteGenerator: {fileID: 1238613732}
+  gameManager: {fileID: 1299961086}
+  syncRoomManager: {fileID: 1299961087}
   isAP: 0
   isFC: 0
   judgeText: {fileID: 1687371135}
@@ -2078,6 +2092,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inputConut: 0
   msCount: 0
+  avg: 0
   avgText: {fileID: 1487681982}
   infoText: {fileID: 49892828}
 --- !u!1 &1313420622

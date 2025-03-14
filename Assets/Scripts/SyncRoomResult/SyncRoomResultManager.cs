@@ -20,13 +20,12 @@ public class SyncRoomResultManager : MonoBehaviour
     public TextMeshProUGUI Rate;
     public TextMeshProUGUI FCAP;
 
-    [System.Obsolete]
     private void Start()
     {
-        gameManager = FindObjectOfType<GameManager>();
-        judgementManager = FindObjectOfType<JudgementManager>();
-        syncRoomManager = FindObjectOfType<SyncRoomManager>();
-        settings = FindObjectOfType<SettingsManager>();
+        gameManager = GameManager.Instance;
+        judgementManager = JudgementManager.Instance;
+        syncRoomManager = SyncRoomManager.Instance;
+        settings = SettingsManager.Instance;
 
         SetResult();
     }

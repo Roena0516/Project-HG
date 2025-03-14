@@ -16,15 +16,14 @@ public class Note : MonoBehaviour
 
     public NoteClass noteClass;
 
-    [System.Obsolete]
     void Start()
     {
         isSet = false;
         isEndNote = false;
-        line = FindObjectOfType<LineInputChecker>();
-        judgement = FindObjectOfType<JudgementManager>();
-        noteGenerator = FindObjectOfType<NoteGenerator>();
-        music = FindObjectOfType<MusicPlayer>();
+        line = LineInputChecker.Instance;
+        judgement = JudgementManager.Instance;
+        noteGenerator = NoteGenerator.Instance;
+        music = MusicPlayer.Instance;
     }
 
     void FixedUpdate()
