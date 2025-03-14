@@ -209,7 +209,6 @@ GameObject:
   - component: {fileID: 44610319}
   - component: {fileID: 44610321}
   - component: {fileID: 44610320}
-  - component: {fileID: 44610322}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -276,20 +275,6 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
---- !u!114 &44610322
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 44610318}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d19d94f747a6e4540b1fd7a4752c5f2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  songList: []
-  shower: {fileID: 1779595401}
 --- !u!1 &64882762
 GameObject:
   m_ObjectHideFlags: 0
