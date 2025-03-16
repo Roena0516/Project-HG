@@ -416,7 +416,6 @@ public class SongListShower : MonoBehaviour
 
     public void SelectSong(int n)
     {
-        Debug.Log(n);
         SongListInfoSetter setter = contentFolder.transform.GetChild(n).GetComponent<SongListInfoSetter>();
 
         settings.SetFileName($"{setter.artist}-{setter.title}");
