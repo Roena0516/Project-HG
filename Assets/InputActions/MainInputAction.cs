@@ -134,6 +134,24 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""DifficultyUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""d07ca4e6-78f2-4604-9310-3f510e9a19aa"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""DifficultyDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""e46222dc-846e-4182-96be-8b1c064a957b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""ScrollList"",
                     ""type"": ""Value"",
                     ""id"": ""c2fd598c-1dac-4414-a1e4-a272c24a4255"",
@@ -232,6 +250,72 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""ListDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b232744c-d749-4329-b619-c6f0ad5cfb00"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DifficultyUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""05504b6e-74ed-4bed-a768-5604a6de8778"",
+                    ""path"": ""<Keyboard>/rightArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DifficultyUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c14e1943-3ef6-405a-bcf8-7303aa5f8b78"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DifficultyUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""477e2706-69b6-49be-8877-450bacc00570"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DifficultyDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""064cad5b-cdfd-424a-8264-836dc9b7f981"",
+                    ""path"": ""<Keyboard>/leftArrow"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DifficultyDown"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""69bf0138-1efd-401c-8e5b-11fbffd444b1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DifficultyDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -426,6 +510,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_FreePlay = asset.FindActionMap("FreePlay", throwIfNotFound: true);
         m_FreePlay_ListUp = m_FreePlay.FindAction("ListUp", throwIfNotFound: true);
         m_FreePlay_ListDown = m_FreePlay.FindAction("ListDown", throwIfNotFound: true);
+        m_FreePlay_DifficultyUp = m_FreePlay.FindAction("DifficultyUp", throwIfNotFound: true);
+        m_FreePlay_DifficultyDown = m_FreePlay.FindAction("DifficultyDown", throwIfNotFound: true);
         m_FreePlay_ScrollList = m_FreePlay.FindAction("ScrollList", throwIfNotFound: true);
         m_FreePlay_SongSelect = m_FreePlay.FindAction("SongSelect", throwIfNotFound: true);
         m_FreePlay_ExitSongList = m_FreePlay.FindAction("ExitSongList", throwIfNotFound: true);
@@ -577,6 +663,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
     private List<IFreePlayActions> m_FreePlayActionsCallbackInterfaces = new List<IFreePlayActions>();
     private readonly InputAction m_FreePlay_ListUp;
     private readonly InputAction m_FreePlay_ListDown;
+    private readonly InputAction m_FreePlay_DifficultyUp;
+    private readonly InputAction m_FreePlay_DifficultyDown;
     private readonly InputAction m_FreePlay_ScrollList;
     private readonly InputAction m_FreePlay_SongSelect;
     private readonly InputAction m_FreePlay_ExitSongList;
@@ -588,6 +676,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         public FreePlayActions(@MainInputAction wrapper) { m_Wrapper = wrapper; }
         public InputAction @ListUp => m_Wrapper.m_FreePlay_ListUp;
         public InputAction @ListDown => m_Wrapper.m_FreePlay_ListDown;
+        public InputAction @DifficultyUp => m_Wrapper.m_FreePlay_DifficultyUp;
+        public InputAction @DifficultyDown => m_Wrapper.m_FreePlay_DifficultyDown;
         public InputAction @ScrollList => m_Wrapper.m_FreePlay_ScrollList;
         public InputAction @SongSelect => m_Wrapper.m_FreePlay_SongSelect;
         public InputAction @ExitSongList => m_Wrapper.m_FreePlay_ExitSongList;
@@ -608,6 +698,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @ListDown.started += instance.OnListDown;
             @ListDown.performed += instance.OnListDown;
             @ListDown.canceled += instance.OnListDown;
+            @DifficultyUp.started += instance.OnDifficultyUp;
+            @DifficultyUp.performed += instance.OnDifficultyUp;
+            @DifficultyUp.canceled += instance.OnDifficultyUp;
+            @DifficultyDown.started += instance.OnDifficultyDown;
+            @DifficultyDown.performed += instance.OnDifficultyDown;
+            @DifficultyDown.canceled += instance.OnDifficultyDown;
             @ScrollList.started += instance.OnScrollList;
             @ScrollList.performed += instance.OnScrollList;
             @ScrollList.canceled += instance.OnScrollList;
@@ -633,6 +729,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @ListDown.started -= instance.OnListDown;
             @ListDown.performed -= instance.OnListDown;
             @ListDown.canceled -= instance.OnListDown;
+            @DifficultyUp.started -= instance.OnDifficultyUp;
+            @DifficultyUp.performed -= instance.OnDifficultyUp;
+            @DifficultyUp.canceled -= instance.OnDifficultyUp;
+            @DifficultyDown.started -= instance.OnDifficultyDown;
+            @DifficultyDown.performed -= instance.OnDifficultyDown;
+            @DifficultyDown.canceled -= instance.OnDifficultyDown;
             @ScrollList.started -= instance.OnScrollList;
             @ScrollList.performed -= instance.OnScrollList;
             @ScrollList.canceled -= instance.OnScrollList;
@@ -746,6 +848,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
     {
         void OnListUp(InputAction.CallbackContext context);
         void OnListDown(InputAction.CallbackContext context);
+        void OnDifficultyUp(InputAction.CallbackContext context);
+        void OnDifficultyDown(InputAction.CallbackContext context);
         void OnScrollList(InputAction.CallbackContext context);
         void OnSongSelect(InputAction.CallbackContext context);
         void OnExitSongList(InputAction.CallbackContext context);
