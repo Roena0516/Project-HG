@@ -67,7 +67,7 @@ public class SongListShower : MonoBehaviour
 
             SongInfoClass info = loader.songDictionary[key][0];
 
-            if (selectedSongInfo == null)
+            if (selectedSongInfo.artist == "")
             {
                 SetSelectedSongInfo(info);
             }
@@ -94,6 +94,16 @@ public class SongListShower : MonoBehaviour
     private void difficultySetter(string key)
     {
         List<SongInfoClass> songList = loader.songDictionary[key];
+
+        basicText.color = basicText.color.SetAlpha(0f);
+        basicText.text = $"0";
+        advancedText.color = basicText.color.SetAlpha(0f);
+        advancedText.text = $"0";
+        expertText.color = basicText.color.SetAlpha(0f);
+        expertText.text = $"0";
+        masterText.color = basicText.color.SetAlpha(0f);
+        masterText.text = $"0";
+
         foreach (SongInfoClass infos in songList)
         {
             if (infos.difficulty == "Basic")
