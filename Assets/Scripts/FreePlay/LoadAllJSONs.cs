@@ -42,6 +42,8 @@ public class LoadAllJSONs : MonoBehaviour
                 SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
                 tempSongInfoClass = container.info;
 
+                tempSongInfoClass.songFile = filePath;
+
                 string key = tempSongInfoClass.artist + "-" + tempSongInfoClass.title;
                 if (!songDictionary.ContainsKey(key))
                 {
