@@ -55,7 +55,7 @@ public class LoadManager : MonoBehaviour
     {
         settings = SettingsManager.Instance;
 
-        LoadFromJson(Path.Combine(Application.streamingAssetsPath, settings.fileName + ".roena"));   
+        LoadFromJson(Path.Combine(settings.fileName));
     }
 
     public void LoadFromJson(string filePath)

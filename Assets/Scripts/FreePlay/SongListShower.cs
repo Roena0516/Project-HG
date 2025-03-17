@@ -31,6 +31,8 @@ public class SongListShower : MonoBehaviour
 
     public int listNum;
 
+    public int selectedDifficulty;
+
     private bool isHold;
 
     private Coroutine currentSetSongRoutine;
@@ -55,6 +57,7 @@ public class SongListShower : MonoBehaviour
         isHold = false;
 
         listNum = 1;
+        selectedDifficulty = 1;
 
         speedText.text = $"{settings.speed:F1}";
     }
@@ -82,6 +85,7 @@ public class SongListShower : MonoBehaviour
 
             song.GetComponent<SongListInfoSetter>().artist = info.artist;
             song.GetComponent<SongListInfoSetter>().title = info.title;
+            song.GetComponent<SongListInfoSetter>().filePath = info.songFile;
         }
     }
 
@@ -428,7 +432,7 @@ public class SongListShower : MonoBehaviour
     {
         SongListInfoSetter setter = contentFolder.transform.GetChild(n).GetComponent<SongListInfoSetter>();
 
-        settings.SetFileName($"{setter.artist}-{setter.title}");
+        settings.SetFileName($"{setter.filePath} {selectedDifficulty}");
 
         SceneManager.LoadScene("InGame");
     }
