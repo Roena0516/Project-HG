@@ -2479,9 +2479,9 @@ RectTransform:
   - {fileID: 1916045516}
   - {fileID: 1534599115}
   - {fileID: 509688065}
-  - {fileID: 1217696121}
   - {fileID: 64882763}
   - {fileID: 104730656}
+  - {fileID: 1217696121}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2757,6 +2757,7 @@ MonoBehaviour:
   songListFolder: {fileID: 1916045515}
   songPrefab: {fileID: 7203529609370929433, guid: f80fdd38f230a4a50ba6ad1c5ad1f5dd, type: 3}
   canvas: {fileID: 1585021326}
+  difficultyIndicator: {fileID: 104730655}
   speedText: {fileID: 1217696122}
   basicText: {fileID: 558621959}
   advancedText: {fileID: 872404388}
