@@ -49,8 +49,15 @@ public class LoadAllJSONs : MonoBehaviour
                     songDictionary[key] = new List<SongInfoClass>();
                 }
                 songDictionary[key].Add(tempSongInfoClass);
-                Debug.Log(songDictionary[key][0].title);
-                Debug.Log(key);
+
+                //foreach (SongInfoClass infoss in songDictionary[key])
+                //{
+                //    Debug.Log(infoss.title);
+                //    Debug.Log(infoss.songFile);
+                //    Debug.Log(infoss.difficulty);
+                //}
+                //Debug.Log("----");
+
             }
         }
 

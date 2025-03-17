@@ -83,6 +83,7 @@ public class NoteGenerator : MonoBehaviour
         BPM = info.bpm;
 
         noteCount = notes.Count;
+        Debug.Log(noteCount);
         notes[noteCount - 1].isEndNote = true;
 
         StartCoroutine(NoteSpawnerSpawner());

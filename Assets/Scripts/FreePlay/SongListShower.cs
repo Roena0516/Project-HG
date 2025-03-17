@@ -101,19 +101,23 @@ public class SongListShower : MonoBehaviour
             {
                 if (infos.difficulty == "Basic")
                 {
-                    setter.filePath[0] = info.songFile;
+                    Debug.Log(infos.songFile);
+                    setter.filePath[0] = infos.songFile;
                 }
                 if (infos.difficulty == "Advanced")
                 {
-                    setter.filePath[1] = info.songFile;
+                    Debug.Log(infos.songFile);
+                    setter.filePath[1] = infos.songFile;
                 }
                 if (infos.difficulty == "Expert")
                 {
-                    setter.filePath[2] = info.songFile;
+                    Debug.Log(infos.songFile);
+                    setter.filePath[2] = infos.songFile;
                 }
                 if (infos.difficulty == "Master")
                 {
-                    setter.filePath[3] = info.songFile;
+                    Debug.Log(infos.songFile);
+                    setter.filePath[3] = infos.songFile;
                 }
             }
         }
