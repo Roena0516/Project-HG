@@ -1,8 +1,9 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SongListInfoSetter : MonoBehaviour
 {
     public string artist;
     public string title;
-    public string filePath;
+    public List<string> filePath;
 }

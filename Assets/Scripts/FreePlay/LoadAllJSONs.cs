@@ -25,7 +25,6 @@ public class LoadAllJSONs : MonoBehaviour
     //    }
     //}
 
-    [System.Obsolete]
     private void Start()
     {
         string[] directories = Directory.GetDirectories(Application.streamingAssetsPath, "*");
