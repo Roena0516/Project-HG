@@ -83,9 +83,35 @@ public class SongListShower : MonoBehaviour
             artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
             song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
 
-            song.GetComponent<SongListInfoSetter>().artist = info.artist;
-            song.GetComponent<SongListInfoSetter>().title = info.title;
-            song.GetComponent<SongListInfoSetter>().filePath = info.songFile;
+            SongListInfoSetter setter = song.GetComponent<SongListInfoSetter>();
+            setter.filePath.Add("");
+            setter.filePath.Add("");
+            setter.filePath.Add("");
+            setter.filePath.Add("");
+
+            setter.artist = info.artist;
+            setter.title = info.title;
+
+            List<SongInfoClass> songList = loader.songDictionary[key];
+            foreach (SongInfoClass infos in songList)
+            {
+                if (infos.difficulty == "Basic")
+                {
+                    setter.filePath[0] = info.songFile;
+                }
+                if (infos.difficulty == "Advanced")
+                {
+                    setter.filePath[1] = info.songFile;
+                }
+                if (infos.difficulty == "Expert")
+                {
+                    setter.filePath[2] = info.songFile;
+                }
+                if (infos.difficulty == "Master")
+                {
+                    setter.filePath[3] = info.songFile;
+                }
+            }
         }
     }
 
@@ -141,6 +167,8 @@ public class SongListShower : MonoBehaviour
     public MainInputAction action;
     private InputAction listUp;
     private InputAction listDown;
+    private InputAction DifficultyUp;
+    private InputAction DifficultyDown;
     private InputAction scrollList;
     private InputAction songSelect;
     private InputAction exitSongList;
@@ -152,6 +180,8 @@ public class SongListShower : MonoBehaviour
         action = new MainInputAction();
         listUp = action.FreePlay.ListUp;
         listDown = action.FreePlay.ListDown;
+        DifficultyUp = action.FreePlay.DifficultyUp;
+        DifficultyDown = action.FreePlay.DifficultyDown;
         scrollList = action.FreePlay.ScrollList;
         songSelect = action.FreePlay.SongSelect;
         exitSongList = action.FreePlay.ExitSongList;
@@ -184,6 +214,14 @@ public class SongListShower : MonoBehaviour
         listDown.started += Started;
         listDown.canceled += Canceled;
 
+        DifficultyUp.Enable();
+        DifficultyUp.started += Started;
+        DifficultyUp.canceled += Canceled;
+
+        DifficultyDown.Enable();
+        DifficultyDown.started += Started;
+        DifficultyDown.canceled += Canceled;
+
         scrollList.Enable();
         scrollList.performed += OnScroll;
 
@@ -214,6 +252,14 @@ public class SongListShower : MonoBehaviour
         listDown.Disable();
         listDown.started -= Started;
         listDown.canceled -= Canceled;
+
+        DifficultyUp.Disable();
+        DifficultyUp.started -= Started;
+        DifficultyUp.canceled -= Canceled;
+
+        DifficultyDown.Disable();
+        DifficultyDown.started -= Started;
+        DifficultyDown.canceled -= Canceled;
 
         scrollList.Disable();
         scrollList.performed -= OnScroll;
@@ -269,6 +315,14 @@ public class SongListShower : MonoBehaviour
                     SetList(listNum + 1);
                     repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
                     break;
+                case "DifficultyUp":
+                    SetDifficulty(selectedDifficulty + 1);
+                    repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
+                    break;
+                case "DifficultyDown":
+                    SetDifficulty(selectedDifficulty - 1);
+                    repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
+                    break;
                 case "SongSelect":
                     SelectSong(listNum - 1);
                     break;
@@ -295,6 +349,15 @@ public class SongListShower : MonoBehaviour
         {
             StopCoroutine(repeatCoroutine);
             repeatCoroutine = null;
+        }
+    }
+
+    private void SetDifficulty(int toIndex)
+    {
+        if (toIndex > 0 && toIndex <= 4)
+        {
+            selectedDifficulty = toIndex;
+            Debug.Log(selectedDifficulty);
         }
     }
 
@@ -432,7 +495,7 @@ public class SongListShower : MonoBehaviour
     {
         SongListInfoSetter setter = contentFolder.transform.GetChild(n).GetComponent<SongListInfoSetter>();
 
-        settings.SetFileName($"{setter.filePath} {selectedDifficulty}");
+        settings.SetFileName($"{setter.filePath[selectedDifficulty - 1]}");
 
         SceneManager.LoadScene("InGame");
     }
