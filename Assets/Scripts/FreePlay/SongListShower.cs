@@ -16,6 +16,7 @@ public class SongListShower : MonoBehaviour
     public GameObject songListFolder;
     public GameObject songPrefab;
     public GameObject canvas;
+    public GameObject difficultyIndicator;
 
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI basicText;
@@ -27,6 +28,7 @@ public class SongListShower : MonoBehaviour
     public GameObject speedInput;
 
     private float originX;
+    private float indicatorOriginX;
     private float originY;
 
     public int listNum;
@@ -36,6 +38,7 @@ public class SongListShower : MonoBehaviour
     private bool isHold;
 
     private Coroutine currentSetSongRoutine;
+    private Coroutine currentSetDifficultyRoutine;
     private Coroutine repeatCoroutine;
 
     public SongInfoClass selectedSongInfo;
@@ -52,6 +55,7 @@ public class SongListShower : MonoBehaviour
         contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (songListFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
         originX = contentFolder.transform.position.x;
+        indicatorOriginX = difficultyIndicator.transform.position.x;
         originY = contentFolder.transform.position.y;
 
         isHold = false;
@@ -118,50 +122,7 @@ public class SongListShower : MonoBehaviour
     private void SetSelectedSongInfo(SongInfoClass info)
     {
         selectedSongInfo = info;
-        difficultySetter(info.artist + "-" + info.title);
-    }
-
-    private void difficultySetter(string key)
-    {
-        List<SongInfoClass> songList = loader.songDictionary[key];
-
-        basicText.color = basicText.color.SetAlpha(0f);
-        basicText.text = $"0";
-        advancedText.color = basicText.color.SetAlpha(0f);
-        advancedText.text = $"0";
-        expertText.color = basicText.color.SetAlpha(0f);
-        expertText.text = $"0";
-        masterText.color = basicText.color.SetAlpha(0f);
-        masterText.text = $"0";
-
-        foreach (SongInfoClass infos in songList)
-        {
-            if (infos.difficulty == "Basic")
-            {
-                basicText.color = basicText.color.SetAlpha(1f);
-                basicText.text = $"{infos.level}";
-            }
-            if (infos.difficulty == "Advanced")
-            {
-                advancedText.color = advancedText.color.SetAlpha(1f);
-                advancedText.text = $"{infos.level}";
-            }
-            if (infos.difficulty == "Expert")
-            {
-                expertText.color = expertText.color.SetAlpha(1f);
-                expertText.text = $"{infos.level}";
-            }
-            if (infos.difficulty == "Master")
-            {
-                masterText.color = masterText.color.SetAlpha(1f);
-                masterText.text = $"{infos.level}";
-            }
-            if (infos.difficulty == null)
-            {
-                masterText.color = masterText.color.SetAlpha(0f);
-                masterText.text = $"{infos.level}";
-            }
-        }
+        DifficultySetter(info.artist + "-" + info.title);
     }
 
     public MainInputAction action;
@@ -316,11 +277,11 @@ public class SongListShower : MonoBehaviour
                     repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
                     break;
                 case "DifficultyUp":
-                    SetDifficulty(selectedDifficulty + 1);
+                    SetDifficulty(selectedDifficulty + 1, 1);
                     repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
                     break;
                 case "DifficultyDown":
-                    SetDifficulty(selectedDifficulty - 1);
+                    SetDifficulty(selectedDifficulty - 1, -1);
                     repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
                     break;
                 case "SongSelect":
@@ -352,15 +313,6 @@ public class SongListShower : MonoBehaviour
         }
     }
 
-    private void SetDifficulty(int toIndex)
-    {
-        if (toIndex > 0 && toIndex <= 4)
-        {
-            selectedDifficulty = toIndex;
-            Debug.Log(selectedDifficulty);
-        }
-    }
-
     public void SpeedOneUp()
     {
         settings.speed += 0.1f;
@@ -389,7 +341,9 @@ public class SongListShower : MonoBehaviour
             currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
 
             SongListInfoSetter setter = contentFolder.transform.GetChild(listNum - 1).GetComponent<SongListInfoSetter>();
-            difficultySetter(setter.artist + "-" + setter.title);
+            DifficultySetter(setter.artist + "-" + setter.title);
+
+            SetDifficulty(selectedDifficulty, 1);
         }
 
         //if (currentSetSongIndexRoutine == null)
@@ -464,6 +418,125 @@ public class SongListShower : MonoBehaviour
         yield break;
     }
 
+    private void DifficultySetter(string key)
+    {
+        List<SongInfoClass> songList = loader.songDictionary[key];
+
+        basicText.color = basicText.color.SetAlpha(0f);
+        basicText.text = $"0";
+        advancedText.color = basicText.color.SetAlpha(0f);
+        advancedText.text = $"0";
+        expertText.color = basicText.color.SetAlpha(0f);
+        expertText.text = $"0";
+        masterText.color = basicText.color.SetAlpha(0f);
+        masterText.text = $"0";
+
+        foreach (SongInfoClass infos in songList)
+        {
+            if (infos.difficulty == "Basic")
+            {
+                basicText.color = basicText.color.SetAlpha(1f);
+                basicText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == "Advanced")
+            {
+                advancedText.color = advancedText.color.SetAlpha(1f);
+                advancedText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == "Expert")
+            {
+                expertText.color = expertText.color.SetAlpha(1f);
+                expertText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == "Master")
+            {
+                masterText.color = masterText.color.SetAlpha(1f);
+                masterText.text = $"{infos.level}";
+            }
+            if (infos.difficulty == null)
+            {
+                masterText.color = masterText.color.SetAlpha(0f);
+                masterText.text = $"{infos.level}";
+            }
+        }
+    }
+
+    private void SetDifficulty(int toIndex, int index)
+    {
+        if (toIndex > 0 && toIndex <= 4)
+        {
+            if (toIndex == 1)
+            {
+                if (basicText.color.a == 0)
+                {
+                    SetDifficulty(toIndex + index, index);
+                    return;
+                }
+            }
+            if (toIndex == 2)
+            {
+                if (advancedText.color.a == 0)
+                {
+                    SetDifficulty(toIndex + index, index);
+                    return;
+                }
+            }
+            if (toIndex == 3)
+            {
+                if (expertText.color.a == 0)
+                {
+                    SetDifficulty(toIndex + index, index);
+                    return;
+                }
+            }
+            if (toIndex == 4)
+            {
+                if (masterText.color.a == 0)
+                {
+                    return;
+                }
+            }
+            selectedDifficulty = toIndex;
+            if (currentSetDifficultyRoutine != null)
+            {
+                StopCoroutine(currentSetDifficultyRoutine);
+            }
+            currentSetDifficultyRoutine = StartCoroutine(SetDifficultyIndicator(toIndex - 1));
+        }
+    }
+
+    private IEnumerator SetDifficultyIndicator(int index)
+    {
+        canvas.transform.localScale = Vector3.one;
+
+        Transform T = difficultyIndicator.transform;
+
+        float elapsedTime = 0f;
+        Vector3 startPos = new(T.position.x, T.position.y, 0f);
+        float duration = 0.15f;
+        Vector3 targetPos = new(indicatorOriginX + 75f * index, T.position.y, 0f);
+
+        while (elapsedTime < duration)
+        {
+            canvas.transform.localScale = Vector3.one;
+
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            float easedT = Mathf.Sin(t * Mathf.PI * 0.5f);
+
+            T.position = Vector3.Lerp(startPos, targetPos, easedT);
+
+            yield return null;
+        }
+
+        canvas.transform.localScale = Vector3.one;
+        T.position = targetPos;
+
+        currentSetDifficultyRoutine = null;
+
+        yield break;
+    }
+
     [System.Obsolete]
     private IEnumerator RepeatKeyPress(string actionName)
     {
@@ -478,6 +551,12 @@ public class SongListShower : MonoBehaviour
                     break;
                 case "ListDown":
                     SetList(listNum + 1);
+                    break;
+                case "DifficultyUp":
+                    SetDifficulty(selectedDifficulty + 1, 1);
+                    break;
+                case "DifficultyDown":
+                    SetDifficulty(selectedDifficulty - 1, -1);
                     break;
                 case "SpeedUp":
                     SpeedOneUp();
