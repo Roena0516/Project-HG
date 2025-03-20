@@ -121,8 +121,7 @@ public class JudgementManager : MonoBehaviour
 
             if (timeDifference <= bad && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
             {
-                PerformAction(note, "Perfect", note.ms);
-                AddCombo(1);
+                SetHoldInputed(note);
                 break;
             }
             if (timeDifference <= perfect && note.type == "normal" && raneNumber + 1 == note.position && !note.isInputed)
@@ -152,6 +151,11 @@ public class JudgementManager : MonoBehaviour
         }
     }
 
+    public void SetHoldInputed(NoteClass note)
+    {
+        note.isInputed = true;
+    }
+
     public void UpJudge(int raneNumber, double currentTimeMs)
     {
         var filteredNotes = noteGenerator.notes
@@ -163,10 +167,9 @@ public class JudgementManager : MonoBehaviour
             float timeDifference = Mathf.Abs((float)(note.ms - currentTimeMs));
             double notAbsDiff = note.ms - currentTimeMs;
 
-            if (timeDifference <= perfect && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
+            if ((note.ms - (currentTimeMs) <= 40 && note.ms - (currentTimeMs) > 0) && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
             {
-                PerformAction(note, "Perfect", note.ms);
-                AddCombo(1);
+                note.isInputed = true;
                 break;
             }
 
