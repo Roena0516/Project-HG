@@ -8,6 +8,7 @@ public class Note : MonoBehaviour
     public double ms;
 
     public bool isEndNote;
+    public bool isInputed;
 
     private LineInputChecker line;
     private JudgementManager judgement;
@@ -20,6 +21,7 @@ public class Note : MonoBehaviour
     {
         isSet = false;
         isEndNote = false;
+        isInputed = false;
         line = LineInputChecker.Instance;
         judgement = JudgementManager.Instance;
         noteGenerator = NoteGenerator.Instance;
@@ -41,6 +43,12 @@ public class Note : MonoBehaviour
                 judgement.PerformAction(noteClass, "Miss", ms);
                 judgement.ClearCombo();
             }
+        }
+
+        if (noteClass.type == "hold" && noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0 && noteClass.ms - (line.currentTime * 1000f) >= -160))
+        {
+            line.judgementManager.PerformAction(noteClass, "Perfect", noteClass.ms);
+            line.judgementManager.AddCombo(1);
         }
     }
 

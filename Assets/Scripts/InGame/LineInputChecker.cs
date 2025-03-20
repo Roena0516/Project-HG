@@ -161,14 +161,30 @@ public class LineInputChecker : MonoBehaviour
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -120))
+            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -160))
             {
-                judgementManager.PerformAction(note, "Perfect", note.ms);
-                judgementManager.AddCombo(1);
+                note.isInputed = true;
                 break;
             }
         }
     }
+
+    //private void PerformHold()
+    //{
+    //    var filteredNotes = noteGenerator.notes
+    //    .Where(note => Mathf.Abs((float)(note.ms - (currentTime * 1000))) <= 160)
+    //    .ToList();
+
+    //    foreach (NoteClass note in filteredNotes)
+    //    {
+    //        if (note.type == "hold" && note.isInputed && (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -160))
+    //        {
+    //            judgementManager.PerformAction(note, "Perfect", note.ms);
+    //            judgementManager.AddCombo(1);
+    //            break;
+    //        }
+    //    }
+    //}
 
     private void DownInput(int raneNumber)
     {
