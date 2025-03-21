@@ -272,7 +272,7 @@ public class JudgementManager : MonoBehaviour
         }
         StartCoroutine(JudegementTextShower(judgement, Ms, note.position));
 
-        if (gameManager.isSyncRoom)
+        if (gameManager.isSyncRoom && judgement != "Miss")
         {
             syncRoomManager.inputConut++;
             syncRoomManager.msCount += (int)Ms;
