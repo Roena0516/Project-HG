@@ -155,7 +155,7 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                settingsManager.SetFileName($"SyncRoom-Level");
+                settingsManager.SetFileName($"{Application.streamingAssetsPath}/system/SyncRoom-Level.roena");
 
                 SceneManager.LoadScene("SyncRoom");
             }
