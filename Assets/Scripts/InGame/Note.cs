@@ -17,6 +17,11 @@ public class Note : MonoBehaviour
 
     public NoteClass noteClass;
 
+    private const float startY = 6f;
+    private const float endY = -6f;
+
+    private double dropStartTime;
+
     void Start()
     {
         isSet = false;
@@ -28,20 +33,26 @@ public class Note : MonoBehaviour
         music = MusicPlayer.Instance;
     }
 
-    void FixedUpdate()
+    void Update()
     {
-        if (ShouldSetNote())
+        if (ShouldSetNote() && !isSet)
         {
             SetNote();
         }
 
         if (isSet)
         {
-            transform.Translate(Vector2.down * speed * Time.deltaTime);
+            double elapsedTime = line.currentTime - dropStartTime;
+            float progress = (float)(elapsedTime * noteGenerator.speed / (startY - endY));
+            progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
+            float currentY = Mathf.Lerp(startY, endY, progress);
+            transform.position = new Vector2(transform.position.x, currentY);
+
             if ((line.currentTime * 1000f) - ms >= 200f)
             {
                 judgement.PerformAction(noteClass, "Miss", ms);
                 judgement.ClearCombo();
+                isSet = false;
             }
         }
 
@@ -60,6 +71,7 @@ public class Note : MonoBehaviour
 
     public void SetNote()
     {
+        dropStartTime = line.currentTime;
         isSet = true;
     }
 
