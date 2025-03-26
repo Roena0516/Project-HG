@@ -18,6 +18,7 @@ public class JudgementManager : MonoBehaviour
     public NoteGenerator noteGenerator;
     public GameManager gameManager;
     public SyncRoomManager syncRoomManager;
+    private SettingsManager settings;
 
     public bool isAP;
     public bool isFC;
@@ -28,6 +29,7 @@ public class JudgementManager : MonoBehaviour
     public TextMeshProUGUI rateText;
     public TextMeshProUGUI judgeCountText;
     public TextMeshProUGUI FCAPText;
+    public TextMeshProUGUI speedText;
 
     public List<SpriteRenderer> fastIndicators;
     public List<SpriteRenderer> slowIndicators;
@@ -53,6 +55,8 @@ public class JudgementManager : MonoBehaviour
 
     private void Start()
     {
+        settings = SettingsManager.Instance;
+
         Color tempColor = judgeText.color;
         tempColor.a = 0f;
         judgeText.color = tempColor;
@@ -71,6 +75,8 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Good"] = 0;
         judgeCount["Bad"] = 0;
         judgeCount["Miss"] = 0;
+
+        speedText.text = $"{settings.speed:F1}";
 
         StartCoroutine(IndicatorSetter());
         ClearCombo();
