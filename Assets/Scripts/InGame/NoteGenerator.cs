@@ -147,7 +147,7 @@ public class NoteGenerator : MonoBehaviour
             note.GetComponent<Note>().isEndNote = true;
         }
         noteClass.noteObject = note;
-        noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
+        //noteClass.noteObject.GetComponent<Note>().SetSpeed(speed);
         oneBeatDuration = 60f / BPM * 1000f;
         beatDuration = oneBeatDuration * beat;
 
