@@ -23,6 +23,10 @@ public class LineInputChecker : MonoBehaviour
 
     public List<bool> isHolding;
 
+    private bool isSpeedHold;
+
+    private Coroutine repeatCoroutine;
+
     public static LineInputChecker Instance { get; private set; }
 
     private void Awake()
@@ -57,9 +61,11 @@ public class LineInputChecker : MonoBehaviour
 
         speedUp.Enable();
         speedUp.started += Started;
+        speedUp.canceled += Canceled;
 
         speedDown.Enable();
         speedDown.started += Started;
+        speedDown.canceled += Canceled;
     }
 
     private void OnDisable()
@@ -74,17 +80,22 @@ public class LineInputChecker : MonoBehaviour
 
         speedUp.Disable();
         speedUp.started -= Started;
+        speedUp.canceled -= Canceled;
 
         speedDown.Disable();
         speedDown.started -= Started;
+        speedDown.canceled -= Canceled;
     }
 
     public void SetSpeed(float duration)
     {
-        settings.speed += duration;
-        noteGenerator.speed = 4.5f * settings.speed;
-        noteGenerator.fallTime = noteGenerator.distance / noteGenerator.speed * 1000f;
-        judgementManager.speedText.text = $"{settings.speed:F1}";
+        if (settings.speed + duration >= 2.0 && settings.speed + duration <= 9.1)
+        {
+            settings.speed += duration;
+            noteGenerator.speed = 4.5f * settings.speed;
+            noteGenerator.fallTime = noteGenerator.distance / noteGenerator.speed * 1000f;
+            judgementManager.speedText.text = $"{settings.speed:F1}";
+        }
     }
 
     void Started(InputAction.CallbackContext context)
@@ -109,10 +120,14 @@ public class LineInputChecker : MonoBehaviour
                 DownInput(3);
                 break;
             case "SpeedUp":
+                isSpeedHold = true;
                 SetSpeed(0.1f);
+                repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
                 break;
             case "SpeedDown":
+                isSpeedHold = true;
                 SetSpeed(-0.1f);
+                repeatCoroutine = StartCoroutine(RepeatKeyPress(actionName));
                 break;
         }
     }
@@ -132,6 +147,8 @@ public class LineInputChecker : MonoBehaviour
 
         Debug.Log($"Cancel {pressed} {actionName}");
 
+        isSpeedHold = false;
+
         switch (actionName)
         {
             case "Line1Action":
@@ -146,6 +163,12 @@ public class LineInputChecker : MonoBehaviour
             case "Line4Action":
                 UpInput(3);
                 break;
+        }
+
+        if (repeatCoroutine != null)
+        {
+            StopCoroutine(repeatCoroutine);
+            repeatCoroutine = null;
         }
     }
 
@@ -283,5 +306,24 @@ public class LineInputChecker : MonoBehaviour
         renderer.color = new Color(renderer.color.r, renderer.color.g, renderer.color.b, targetAlpha);
 
         yield break;
+    }
+
+    private IEnumerator RepeatKeyPress(string actionName)
+    {
+        yield return new WaitForSeconds(0.3f);
+
+        while (isSpeedHold)
+        {
+            switch (actionName)
+            {
+                case "SpeedUp":
+                    SetSpeed(0.1f);
+                    break;
+                case "SpeedDown":
+                    SetSpeed(-0.1f);
+                    break;
+            }
+            yield return new WaitForSeconds(0.05f);
+        }
     }
 }
