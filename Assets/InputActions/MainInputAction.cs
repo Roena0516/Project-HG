@@ -62,6 +62,24 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpeedUp"",
+                    ""type"": ""Button"",
+                    ""id"": ""c699646c-d3ed-48bf-a4b7-09f0e3029757"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpeedDown"",
+                    ""type"": ""Button"",
+                    ""id"": ""69ed2805-34db-413f-ae13-4315e58dd021"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -73,6 +91,28 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Line1Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6fec7c9f-a5f6-45a9-9b01-5ad4c0e509f6"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpeedUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""fdb6a3f7-c7f2-4e43-a34b-4e085eade0df"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpeedDown"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -506,6 +546,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_Player_Line2Action = m_Player.FindAction("Line2Action", throwIfNotFound: true);
         m_Player_Line3Action = m_Player.FindAction("Line3Action", throwIfNotFound: true);
         m_Player_Line4Action = m_Player.FindAction("Line4Action", throwIfNotFound: true);
+        m_Player_SpeedUp = m_Player.FindAction("SpeedUp", throwIfNotFound: true);
+        m_Player_SpeedDown = m_Player.FindAction("SpeedDown", throwIfNotFound: true);
         // FreePlay
         m_FreePlay = asset.FindActionMap("FreePlay", throwIfNotFound: true);
         m_FreePlay_ListUp = m_FreePlay.FindAction("ListUp", throwIfNotFound: true);
@@ -595,6 +637,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Line2Action;
     private readonly InputAction m_Player_Line3Action;
     private readonly InputAction m_Player_Line4Action;
+    private readonly InputAction m_Player_SpeedUp;
+    private readonly InputAction m_Player_SpeedDown;
     public struct PlayerActions
     {
         private @MainInputAction m_Wrapper;
@@ -603,6 +647,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         public InputAction @Line2Action => m_Wrapper.m_Player_Line2Action;
         public InputAction @Line3Action => m_Wrapper.m_Player_Line3Action;
         public InputAction @Line4Action => m_Wrapper.m_Player_Line4Action;
+        public InputAction @SpeedUp => m_Wrapper.m_Player_SpeedUp;
+        public InputAction @SpeedDown => m_Wrapper.m_Player_SpeedDown;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -624,6 +670,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @Line4Action.started += instance.OnLine4Action;
             @Line4Action.performed += instance.OnLine4Action;
             @Line4Action.canceled += instance.OnLine4Action;
+            @SpeedUp.started += instance.OnSpeedUp;
+            @SpeedUp.performed += instance.OnSpeedUp;
+            @SpeedUp.canceled += instance.OnSpeedUp;
+            @SpeedDown.started += instance.OnSpeedDown;
+            @SpeedDown.performed += instance.OnSpeedDown;
+            @SpeedDown.canceled += instance.OnSpeedDown;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -640,6 +692,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
             @Line4Action.started -= instance.OnLine4Action;
             @Line4Action.performed -= instance.OnLine4Action;
             @Line4Action.canceled -= instance.OnLine4Action;
+            @SpeedUp.started -= instance.OnSpeedUp;
+            @SpeedUp.performed -= instance.OnSpeedUp;
+            @SpeedUp.canceled -= instance.OnSpeedUp;
+            @SpeedDown.started -= instance.OnSpeedDown;
+            @SpeedDown.performed -= instance.OnSpeedDown;
+            @SpeedDown.canceled -= instance.OnSpeedDown;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -843,6 +901,8 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         void OnLine2Action(InputAction.CallbackContext context);
         void OnLine3Action(InputAction.CallbackContext context);
         void OnLine4Action(InputAction.CallbackContext context);
+        void OnSpeedUp(InputAction.CallbackContext context);
+        void OnSpeedDown(InputAction.CallbackContext context);
     }
     public interface IFreePlayActions
     {

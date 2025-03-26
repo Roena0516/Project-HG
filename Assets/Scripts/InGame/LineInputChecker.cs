@@ -17,8 +17,9 @@ public class LineInputChecker : MonoBehaviour
     private SettingsManager settings;
 
     public MainInputAction action;
-
     private List<InputAction> LineActions;
+    private InputAction speedUp;
+    private InputAction speedDown;
 
     public List<bool> isHolding;
 
@@ -27,6 +28,9 @@ public class LineInputChecker : MonoBehaviour
     private void Awake()
     {
         action = new MainInputAction();
+        speedUp = action.Player.SpeedUp;
+        speedDown = action.Player.SpeedDown;
+
         settings = SettingsManager.Instance;
 
         LineActions = settings.LineActions.ToList();
@@ -50,6 +54,12 @@ public class LineInputChecker : MonoBehaviour
             LineActions[i].performed += Performed;
             LineActions[i].canceled += Canceled;
         }
+
+        speedUp.Enable();
+        speedUp.started += Started;
+
+        speedDown.Enable();
+        speedDown.started += Started;
     }
 
     private void OnDisable()
@@ -61,6 +71,20 @@ public class LineInputChecker : MonoBehaviour
             LineActions[i].performed -= Performed;
             LineActions[i].canceled -= Canceled;
         }
+
+        speedUp.Disable();
+        speedUp.started -= Started;
+
+        speedDown.Disable();
+        speedDown.started -= Started;
+    }
+
+    public void SetSpeed(float duration)
+    {
+        settings.speed += duration;
+        noteGenerator.speed = 4.5f * settings.speed;
+        noteGenerator.fallTime = noteGenerator.distance / noteGenerator.speed * 1000f;
+        Debug.Log("Speed is setted to " + settings.speed);
     }
 
     void Started(InputAction.CallbackContext context)
@@ -83,6 +107,12 @@ public class LineInputChecker : MonoBehaviour
                 break;
             case "Line4Action":
                 DownInput(3);
+                break;
+            case "SpeedUp":
+                SetSpeed(0.1f);
+                break;
+            case "SpeedDown":
+                SetSpeed(-0.1f);
                 break;
         }
     }

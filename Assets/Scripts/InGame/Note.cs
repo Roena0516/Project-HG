@@ -75,8 +75,8 @@ public class Note : MonoBehaviour
         isSet = true;
     }
 
-    public void SetSpeed(float spd)
-    {
-        speed = spd;
-    }
+    //public void SetSpeed(float spd)
+    //{
+    //    speed = spd;
+    //}
 }
