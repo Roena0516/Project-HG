@@ -84,7 +84,7 @@ public class LineInputChecker : MonoBehaviour
         settings.speed += duration;
         noteGenerator.speed = 4.5f * settings.speed;
         noteGenerator.fallTime = noteGenerator.distance / noteGenerator.speed * 1000f;
-        Debug.Log("Speed is setted to " + settings.speed);
+        judgementManager.speedText.text = $"{settings.speed:F1}";
     }
 
     void Started(InputAction.CallbackContext context)
