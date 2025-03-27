@@ -57,6 +57,15 @@ public class Note : MonoBehaviour
         }
     }
 
+    private void HoldPerformer()
+    {
+        if (noteClass.type == "hold" && noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0 && noteClass.ms - (line.currentTime * 1000f) >= -160))
+        {
+            line.judgementManager.PerformAction(noteClass, "Perfect", noteClass.ms);
+            line.judgementManager.AddCombo(1);
+        }
+    }
+
     void Update()
     {
         if (ShouldSetNote() && !isSet)
@@ -68,11 +77,7 @@ public class Note : MonoBehaviour
 
         Misser();
 
-        if (noteClass.type == "hold" && noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0 && noteClass.ms - (line.currentTime * 1000f) >= -160))
-        {
-            line.judgementManager.PerformAction(noteClass, "Perfect", noteClass.ms);
-            line.judgementManager.AddCombo(1);
-        }
+        HoldPerformer();
     }
 
     private bool ShouldSetNote()
