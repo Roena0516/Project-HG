@@ -4,7 +4,7 @@ public class Note : MonoBehaviour
 {
     private float speed;
 
-    private bool isSet;
+    public bool isSet;
     public double ms;
 
     public bool isEndNote;
@@ -33,6 +33,30 @@ public class Note : MonoBehaviour
         music = MusicPlayer.Instance;
     }
 
+    public void MoveNote()
+    {
+        if (isSet)
+        {
+            double elapsedTime = line.currentTime - dropStartTime;
+            float progress = (float)(elapsedTime * noteGenerator.speed / (startY - endY));
+            //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
+            progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
+            float currentY = Mathf.Lerp(startY, endY, progress);
+            transform.position = new Vector2(transform.position.x, currentY);
+
+        }
+    }
+
+    private void Misser()
+    {
+        if ((line.currentTime * 1000f) - ms >= 200f)
+        {
+            judgement.PerformAction(noteClass, "Miss", ms);
+            judgement.ClearCombo();
+            isSet = false;
+        }
+    }
+
     void Update()
     {
         if (ShouldSetNote() && !isSet)
@@ -40,21 +64,9 @@ public class Note : MonoBehaviour
             SetNote();
         }
 
-        if (isSet)
-        {
-            double elapsedTime = line.currentTime - dropStartTime;
-            float progress = (float)(elapsedTime * noteGenerator.speed / (startY - endY));
-            progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
-            float currentY = Mathf.Lerp(startY, endY, progress);
-            transform.position = new Vector2(transform.position.x, currentY);
+        MoveNote();
 
-            if ((line.currentTime * 1000f) - ms >= 200f)
-            {
-                judgement.PerformAction(noteClass, "Miss", ms);
-                judgement.ClearCombo();
-                isSet = false;
-            }
-        }
+        Misser();
 
         if (noteClass.type == "hold" && noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0 && noteClass.ms - (line.currentTime * 1000f) >= -160))
         {
