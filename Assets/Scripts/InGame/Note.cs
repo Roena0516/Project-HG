@@ -27,10 +27,18 @@ public class Note : MonoBehaviour
         isSet = false;
         isEndNote = false;
         isInputed = false;
+        speed = 0;
         line = LineInputChecker.Instance;
         judgement = JudgementManager.Instance;
         noteGenerator = NoteGenerator.Instance;
         music = MusicPlayer.Instance;
+    }
+
+    public void SetNote()
+    {
+        dropStartTime = line.currentTime;
+        speed = noteGenerator.speed;
+        isSet = true;
     }
 
     public void MoveNote()
@@ -38,7 +46,7 @@ public class Note : MonoBehaviour
         if (isSet)
         {
             double elapsedTime = line.currentTime - dropStartTime;
-            float progress = (float)(elapsedTime * noteGenerator.speed / (startY - endY));
+            float progress = (float)(elapsedTime * speed / (startY - endY));
             //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
             progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
             float currentY = Mathf.Lerp(startY, endY, progress);
@@ -85,13 +93,6 @@ public class Note : MonoBehaviour
         double targetTime = (ms - noteGenerator.fallTime * 1d) / 1000d;
         return line.currentTime >= targetTime;
     }
-
-    public void SetNote()
-    {
-        dropStartTime = line.currentTime;
-        isSet = true;
-    }
-
     //public void SetSpeed(float spd)
     //{
     //    speed = spd;
