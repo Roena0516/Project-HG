@@ -118,11 +118,16 @@ public class JudgementManager : MonoBehaviour
     public void Judge(int raneNumber, double currentTimeMs)
     {
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs((float)(note.ms - currentTimeMs)) <= 1000)
+        .Where(note => Mathf.Abs((float)(note.ms - currentTimeMs)) <= 161)
         .ToList();
 
         foreach (NoteClass note in filteredNotes)
         {
+            if (note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            {
+                break;
+            }
+
             float timeDifference = Mathf.Abs((float)(note.ms - currentTimeMs));
 
             if (timeDifference <= bad && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
