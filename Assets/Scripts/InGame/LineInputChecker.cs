@@ -24,6 +24,7 @@ public class LineInputChecker : MonoBehaviour
     public List<bool> isHolding;
 
     private bool isSpeedHold;
+    public bool isAutoPlay;
 
     private Coroutine repeatCoroutine;
 
@@ -176,6 +177,7 @@ public class LineInputChecker : MonoBehaviour
     {
         currentTimeMs = 0d;
         startTime = Time.time;
+        isAutoPlay = settings.isAutoPlay;
         Debug.Log($"Start Time : {startTime}");
 
         for (int i = 0; i < 4; i++)

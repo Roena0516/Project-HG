@@ -15,6 +15,8 @@ public class SettingsManager : MonoBehaviour
 
     public List<InputAction> LineActions;
 
+    public bool isAutoPlay;
+
     public static SettingsManager Instance { get; private set; }
 
     private void Awake()

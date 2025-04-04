@@ -74,6 +74,15 @@ public class Note : MonoBehaviour
         }
     }
 
+    private void AutoPlayPerformer()
+    {
+        if (line.isAutoPlay && !noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0))
+        {
+            line.judgementManager.PerformAction(noteClass, "Perfect", noteClass.ms);
+            line.judgementManager.AddCombo(1);
+        }
+    }
+
     void Update()
     {
         if (ShouldSetNote() && !isSet)
@@ -86,6 +95,8 @@ public class Note : MonoBehaviour
         Misser();
 
         HoldPerformer();
+
+        AutoPlayPerformer();
     }
 
     private bool ShouldSetNote()

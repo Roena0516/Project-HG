@@ -202,6 +202,11 @@ public class MenuManager : MonoBehaviour
         settedButtonInputRane = 0;
     }
 
+    public void SetAutoPlay(bool setted)
+    {
+        settingsManager.isAutoPlay = setted;
+    }
+
     private void Start()
     {
         isSet = true;
