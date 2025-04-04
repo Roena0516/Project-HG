@@ -33,6 +33,7 @@ public class LevelEditer : MonoBehaviour
 
     public int madi;
     public int madi2;
+    public int madi3;
 
     private bool isRemoving;
     public bool isMusicPlaying;
@@ -135,6 +136,7 @@ public class LevelEditer : MonoBehaviour
 
         madi = 192;
         madi2 = 288;
+        madi3 = madi + madi2;
 
         LevelEditorSetter();
     }
@@ -145,7 +147,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum13 = 3;
         float sizeDelta = 640f / (float)beatNum13;
-        for (int i = 0; i < madi * beatNum13; i++)
+        for (int i = 0; i < madi2 * beatNum13; i++)
         {
             GameObject instantiateObject = Instantiate(beat13, new Vector3(0, rect13.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder13.transform);
             beats13.Add(instantiateObject);
@@ -221,7 +223,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum14 = 4;
         sizeDelta = 640f / (float)beatNum14;
-        for (int i = 0; i < madi * beatNum14; i++)
+        for (int i = 0; i < madi2 * beatNum14; i++)
         {
             GameObject instantiateObject = Instantiate(beat14, new Vector3(0, rect14.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder14.transform);
             beats14.Add(instantiateObject);
@@ -297,7 +299,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum16 = 6;
         sizeDelta = 640f / (float)beatNum16;
-        for (int i = 0; i < madi * beatNum16; i++)
+        for (int i = 0; i < madi2 * beatNum16; i++)
         {
             GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect16.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder16.transform);
             beats16.Add(instantiateObject);
@@ -373,7 +375,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum18 = 8;
         sizeDelta = 640f / (float)beatNum18;
-        for (int i = 0; i < madi * beatNum18; i++)
+        for (int i = 0; i < madi2 * beatNum18; i++)
         {
             GameObject instantiateObject = Instantiate(beat18, new Vector3(0, rect18.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder18.transform);
             beats18.Add(instantiateObject);
@@ -449,7 +451,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum112 = 12;
         sizeDelta = 640f / (float)beatNum112;
-        for (int i = 0; i < madi * beatNum112; i++)
+        for (int i = 0; i < madi2 * beatNum112; i++)
         {
             GameObject instantiateObject = Instantiate(beat112, new Vector3(0, rect112.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder112.transform);
             beats112.Add(instantiateObject);
@@ -525,7 +527,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum116 = 16;
         sizeDelta = 640f / (float)beatNum116;
-        for (int i = 0; i < madi * beatNum116; i++)
+        for (int i = 0; i < madi2 * beatNum116; i++)
         {
             GameObject instantiateObject = Instantiate(beat116, new Vector3(0, rect116.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder116.transform);
             beats116.Add(instantiateObject);
@@ -601,7 +603,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum124 = 24;
         sizeDelta = 640f / (float)beatNum124;
-        for (int i = 0; i < madi * beatNum124; i++)
+        for (int i = 0; i < madi2 * beatNum124; i++)
         {
             GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect124.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder124.transform);
             beats124.Add(instantiateObject);
@@ -677,7 +679,7 @@ public class LevelEditer : MonoBehaviour
 
         int beatNum132 = 32;
         sizeDelta = 640f / (float)beatNum132;
-        for (int i = 0; i < madi * beatNum132; i++)
+        for (int i = 0; i < madi2 * beatNum132; i++)
         {
             GameObject instantiateObject = Instantiate(beat132, new Vector3(0, rect132.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder132.transform);
             beats132.Add(instantiateObject);
