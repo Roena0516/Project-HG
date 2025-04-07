@@ -90,7 +90,7 @@ public class LineInputChecker : MonoBehaviour
 
     public void SetSpeed(float duration)
     {
-        if (settings.speed + duration >= 2.0 && settings.speed + duration <= 10.1)
+        if (settings.speed + duration >= 1.0 && settings.speed + duration <= 10.1)
         {
             settings.speed += duration;
             noteGenerator.speed = 4.5f * settings.speed;
