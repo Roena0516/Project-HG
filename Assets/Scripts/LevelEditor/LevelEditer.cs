@@ -134,6 +134,8 @@ public class LevelEditer : MonoBehaviour
 
         scrollSpeed = 10f;
 
+        BPM = 120f;
+
         madi = 192;
         madi2 = 288;
         madi3 = madi + madi2;
@@ -1190,32 +1192,11 @@ public class LevelEditer : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.W))
         {
-            if (Input.GetKey(KeyCode.E))
-            {
-                gridFolder.transform.Translate(2f * scrollSpeed * Time.deltaTime * Vector2.down);
-            }
-            else
-            {
-                gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.down);
-            }
-            //OnSliderChanged();
+            gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.down);
         }
         if (Input.GetKey(KeyCode.S))
         {
-            if (Input.GetKey(KeyCode.E))
-            {
-                gridFolder.transform.Translate(2f * scrollSpeed * Time.deltaTime * Vector2.up);
-            }
-            else
-            {
-                gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.up);
-            }
-            //OnSliderChanged();
-        }
-
-        if (Input.GetKeyDown(KeyCode.X))
-        {
-            SaveLevel();
+            gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.up);
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -1227,23 +1208,26 @@ public class LevelEditer : MonoBehaviour
             SetIsRemoving("Remove");
         }
 
-        /*if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E))
         {
             isMusicPlaying = !isMusicPlaying;
             eventInstance.setPaused(!isMusicPlaying);
-        }*/
 
-        /*if (Input.GetKeyDown(KeyCode.H))
-        {
-            eventInstance.start();
-            eventInstance.setPaused(true);
+            if (currentMoveSliderer == null)
+            {
+                currentMoveSliderer = StartCoroutine(MoveSlider());
+            }
+            else
+            {
+                StopCoroutine(currentMoveSliderer);
+                currentMoveSliderer = null;
+            }
         }
 
         UpdateMusicTime();
-        UpdateSlider();*/
     }
 
-    /*private void UpdateMusicTime()
+    private void UpdateMusicTime()
     {
         if (eventInstance.isValid())
         {
@@ -1251,88 +1235,20 @@ public class LevelEditer : MonoBehaviour
         }
     }
 
-    private void UpdateSlider()
+    IEnumerator MoveSlider()
     {
-        int length;
-        eventInstance.getDescription(out var description);
-        description.getLength(out length);
-
-        if (length > 0)
-        {
-            if (isMusicPlaying)
-            {
-                if (currentMoveSliderer == null)
-                {
-                    currentMoveSliderer = StartCoroutine(MoveSliderer());
-                }
-                
-            }
-            else
-            {
-                if (currentMoveSliderer != null)
-                {
-                    StopCoroutine(currentMoveSliderer);
-                    currentMoveSliderer = null;
-                }
-            }
-        }
-    }
-
-    IEnumerator MoveSliderer()
-    {
-        while(true)
-        {
-            float moveTime = 30f / BPM;
-            StartCoroutine(MoveSlider(moveTime));
-
-            yield return new WaitForSeconds(moveTime);
-        }
-    }
-
-    IEnumerator MoveSlider(float moveTime)
-    {
-        canvas.transform.localScale = Vector3.one;
-
-        Transform T = gridFolder.transform;
-
-        float elapsedTime = 0f;
-        Vector3 startPos = new Vector3(T.position.x, T.position.y, 0f);
-        float duration = moveTime;
-        Vector3 targetPos = new Vector3(T.position.x, T.position.y - 160f, 0f);
-
-        while (elapsedTime < duration)
+        while (isMusicPlaying)
         {
             canvas.transform.localScale = Vector3.one;
-
-            elapsedTime += Time.deltaTime;
-            float t = Mathf.Clamp01(elapsedTime / duration);
-
-            T.position = Vector3.Lerp(startPos, targetPos, t);
-
+            UpdateMusicTime();
+            //gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.down);
+            gridFolder.transform.position = new Vector3(gridFolder.transform.position.x, -(scrollSpeed * currentMusicTime) * 2f, 0f);
+            
             yield return null;
         }
 
-        canvas.transform.localScale = Vector3.one;
-        T.position = targetPos;
-
         yield break;
     }
-
-    public void OnSliderChanged()
-    {
-        int length;
-        eventInstance.getDescription(out var description);
-        description.getLength(out length);
-
-        float moveTime = 30f / BPM;
-
-        float temp = moveTime * 160f;
-
-        float value = -gridFolder.transform.position.y / temp;
-
-        int newTime = (int)(value * length);
-        eventInstance.setTimelinePosition(newTime);
-    }*/
 
     public void SaveLevel()
     {
@@ -1444,6 +1360,7 @@ public class LevelEditer : MonoBehaviour
     public void SetBPM(string inputed)
     {
         float.TryParse(inputed, out BPM);
+        scrollSpeed = 160f / (1000f * 60f / BPM);
     }
 
     public void SetNoteType(string type)
@@ -1464,13 +1381,15 @@ public class LevelEditer : MonoBehaviour
     public void SetEventName(string inputed)
     {
         eventName = inputed;
-        /*eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
+        eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
 
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
 
         eventInstance.setVolume(0.5f);
         eventInstance.start();
-        eventInstance.setPaused(true);*/
+
+        eventInstance.setTimelinePosition(0);
+        eventInstance.setPaused(true);
     }
 
     //public void SetFilePath()
