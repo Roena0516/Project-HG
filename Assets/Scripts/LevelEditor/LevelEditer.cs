@@ -1193,10 +1193,12 @@ public class LevelEditer : MonoBehaviour
         if (Input.GetKey(KeyCode.W))
         {
             gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.down);
+            CalcCurrentMusicTime();
         }
         if (Input.GetKey(KeyCode.S))
         {
             gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.up);
+            CalcCurrentMusicTime();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -1233,6 +1235,20 @@ public class LevelEditer : MonoBehaviour
         {
             eventInstance.getTimelinePosition(out currentMusicTime);
         }
+    }
+
+    private void SetMusicTime(int musicTime)
+    {
+        currentMusicTime = musicTime;
+        //Debug.Log(currentMusicTime);
+        eventInstance.setTimelinePosition(currentMusicTime);
+    }
+
+    private void CalcCurrentMusicTime()
+    {
+        canvas.transform.localScale = Vector3.one;
+        float musicTime = -(gridFolder.transform.position.y) / scrollSpeed / 2f;
+        SetMusicTime((int)musicTime);
     }
 
     IEnumerator MoveSlider()
