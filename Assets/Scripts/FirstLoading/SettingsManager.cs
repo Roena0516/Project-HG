@@ -17,6 +17,8 @@ public class SettingsManager : MonoBehaviour
 
     public bool isAutoPlay;
 
+    public string effectOption;
+
     public static SettingsManager Instance { get; private set; }
 
     private void Awake()
@@ -26,6 +28,8 @@ public class SettingsManager : MonoBehaviour
         LineActions.Add(action.Player.Line2Action);
         LineActions.Add(action.Player.Line3Action);
         LineActions.Add(action.Player.Line4Action);
+
+        effectOption = "None";
 
         if (Instance == null)
         {
