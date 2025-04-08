@@ -95,7 +95,7 @@ public class NoteGenerator : MonoBehaviour
 
         noteCount = notes.Count;
         Debug.Log($"Count : {noteCount}");
-        notes[noteCount - 1].isEndNote = true;
+        
 
         if (!gameManager.isTest)
         {
@@ -109,7 +109,11 @@ public class NoteGenerator : MonoBehaviour
         foreach (NoteClass note in notes)
         {
             noteTypeCounts[note.type]++;
+            note.isEndNote = false;
         }
+
+        notes[noteCount - 1].isEndNote = true;
+        Debug.Log($"isEndNote is {notes[noteCount - 1].beat}");
 
         judgement.CalcRate();
 
