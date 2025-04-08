@@ -98,8 +98,19 @@ public class LevelEditer : MonoBehaviour
     public List<GameObject> beats124;
     public List<GameObject> beats132;
 
+    public static LevelEditer Instance { get; private set; }
+
     private void Awake()
     {
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
         beat13 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat13");
         beat14 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat14");
         beat16 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat16");
@@ -1227,6 +1238,24 @@ public class LevelEditer : MonoBehaviour
         }
 
         UpdateMusicTime();
+        UpdateInputFieldValue();
+    }
+
+    public TMP_InputField BPMInput;
+    public TMP_InputField artistInput;
+    public TMP_InputField titleInput;
+    public TMP_InputField eventNameInput;
+    public TMP_InputField difficultyInput;
+    public TMP_InputField levelInput;
+
+    private void UpdateInputFieldValue()
+    {
+        BPMInput.text = $"{BPM}";
+        artistInput.text = $"{artist}";
+        titleInput.text = $"{title}";
+        eventNameInput.text = $"{eventName}";
+        difficultyInput.text = $"{difficulty}";
+        levelInput.text = $"{level}";
     }
 
     private void UpdateMusicTime()
@@ -1285,6 +1314,12 @@ public class LevelEditer : MonoBehaviour
             string decrypted = EncryptionHelper.Decrypt(json);
 
             NotesContainer container = JsonUtility.FromJson<NotesContainer>(decrypted);
+            BPM = container.info.bpm;
+            artist = container.info.artist;
+            title = container.info.title;
+            difficulty = container.info.difficulty;
+            level = container.info.level;
+            eventName = container.info.eventName;
 
             saveManager.notes = container.notes;
 
@@ -1436,7 +1471,14 @@ public class LevelEditer : MonoBehaviour
 
     public void ChangeToTestScene()
     {
+        canvas.SetActive(false);
+        
         SceneManager.LoadSceneAsync("InGame", LoadSceneMode.Additive);
+        Scene testScene = SceneManager.GetSceneByName("InGame");
+        if (testScene.IsValid() && testScene.isLoaded)
+        {
+            SceneManager.SetActiveScene(testScene);
+        }
     }
 
 

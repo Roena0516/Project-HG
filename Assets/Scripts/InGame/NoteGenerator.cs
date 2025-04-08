@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class NoteGenerator : MonoBehaviour
 {
@@ -32,10 +31,14 @@ public class NoteGenerator : MonoBehaviour
     public LineInputChecker checker;
     public JudgementManager judgement;
     public MusicPlayer musicPlayer;
+    public GameManager gameManager;
     private SettingsManager settings;
+    private LevelEditer levelEditor;
 
     public List<NoteClass> notes;
     public SongInfoClass info;
+
+    public GameObject notesFolder;
 
     public static NoteGenerator Instance { get; private set; }
 
@@ -80,10 +83,18 @@ public class NoteGenerator : MonoBehaviour
 
         notes = loadManager.notes;
         info = loadManager.info;
-        BPM = info.bpm;
+        if (!gameManager.isTest)
+        {
+            BPM = info.bpm;
+        }
+        else
+        {
+            levelEditor = LevelEditer.Instance;
+            BPM = levelEditor.BPM;
+        }
 
         noteCount = notes.Count;
-        Debug.Log(noteCount);
+        Debug.Log($"Count : {noteCount}");
         notes[noteCount - 1].isEndNote = true;
 
         StartCoroutine(NoteSpawnerSpawner());
@@ -106,6 +117,7 @@ public class NoteGenerator : MonoBehaviour
             yield return new WaitForSeconds(0.03625f);
         }
     }
+
 
     public void NoteSpawner(NoteClass noteClass, int position, string type, float beat, Quaternion R)
     {
@@ -131,15 +143,15 @@ public class NoteGenerator : MonoBehaviour
         }
         if (type == "normal")
         {
-            note = Instantiate(notePrefab, ranePosition, R);
+            note = Instantiate(notePrefab, ranePosition, R, notesFolder.transform);
         }
         if (type == "hold")
         {
-            note = Instantiate(holdPrefab, ranePosition, R);
+            note = Instantiate(holdPrefab, ranePosition, R, notesFolder.transform);
         }
         if (type == "up")
         {
-            note = Instantiate(upPrefab, ranePosition, R);
+            note = Instantiate(upPrefab, ranePosition, R, notesFolder.transform);
         }
 
         if (noteClass.isEndNote == true)
@@ -159,6 +171,12 @@ public class NoteGenerator : MonoBehaviour
         Note noteScript = note.GetComponent<Note>();
 
         float ms = beatDuration + 3000f;
+
+        if (gameManager.isTest)
+        {
+            levelEditor = LevelEditer.Instance;
+            ms -= levelEditor.currentMusicTime;
+        }
 
         noteClass.ms = ms;
 

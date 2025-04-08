@@ -5776,6 +5776,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sync: 0.5
   eventName: 
+  gameManager: {fileID: 1299961086}
 --- !u!4 &669266813
 Transform:
   m_ObjectHideFlags: 0
@@ -16080,6 +16081,7 @@ MonoBehaviour:
   checker: {fileID: 1299961083}
   judgement: {fileID: 1299961085}
   musicPlayer: {fileID: 669266812}
+  gameManager: {fileID: 1299961086}
   notes: []
   info:
     title: 
@@ -16089,6 +16091,7 @@ MonoBehaviour:
     eventName: 
     level: 0
     difficulty: 
+  notesFolder: {fileID: 1937704636}
 --- !u!1 &1244622319
 GameObject:
   m_ObjectHideFlags: 0
@@ -16258,6 +16261,7 @@ MonoBehaviour:
     level: 0
     difficulty: 
   notes: []
+  gameManager: {fileID: 1299961086}
 --- !u!114 &1299961085
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16309,6 +16313,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isLevelEnd: 0
   isSyncRoom: 0
+  isTest: 0
 --- !u!114 &1299961087
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22187,6 +22192,37 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1927130562}
   m_CullTransparentMesh: 1
+--- !u!1 &1937704636
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1937704637}
+  m_Layer: 0
+  m_Name: Notes
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1937704637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1937704636}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2010966702
 GameObject:
   m_ObjectHideFlags: 0
@@ -22457,3 +22493,4 @@ SceneRoots:
   - {fileID: 1299961082}
   - {fileID: 503537038}
   - {fileID: 1076656352}
+  - {fileID: 1937704637}

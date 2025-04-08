@@ -6810,7 +6810,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2016227766}
         m_TargetAssemblyTypeName: LevelEditer, Assembly-CSharp
-        m_MethodName: SaveLevel
+        m_MethodName: ChangeToTestScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -8641,6 +8641,7 @@ GameObject:
   - component: {fileID: 2016227765}
   - component: {fileID: 2016227766}
   - component: {fileID: 2016227767}
+  - component: {fileID: 2016227768}
   m_Layer: 0
   m_Name: LevelEditor
   m_TagString: Untagged
@@ -8716,6 +8717,12 @@ MonoBehaviour:
   beats116: []
   beats124: []
   beats132: []
+  BPMInput: {fileID: 1001642321}
+  artistInput: {fileID: 1743135929}
+  titleInput: {fileID: 466027008}
+  eventNameInput: {fileID: 1093333223}
+  difficultyInput: {fileID: 884414835}
+  levelInput: {fileID: 1189550524}
 --- !u!114 &2016227767
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8737,6 +8744,24 @@ MonoBehaviour:
     eventName: 
     level: 0
     difficulty: 
+--- !u!114 &2016227768
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2016227764}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acbc5a7604b804190b80027ff71683cc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sync: 0
+  speed: 4
+  eventName: 
+  fileName: 
+  LineActions: []
+  isAutoPlay: 0
 --- !u!1 &2021235040
 GameObject:
   m_ObjectHideFlags: 0

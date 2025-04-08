@@ -12,6 +12,8 @@ public class MusicPlayer : MonoBehaviour
     public string eventName;
 
     private SettingsManager settings;
+    private LevelEditer levelEditer;
+    public GameManager gameManager;
 
     public static MusicPlayer Instance { get; private set; }
 
@@ -40,7 +42,17 @@ public class MusicPlayer : MonoBehaviour
     {
         yield return new WaitForSecondsRealtime(0.1f);
 
-        eventName = settings.eventName;
+        int timeLinePosition = 0;
+        if (!gameManager.isTest)
+        {
+            eventName = settings.eventName;
+        }
+        else
+        {
+            levelEditer = LevelEditer.Instance;
+            eventName = levelEditer.eventName;
+            timeLinePosition = levelEditer.currentMusicTime;
+        }
         eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
 
         Debug.Log($"2{eventName}");
@@ -48,6 +60,7 @@ public class MusicPlayer : MonoBehaviour
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
 
         eventInstance.setVolume(0.5f);
+        eventInstance.setTimelinePosition(timeLinePosition);
 
         yield return new WaitForSecondsRealtime(sync);
         eventInstance.start();
