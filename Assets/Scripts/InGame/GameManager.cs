@@ -7,6 +7,7 @@ public class GameManager : MonoBehaviour
 
     public bool isLevelEnd;
     public bool isSyncRoom;
+    public bool isTest;
 
     public static GameManager Instance { get; private set; }
 
@@ -32,18 +33,18 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene("InGame");
+            SceneManager.LoadSceneAsync("InGame");
         }
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isSyncRoom)
             {
-                SceneManager.LoadScene("Menu");
+                SceneManager.LoadSceneAsync("Menu");
             }
             else
             {
-                SceneManager.LoadScene("FreePlay");
+                SceneManager.LoadSceneAsync("FreePlay");
             }
         }
 
@@ -56,17 +57,24 @@ public class GameManager : MonoBehaviour
 
     IEnumerator ChangeToResult()
     {
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(5f);
 
-        DontDestroyOnLoad(gameObject);
-
-        if (isSyncRoom)
+        if (!isTest)
         {
-            SceneManager.LoadScene("SyncRoomResult");
+            DontDestroyOnLoad(gameObject);
+
+            if (isSyncRoom)
+            {
+                SceneManager.LoadSceneAsync("SyncRoomResult");
+            }
+            else
+            {
+                SceneManager.LoadSceneAsync("Result");
+            }
         }
         else
         {
-            SceneManager.LoadScene("Result");
+            SceneManager.UnloadSceneAsync("LevelEditorTest");
         }
 
         yield break;

@@ -13,6 +13,6 @@ public class CompleteLoading : MonoBehaviour
 
         DontDestroyOnLoad(settingsManager.gameObject);
 
-        SceneManager.LoadScene("Menu");
+        SceneManager.LoadSceneAsync("Menu");
     }
 }

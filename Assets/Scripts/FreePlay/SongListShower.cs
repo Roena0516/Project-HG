@@ -580,7 +580,7 @@ public class SongListShower : MonoBehaviour
 
         settings.SetFileName($"{setter.filePath[selectedDifficulty - 1]}");
 
-        SceneManager.LoadScene("InGame");
+        SceneManager.LoadSceneAsync("InGame");
     }
 
     public void SetSync(string inputed)
