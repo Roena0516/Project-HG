@@ -63,6 +63,10 @@ public class GameManager : MonoBehaviour
             {
                 levelEditor = LevelEditer.Instance;
                 levelEditor.canvas.SetActive(true);
+                foreach (NoteClass note in levelEditor.saveManager.notes)
+                {
+                    note.isInputed = false;
+                }
                 Scene editorScene = SceneManager.GetSceneByName("LevelEditor");
                 if (editorScene.IsValid() && editorScene.isLoaded)
                 {

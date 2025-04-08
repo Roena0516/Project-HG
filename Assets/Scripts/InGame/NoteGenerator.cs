@@ -77,7 +77,7 @@ public class NoteGenerator : MonoBehaviour
         StartCoroutine(NoteGenerate());
     }
 
-    IEnumerator NoteGenerate()
+    private IEnumerator NoteGenerate()
     {
         yield return new WaitForSeconds(1f);
 
@@ -97,7 +97,14 @@ public class NoteGenerator : MonoBehaviour
         Debug.Log($"Count : {noteCount}");
         notes[noteCount - 1].isEndNote = true;
 
-        StartCoroutine(NoteSpawnerSpawner());
+        if (!gameManager.isTest)
+        {
+            StartCoroutine(NoteSpawnerSpawner());
+        }
+        else
+        {
+            StartCoroutine(TestNoteSpawnerSpawner());
+        }
 
         foreach (NoteClass note in notes)
         {
@@ -109,13 +116,23 @@ public class NoteGenerator : MonoBehaviour
         yield break;
     }
 
-    IEnumerator NoteSpawnerSpawner()
+    private IEnumerator NoteSpawnerSpawner()
     {
         foreach (NoteClass note in notes)
         {
             NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
             yield return new WaitForSeconds(0.03625f);
         }
+        yield break;
+    }
+
+    private IEnumerator TestNoteSpawnerSpawner()
+    {
+        foreach (NoteClass note in notes)
+        {
+            NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
+        }
+        yield break;
     }
 
 
