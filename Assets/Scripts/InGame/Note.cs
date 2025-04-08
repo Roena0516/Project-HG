@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Note : MonoBehaviour
@@ -22,6 +23,8 @@ public class Note : MonoBehaviour
 
     private double dropStartTime;
 
+    private Coroutine moveNoteRoutine;
+
     void Start()
     {
         isSet = false;
@@ -35,6 +38,8 @@ public class Note : MonoBehaviour
 
         speed = noteGenerator.speed;
         dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
+
+        moveNoteRoutine = StartCoroutine(MoveNote());
     }
 
     public void SetNote()
@@ -44,15 +49,36 @@ public class Note : MonoBehaviour
         isSet = true;
     }
 
-    public void MoveNote()
+    private void OnDestroy()
     {
-        dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
-        double elapsedTime = line.currentTime - dropStartTime;
-        float progress = (float)(elapsedTime * speed / (startY - endY));
-        //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
-        progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
-        float currentY = Mathf.Lerp(startY, endY, progress);
-        transform.position = new Vector2(transform.position.x, currentY);
+        StopCoroutine(moveNoteRoutine);
+    }
+
+    //public void MoveNote()
+    //{
+    //    dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
+    //    double elapsedTime = line.currentTime - dropStartTime;
+    //    float progress = (float)(elapsedTime * speed / (startY - endY));
+    //    //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
+    //    progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
+    //    float currentY = Mathf.Lerp(startY, endY, progress);
+    //    transform.position = new Vector2(transform.position.x, currentY);
+    //}
+
+    public IEnumerator MoveNote()
+    {
+        while(true)
+        {
+            dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
+            double elapsedTime = line.currentTime - dropStartTime;
+            float progress = (float)(elapsedTime * speed / (startY - endY));
+            //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
+            progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
+            float currentY = Mathf.Lerp(startY, endY, progress);
+            transform.position = new Vector2(transform.position.x, currentY);
+
+            yield return null;
+        }
     }
 
     private void Misser()
@@ -91,7 +117,6 @@ public class Note : MonoBehaviour
         //}
 
         speed = noteGenerator.speed;
-        MoveNote();
 
         Misser();
 
