@@ -38,6 +38,8 @@ public class NoteGenerator : MonoBehaviour
     public List<NoteClass> notes;
     public SongInfoClass info;
 
+    public List<int> randomRane;
+
     public GameObject notesFolder;
 
     public static NoteGenerator Instance { get; private set; }
@@ -52,6 +54,11 @@ public class NoteGenerator : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        randomRane.Add(1);
+        randomRane.Add(2);
+        randomRane.Add(3);
+        randomRane.Add(4);
     }
 
     void Start()
@@ -73,6 +80,15 @@ public class NoteGenerator : MonoBehaviour
         noteTypeCounts["normal"] = 0;
         noteTypeCounts["hold"] = 0;
         noteTypeCounts["up"] = 0;
+
+        if (settings.effectOption == "Random")
+        {
+            randomRane.Shuffle();
+        }
+        if (settings.effectOption == "Half Random")
+        {
+            randomRane.ShuffleBySplit(2);
+        }
 
         StartCoroutine(NoteGenerate());
     }
@@ -106,6 +122,8 @@ public class NoteGenerator : MonoBehaviour
             StartCoroutine(TestNoteSpawnerSpawner());
         }
 
+
+
         foreach (NoteClass note in notes)
         {
             noteTypeCounts[note.type]++;
@@ -124,6 +142,8 @@ public class NoteGenerator : MonoBehaviour
     {
         foreach (NoteClass note in notes)
         {
+            //Debug.Log(randomRane[note.position - 1]);
+            note.position = randomRane[note.position - 1];
             NoteSpawner(note, note.position, note.type, note.beat, spawnRotation);
             yield return new WaitForSeconds(0.03625f);
         }

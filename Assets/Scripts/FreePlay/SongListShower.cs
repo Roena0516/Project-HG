@@ -26,6 +26,7 @@ public class SongListShower : MonoBehaviour
 
     public GameObject syncInput;
     public GameObject speedInput;
+    public TMP_Dropdown dropdown;
 
     private float originX;
     private float indicatorOriginX;
@@ -64,6 +65,8 @@ public class SongListShower : MonoBehaviour
         selectedDifficulty = 1;
 
         speedText.text = $"{settings.speed:F1}";
+
+        dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
     }
 
     public void Shower()
@@ -590,5 +593,16 @@ public class SongListShower : MonoBehaviour
     public void SetSpeed(string inputed)
     {
         settings.SetSpeed(inputed);
+    }
+
+    private void OnDropdownValueChanged(int index)
+    {
+        string selectedOption = dropdown.options[index].text;
+        DropdownHandler(selectedOption);
+    }
+
+    public void DropdownHandler(string option)
+    {
+        settings.effectOption = option;
     }
 }
