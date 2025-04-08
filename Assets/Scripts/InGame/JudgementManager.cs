@@ -280,6 +280,8 @@ public class JudgementManager : MonoBehaviour
                 isAP = true;
             }
 
+            Debug.Log($"{note.ms}, {note.type}, {note.position}, {note.isEndNote}, {note.beat}");
+
             gameManager.isLevelEnd = true;
         }
         StartCoroutine(JudegementTextShower(judgement, Ms, note.position));
