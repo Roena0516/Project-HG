@@ -7,8 +7,8 @@ using System.Runtime.InteropServices;
 using System;
 using FMODUnity;
 using FMOD.Studio;
-using static UnityEngine.UI.Image;
 using System.Collections;
+using UnityEngine.SceneManagement;
 //using SFB;
 
 public class LevelEditer : MonoBehaviour
@@ -1432,6 +1432,11 @@ public class LevelEditer : MonoBehaviour
             removeIndicator.SetActive(false);
             addIndicator.SetActive(true);
         }
+    }
+
+    public void ChangeToTestScene()
+    {
+        SceneManager.LoadSceneAsync("InGame", LoadSceneMode.Additive);
     }
 
 

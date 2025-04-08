@@ -31,7 +31,7 @@ public class ResultManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Destroy(judgementManager.gameObject);
-            SceneManager.LoadScene("FreePlay");
+            SceneManager.LoadSceneAsync("FreePlay");
         }
     }
 

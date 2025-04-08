@@ -140,7 +140,7 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                SceneManager.LoadScene("FreePlay");
+                SceneManager.LoadSceneAsync("FreePlay");
             }
         }
         if (index == 2)
@@ -159,7 +159,7 @@ public class MenuManager : MonoBehaviour
                 isSet = false;
                 settingsManager.SetFileName($"{Application.streamingAssetsPath}/system/SyncRoom-Level.roena");
 
-                SceneManager.LoadScene("SyncRoom");
+                SceneManager.LoadSceneAsync("SyncRoom");
             }
         }
     }

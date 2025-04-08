@@ -35,7 +35,7 @@ public class SyncRoomResultManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             Destroy(judgementManager.gameObject);
-            SceneManager.LoadScene("FreePlay");
+            SceneManager.LoadSceneAsync("Menu");
         }
     }
 
