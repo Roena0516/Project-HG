@@ -5399,6 +5399,7 @@ MonoBehaviour:
   - {fileID: 817014737}
   - {fileID: 1610696299}
   settedButtonInputRane: 0
+  setAutoPlayToggle: {fileID: 1347799517}
 --- !u!1 &1894505897
 GameObject:
   m_ObjectHideFlags: 0

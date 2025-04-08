@@ -38,6 +38,8 @@ public class MenuManager : MonoBehaviour
     private TextMeshProUGUI settings;
     private TextMeshProUGUI syncRoom;
 
+    public Toggle setAutoPlayToggle;
+
     private void Awake()
     {
         action = new MainInputAction();
@@ -224,6 +226,8 @@ public class MenuManager : MonoBehaviour
         freePlay = freePlayTransform.gameObject.GetComponent<TextMeshProUGUI>();
         settings = settingsTransform.gameObject.GetComponent<TextMeshProUGUI>();
         syncRoom = syncRoomTransform.gameObject.GetComponent<TextMeshProUGUI>();
+
+        //setAutoPlayToggle.enabled = settingsManager.isAutoPlay;
 
         SetMenu(1);
     }
