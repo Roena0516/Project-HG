@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 [System.Serializable]
 public class SongInfoClass
@@ -36,6 +37,8 @@ public class LoadManager : MonoBehaviour
     public List<NoteClass> notes;
 
     private SettingsManager settings;
+    private LevelEditer levelEditer;
+    public GameManager gameManager;
 
     public static LoadManager Instance { get; private set; }
 
@@ -54,8 +57,24 @@ public class LoadManager : MonoBehaviour
     private void Start()
     {
         settings = SettingsManager.Instance;
+        levelEditer = LevelEditer.Instance;
 
-        LoadFromJson(Path.Combine(settings.fileName));
+        if (!SceneManager.GetSceneByName("LevelEditor").isLoaded)
+        {
+            LoadFromJson(Path.Combine(settings.fileName));
+        }
+        else
+        {
+            info = levelEditer.saveManager.info;
+            notes = levelEditer.saveManager.notes;
+
+            settings.eventName = info.eventName;
+
+            Debug.Log($"1{levelEditer.eventName}");
+
+            Debug.Log("Chart loaded successfully!");
+            Debug.Log($"{info.artist}");
+        }
     }
 
     public void LoadFromJson(string filePath)

@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -10,6 +11,8 @@ public class GameManager : MonoBehaviour
     public bool isTest;
 
     public static GameManager Instance { get; private set; }
+
+    private LevelEditer levelEditor;
 
     private void Awake()
     {
@@ -23,10 +26,24 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    [System.Obsolete]
     private void Start()
     {
         isLevelEnd = false;
+        isTest = SceneManager.GetSceneByName("LevelEditor").isLoaded;
         isSyncRoom = SceneManager.GetSceneByName("SyncRoom").isLoaded;
+
+        if (isTest)
+        {
+            EventSystem[] eventSystems = FindObjectsOfType<EventSystem>();
+            if (eventSystems.Length > 1)
+            {
+                for (int i = 1; i < eventSystems.Length; i++)
+                {
+                    Destroy(eventSystems[i].gameObject);
+                }
+            }
+        }
     }
 
     private void Update()
@@ -42,10 +59,19 @@ public class GameManager : MonoBehaviour
             {
                 SceneManager.LoadSceneAsync("Menu");
             }
-            else
+            if (isTest)
             {
-                SceneManager.LoadSceneAsync("FreePlay");
+                levelEditor = LevelEditer.Instance;
+                levelEditor.canvas.SetActive(true);
+                Scene editorScene = SceneManager.GetSceneByName("LevelEditor");
+                if (editorScene.IsValid() && editorScene.isLoaded)
+                {
+                    SceneManager.SetActiveScene(editorScene);
+                }
+                SceneManager.UnloadSceneAsync("InGame");
+                return;
             }
+            SceneManager.LoadSceneAsync("FreePlay");
         }
 
         if (isLevelEnd)
@@ -71,10 +97,6 @@ public class GameManager : MonoBehaviour
             {
                 SceneManager.LoadSceneAsync("Result");
             }
-        }
-        else
-        {
-            SceneManager.UnloadSceneAsync("LevelEditorTest");
         }
 
         yield break;
