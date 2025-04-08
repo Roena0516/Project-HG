@@ -291,7 +291,7 @@ public class LineInputChecker : MonoBehaviour
         SpriteRenderer renderer = Lines[lineNumber].GetComponent<SpriteRenderer>();
 
         float elapsedTime = 0f;
-        float startAlpha = 0.5f;
+        float startAlpha = 0.25f;
         float duration = 0.0625f;
         float targetAlpha = 0f;
 
