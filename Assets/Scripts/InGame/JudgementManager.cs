@@ -19,6 +19,7 @@ public class JudgementManager : MonoBehaviour
     public GameManager gameManager;
     public SyncRoomManager syncRoomManager;
     private SettingsManager settings;
+    public ParticleManager particle;
 
     public bool isAP;
     public bool isFC;
@@ -282,6 +283,11 @@ public class JudgementManager : MonoBehaviour
             gameManager.isLevelEnd = true;
         }
         StartCoroutine(JudegementTextShower(judgement, Ms, note.position));
+
+        if (judgement != "Miss")
+        {
+            particle.EmitParticle(note.position - 1);
+        }
 
         if (gameManager.isSyncRoom && judgement != "Miss")
         {
