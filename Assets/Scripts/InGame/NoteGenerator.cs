@@ -89,6 +89,14 @@ public class NoteGenerator : MonoBehaviour
         {
             randomRane.ShuffleBySplit(2);
         }
+        if (settings.effectOption == "L. Quater Random")
+        {
+            randomRane.ShuffleBySplit(1);
+        }
+        if (settings.effectOption == "R. Quater Random")
+        {
+            randomRane.ShuffleBySplit(3);
+        }
 
         StartCoroutine(NoteGenerate());
     }
