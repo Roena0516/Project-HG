@@ -67,6 +67,28 @@ public class SongListShower : MonoBehaviour
         speedText.text = $"{settings.speed:F1}";
 
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
+        Debug.Log(settings.effectOption);
+        if (settings.effectOption == "None")
+        {
+            dropdown.value = 0;
+        }
+        if (settings.effectOption == "Random")
+        {
+            dropdown.value = 1;
+        }
+        if (settings.effectOption == "Half Random")
+        {
+            dropdown.value = 2;
+        }
+        if (settings.effectOption == "L. Quater Random")
+        {
+            dropdown.value = 3;
+        }
+        if (settings.effectOption == "R. Quater Random")
+        {
+            dropdown.value = 4;
+        }
+        Debug.Log($"value : {dropdown.value}");
     }
 
     public void Shower()

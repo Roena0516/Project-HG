@@ -10,6 +10,7 @@ public class CompleteLoading : MonoBehaviour
         settingsManager = SettingsManager.Instance;
         settingsManager.sync = 0f;
         settingsManager.speed = 4.0f;
+        settingsManager.effectOption = "None";
 
         DontDestroyOnLoad(settingsManager.gameObject);
 
