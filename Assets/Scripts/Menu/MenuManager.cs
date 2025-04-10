@@ -4,6 +4,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using System.Collections.Generic;
+using System.Collections;
 
 public class MenuManager : MonoBehaviour
 {
@@ -40,6 +41,10 @@ public class MenuManager : MonoBehaviour
 
     public Toggle setAutoPlayToggle;
 
+    public List<InputAction> LineActions;
+
+    private float sync;
+
     private void Awake()
     {
         action = new MainInputAction();
@@ -47,6 +52,11 @@ public class MenuManager : MonoBehaviour
         listDown = action.Menu.ListDown;
         menuSelect = action.Menu.MenuSelect;
         exit = action.Menu.Exit;
+
+        LineActions.Add(action.Temp.Line1Action);
+        LineActions.Add(action.Temp.Line2Action);
+        LineActions.Add(action.Temp.Line3Action);
+        LineActions.Add(action.Temp.Line4Action);
     }
 
     [System.Obsolete]
@@ -63,6 +73,11 @@ public class MenuManager : MonoBehaviour
 
         exit.Enable();
         exit.started += Started;
+
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].Enable();
+        }
     }
 
     [System.Obsolete]
@@ -79,6 +94,11 @@ public class MenuManager : MonoBehaviour
 
         exit.Disable();
         exit.started -= Started;
+
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].Disable();
+        }
     }
 
     [System.Obsolete]
@@ -167,7 +187,7 @@ public class MenuManager : MonoBehaviour
     private void SetSettingsPanel()
     {
         settingsPanel.SetActive(true);
-        musicDelayValue.text = $"{settingsManager.sync}ms";
+        musicDelayValue.text = $"{settingsManager.settings.sync}ms";
 
         for (int i = 0; i < 4; i++)
         {
@@ -177,8 +197,8 @@ public class MenuManager : MonoBehaviour
 
     public void ChangeSync(float duration)
     {
-        settingsManager.sync += duration;
-        musicDelayValue.text = $"{settingsManager.sync}ms";
+        sync += duration;
+        musicDelayValue.text = $"{sync}ms";
     }
 
     public void SetKeyBindsInput(int rane)
@@ -190,15 +210,15 @@ public class MenuManager : MonoBehaviour
 
     private void Rebind(int rane)
     {
-        settingsManager.LineActions[rane - 1].Disable();
-        settingsManager.LineActions[rane - 1].PerformInteractiveRebinding()
+        LineActions[rane - 1].Disable();
+        LineActions[rane - 1].PerformInteractiveRebinding()
         .WithControlsExcluding("Mouse")
         .OnComplete(operation => // 리바인딩 완료 시 실행
                 {
-            Debug.Log($"{settingsManager.LineActions[rane - 1].bindings[0].effectivePath}");
+            Debug.Log($"{LineActions[rane - 1].bindings[0].effectivePath}");
             operation.Dispose(); // 메모리 해제
-                    settingsManager.LineActions[rane - 1].Enable(); // 다시 활성화
-                    RaneButtonText[rane - 1].text = $"{settingsManager.LineActions[rane - 1].bindings[0].ToDisplayString()}";
+                    LineActions[rane - 1].Enable(); // 다시 활성화
+                    RaneButtonText[rane - 1].text = $"{LineActions[rane - 1].bindings[0].ToDisplayString()}";
         })
         .Start(); // 리바인딩 시작
         settedButtonInputRane = 0;
@@ -207,6 +227,28 @@ public class MenuManager : MonoBehaviour
     public void SetAutoPlay(bool setted)
     {
         settingsManager.isAutoPlay = setted;
+    }
+
+    public void SaveSettingsData()
+    {
+        for (int i = 0; i < 4; i++)
+        {
+            LineActions[i].ApplyBindingOverride(settingsManager.LineActions[i].bindings[0].path);
+        }
+
+        Debug.Log(LineActions[0].bindings[0].path);
+
+        settingsManager.settings.KeyBinds = new()
+        {
+            $"{LineActions[0].bindings[0].path}",
+            $"{LineActions[1].bindings[0].path}",
+            $"{LineActions[2].bindings[0].path}",
+            $"{LineActions[3].bindings[0].path}"
+        };
+
+        settingsManager.settings.sync = sync;
+
+        settingsManager.SaveSettings();
     }
 
     private void Start()
@@ -219,6 +261,8 @@ public class MenuManager : MonoBehaviour
 
         settingsManager = SettingsManager.Instance;
 
+        sync = settingsManager.settings.sync;
+
         freePlayTransform = menuFolder.transform.Find("FreePlay");
         settingsTransform = menuFolder.transform.Find("Settings");
         syncRoomTransform = menuFolder.transform.Find("SyncRoom");
@@ -228,6 +272,11 @@ public class MenuManager : MonoBehaviour
         syncRoom = syncRoomTransform.gameObject.GetComponent<TextMeshProUGUI>();
 
         //setAutoPlayToggle.enabled = settingsManager.isAutoPlay;
+
+        LineActions[0].ApplyBindingOverride(settingsManager.settings.KeyBinds[0]);
+        LineActions[1].ApplyBindingOverride(settingsManager.settings.KeyBinds[1]);
+        LineActions[2].ApplyBindingOverride(settingsManager.settings.KeyBinds[2]);
+        LineActions[3].ApplyBindingOverride(settingsManager.settings.KeyBinds[3]);
 
         SetMenu(1);
     }

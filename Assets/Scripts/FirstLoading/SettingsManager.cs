@@ -1,11 +1,28 @@
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+public class GameSettings
+{
+    public float sync = 0f;
+    public float speed = 2.0f;
+    public string effectOption = "None";
+
+    public List<string> KeyBinds = new()
+    {
+        "keyboard/D",
+        "keyboard/F",
+        "keyboard/J",
+        "keyboard/K"
+    };
+}
+
 public class SettingsManager : MonoBehaviour
 {
-    public float sync;
-    public float speed;
+    public GameSettings settings;
+
+    private static readonly string filePath = Application.streamingAssetsPath + "/settings.json";
 
     public string eventName;
 
@@ -17,8 +34,6 @@ public class SettingsManager : MonoBehaviour
 
     public bool isAutoPlay;
 
-    public string effectOption;
-
     public static SettingsManager Instance { get; private set; }
 
     private void Awake()
@@ -29,7 +44,7 @@ public class SettingsManager : MonoBehaviour
         LineActions.Add(action.Player.Line3Action);
         LineActions.Add(action.Player.Line4Action);
 
-        effectOption = "None";
+        settings = new();
 
         if (Instance == null)
         {
@@ -39,6 +54,30 @@ public class SettingsManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
+
+    public void LoadSettings()
+    {
+        if (File.Exists(filePath))
+        {
+            string json = File.ReadAllText(filePath);
+            settings = JsonUtility.FromJson<GameSettings>(json);
+
+            Debug.Log("settings.json loaded successfully!");
+        }
+        else
+        {
+            Debug.LogError("settings.json not found at: " + filePath);
+            SaveSettings();
+        }
+    }
+
+    public void SaveSettings()
+    {
+        string json = JsonUtility.ToJson(settings, true);
+
+        File.WriteAllText(filePath, json);
+        Debug.Log("settings.json saved to: " + filePath);
     }
 
     [System.Obsolete]
@@ -66,11 +105,11 @@ public class SettingsManager : MonoBehaviour
 
     public void SetSync(string inputed)
     {
-        float.TryParse(inputed, out sync);
+        float.TryParse(inputed, out settings.sync);
     }
 
     public void SetSpeed(string inputed)
     {
-        float.TryParse(inputed, out speed);
+        float.TryParse(inputed, out settings.speed);
     }
 }

@@ -73,7 +73,7 @@ public class NoteGenerator : MonoBehaviour
 
         settings = SettingsManager.Instance;
 
-        speed *= settings.speed;
+        speed *= settings.settings.speed;
 
         fallTime = distance / speed * 1000f;
 
@@ -81,19 +81,19 @@ public class NoteGenerator : MonoBehaviour
         noteTypeCounts["hold"] = 0;
         noteTypeCounts["up"] = 0;
 
-        if (settings.effectOption == "Random")
+        if (settings.settings.effectOption == "Random")
         {
             randomRane.Shuffle();
         }
-        if (settings.effectOption == "Half Random")
+        if (settings.settings.effectOption == "Half Random")
         {
             randomRane.ShuffleBySplit(2);
         }
-        if (settings.effectOption == "L. Quater Random")
+        if (settings.settings.effectOption == "L. Quater Random")
         {
             randomRane.ShuffleBySplit(1);
         }
-        if (settings.effectOption == "R. Quater Random")
+        if (settings.settings.effectOption == "R. Quater Random")
         {
             randomRane.ShuffleBySplit(3);
         }

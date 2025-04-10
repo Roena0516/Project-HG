@@ -77,7 +77,7 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Bad"] = 0;
         judgeCount["Miss"] = 0;
 
-        speedText.text = $"{settings.speed:F1}";
+        speedText.text = $"{settings.settings.speed:F1}";
 
         StartCoroutine(IndicatorSetter());
         ClearCombo();
