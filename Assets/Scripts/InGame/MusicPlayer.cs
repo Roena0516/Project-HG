@@ -33,7 +33,7 @@ public class MusicPlayer : MonoBehaviour
     {
         settings = SettingsManager.Instance;
 
-        sync = (settings.sync / 1000f) + 2.6f; // + 2f - 0.1f + 0.7f
+        sync = (settings.settings.sync / 1000f) + 2.6f; // + 2f - 0.1f + 0.7f
 
         StartCoroutine(StartSong());
     }

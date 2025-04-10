@@ -90,12 +90,12 @@ public class LineInputChecker : MonoBehaviour
 
     public void SetSpeed(float duration)
     {
-        if (settings.speed + duration >= 1.0 && settings.speed + duration <= 10.1)
+        if (settings.settings.speed + duration >= 1.0 && settings.settings.speed + duration <= 10.1)
         {
-            settings.speed += duration;
-            noteGenerator.speed = 4.5f * settings.speed;
+            settings.SetSpeed($"{settings.settings.speed += duration}");
+            noteGenerator.speed = 4.5f * settings.settings.speed;
             noteGenerator.fallTime = noteGenerator.distance / noteGenerator.speed * 1000f;
-            judgementManager.speedText.text = $"{settings.speed:F1}";
+            judgementManager.speedText.text = $"{settings.settings.speed:F1}";
         }
     }
 

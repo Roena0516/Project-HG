@@ -536,6 +536,94 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""Temp"",
+            ""id"": ""771df4de-0ff9-4157-b65a-0d18de3e1ca2"",
+            ""actions"": [
+                {
+                    ""name"": ""Line1Action"",
+                    ""type"": ""Button"",
+                    ""id"": ""da792158-35cb-48db-b39e-c083cc3ab553"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Line2Action"",
+                    ""type"": ""Button"",
+                    ""id"": ""e7711184-c8e1-4da5-98b7-638624af8937"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Line3Action"",
+                    ""type"": ""Button"",
+                    ""id"": ""def747a2-9f15-4e31-a026-fcd15871c7b8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Line4Action"",
+                    ""type"": ""Button"",
+                    ""id"": ""dd6e9bea-b388-458d-8fe6-9b58f6e8d72b"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""a6ba7fd9-acdd-4758-abd8-52303e6bf163"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Line1Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96a8db14-8454-462a-a06a-e0e0b23c4b00"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Line2Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a0849dff-8e86-4d66-805a-ae0406c3f421"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Line3Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dd136e5a-5887-411f-ad7c-cf62468c981d"",
+                    ""path"": ""<Keyboard>/k"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Line4Action"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": []
@@ -565,6 +653,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         m_Menu_ListDown = m_Menu.FindAction("ListDown", throwIfNotFound: true);
         m_Menu_MenuSelect = m_Menu.FindAction("MenuSelect", throwIfNotFound: true);
         m_Menu_Exit = m_Menu.FindAction("Exit", throwIfNotFound: true);
+        // Temp
+        m_Temp = asset.FindActionMap("Temp", throwIfNotFound: true);
+        m_Temp_Line1Action = m_Temp.FindAction("Line1Action", throwIfNotFound: true);
+        m_Temp_Line2Action = m_Temp.FindAction("Line2Action", throwIfNotFound: true);
+        m_Temp_Line3Action = m_Temp.FindAction("Line3Action", throwIfNotFound: true);
+        m_Temp_Line4Action = m_Temp.FindAction("Line4Action", throwIfNotFound: true);
     }
 
     ~@MainInputAction()
@@ -572,6 +666,7 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         UnityEngine.Debug.Assert(!m_Player.enabled, "This will cause a leak and performance issues, MainInputAction.Player.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_FreePlay.enabled, "This will cause a leak and performance issues, MainInputAction.FreePlay.Disable() has not been called.");
         UnityEngine.Debug.Assert(!m_Menu.enabled, "This will cause a leak and performance issues, MainInputAction.Menu.Disable() has not been called.");
+        UnityEngine.Debug.Assert(!m_Temp.enabled, "This will cause a leak and performance issues, MainInputAction.Temp.Disable() has not been called.");
     }
 
     public void Dispose()
@@ -895,6 +990,76 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         }
     }
     public MenuActions @Menu => new MenuActions(this);
+
+    // Temp
+    private readonly InputActionMap m_Temp;
+    private List<ITempActions> m_TempActionsCallbackInterfaces = new List<ITempActions>();
+    private readonly InputAction m_Temp_Line1Action;
+    private readonly InputAction m_Temp_Line2Action;
+    private readonly InputAction m_Temp_Line3Action;
+    private readonly InputAction m_Temp_Line4Action;
+    public struct TempActions
+    {
+        private @MainInputAction m_Wrapper;
+        public TempActions(@MainInputAction wrapper) { m_Wrapper = wrapper; }
+        public InputAction @Line1Action => m_Wrapper.m_Temp_Line1Action;
+        public InputAction @Line2Action => m_Wrapper.m_Temp_Line2Action;
+        public InputAction @Line3Action => m_Wrapper.m_Temp_Line3Action;
+        public InputAction @Line4Action => m_Wrapper.m_Temp_Line4Action;
+        public InputActionMap Get() { return m_Wrapper.m_Temp; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(TempActions set) { return set.Get(); }
+        public void AddCallbacks(ITempActions instance)
+        {
+            if (instance == null || m_Wrapper.m_TempActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_TempActionsCallbackInterfaces.Add(instance);
+            @Line1Action.started += instance.OnLine1Action;
+            @Line1Action.performed += instance.OnLine1Action;
+            @Line1Action.canceled += instance.OnLine1Action;
+            @Line2Action.started += instance.OnLine2Action;
+            @Line2Action.performed += instance.OnLine2Action;
+            @Line2Action.canceled += instance.OnLine2Action;
+            @Line3Action.started += instance.OnLine3Action;
+            @Line3Action.performed += instance.OnLine3Action;
+            @Line3Action.canceled += instance.OnLine3Action;
+            @Line4Action.started += instance.OnLine4Action;
+            @Line4Action.performed += instance.OnLine4Action;
+            @Line4Action.canceled += instance.OnLine4Action;
+        }
+
+        private void UnregisterCallbacks(ITempActions instance)
+        {
+            @Line1Action.started -= instance.OnLine1Action;
+            @Line1Action.performed -= instance.OnLine1Action;
+            @Line1Action.canceled -= instance.OnLine1Action;
+            @Line2Action.started -= instance.OnLine2Action;
+            @Line2Action.performed -= instance.OnLine2Action;
+            @Line2Action.canceled -= instance.OnLine2Action;
+            @Line3Action.started -= instance.OnLine3Action;
+            @Line3Action.performed -= instance.OnLine3Action;
+            @Line3Action.canceled -= instance.OnLine3Action;
+            @Line4Action.started -= instance.OnLine4Action;
+            @Line4Action.performed -= instance.OnLine4Action;
+            @Line4Action.canceled -= instance.OnLine4Action;
+        }
+
+        public void RemoveCallbacks(ITempActions instance)
+        {
+            if (m_Wrapper.m_TempActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(ITempActions instance)
+        {
+            foreach (var item in m_Wrapper.m_TempActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_TempActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public TempActions @Temp => new TempActions(this);
     public interface IPlayerActions
     {
         void OnLine1Action(InputAction.CallbackContext context);
@@ -922,5 +1087,12 @@ public partial class @MainInputAction: IInputActionCollection2, IDisposable
         void OnListDown(InputAction.CallbackContext context);
         void OnMenuSelect(InputAction.CallbackContext context);
         void OnExit(InputAction.CallbackContext context);
+    }
+    public interface ITempActions
+    {
+        void OnLine1Action(InputAction.CallbackContext context);
+        void OnLine2Action(InputAction.CallbackContext context);
+        void OnLine3Action(InputAction.CallbackContext context);
+        void OnLine4Action(InputAction.CallbackContext context);
     }
 }

@@ -64,6 +64,6 @@ public class SyncRoomResultManager : MonoBehaviour
 
     public void SetSync()
     {
-        settings.sync = syncRoomManager.avg;
+        settings.settings.sync = syncRoomManager.avg;
     }
 }

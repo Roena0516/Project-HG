@@ -1,3 +1,4 @@
+using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -8,9 +9,7 @@ public class CompleteLoading : MonoBehaviour
     private void Start()
     {
         settingsManager = SettingsManager.Instance;
-        settingsManager.sync = 0f;
-        settingsManager.speed = 4.0f;
-        settingsManager.effectOption = "None";
+        settingsManager.LoadSettings();
 
         DontDestroyOnLoad(settingsManager.gameObject);
 

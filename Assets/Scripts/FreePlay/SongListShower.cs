@@ -64,27 +64,27 @@ public class SongListShower : MonoBehaviour
         listNum = 1;
         selectedDifficulty = 1;
 
-        speedText.text = $"{settings.speed:F1}";
+        speedText.text = $"{settings.settings.speed:F1}";
 
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
-        Debug.Log(settings.effectOption);
-        if (settings.effectOption == "None")
+        Debug.Log(settings.settings.effectOption);
+        if (settings.settings.effectOption == "None")
         {
             dropdown.value = 0;
         }
-        if (settings.effectOption == "Random")
+        if (settings.settings.effectOption == "Random")
         {
             dropdown.value = 1;
         }
-        if (settings.effectOption == "Half Random")
+        if (settings.settings.effectOption == "Half Random")
         {
             dropdown.value = 2;
         }
-        if (settings.effectOption == "L. Quater Random")
+        if (settings.settings.effectOption == "L. Quater Random")
         {
             dropdown.value = 3;
         }
-        if (settings.effectOption == "R. Quater Random")
+        if (settings.settings.effectOption == "R. Quater Random")
         {
             dropdown.value = 4;
         }
@@ -344,13 +344,13 @@ public class SongListShower : MonoBehaviour
 
     public void SpeedOneUp()
     {
-        settings.speed += 0.1f;
-        speedText.text = $"{settings.speed:F1}";
+        settings.settings.speed += 0.1f;
+        speedText.text = $"{settings.settings.speed:F1}";
     }
     public void SpeedOneDown()
     {
-        settings.speed -= 0.1f;
-        speedText.text = $"{settings.speed:F1}";
+        settings.settings.speed -= 0.1f;
+        speedText.text = $"{settings.settings.speed:F1}";
     }
 
     [System.Obsolete]
@@ -625,6 +625,6 @@ public class SongListShower : MonoBehaviour
 
     public void DropdownHandler(string option)
     {
-        settings.effectOption = option;
+        settings.settings.effectOption = option;
     }
 }
