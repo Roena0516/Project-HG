@@ -233,17 +233,15 @@ public class MenuManager : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            LineActions[i].ApplyBindingOverride(settingsManager.LineActions[i].bindings[0].path);
+            settingsManager.LineActions[i].ApplyBindingOverride(LineActions[i].bindings[0].effectivePath);
         }
-
-        Debug.Log(LineActions[0].bindings[0].path);
 
         settingsManager.settings.KeyBinds = new()
         {
-            $"{LineActions[0].bindings[0].path}",
-            $"{LineActions[1].bindings[0].path}",
-            $"{LineActions[2].bindings[0].path}",
-            $"{LineActions[3].bindings[0].path}"
+            $"{LineActions[0].bindings[0].effectivePath}",
+            $"{LineActions[1].bindings[0].effectivePath}",
+            $"{LineActions[2].bindings[0].effectivePath}",
+            $"{LineActions[3].bindings[0].effectivePath}"
         };
 
         settingsManager.settings.sync = sync;
