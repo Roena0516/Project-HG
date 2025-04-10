@@ -63,6 +63,11 @@ public class SettingsManager : MonoBehaviour
             string json = File.ReadAllText(filePath);
             settings = JsonUtility.FromJson<GameSettings>(json);
 
+            for (int i = 0; i < 4; i++)
+            {
+                LineActions[i].ApplyBindingOverride(settings.KeyBinds[i]);
+            }
+
             Debug.Log("settings.json loaded successfully!");
         }
         else
