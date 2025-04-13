@@ -29,6 +29,8 @@ public class LevelEditer : MonoBehaviour
     public GameObject addIndicator;
     public GameObject removeIndicator;
 
+    public GameObject settingsPanel;
+
     private Coroutine currentMoveSliderer;
 
     public int madi;
@@ -1479,6 +1481,11 @@ public class LevelEditer : MonoBehaviour
         {
             SceneManager.SetActiveScene(testScene);
         }
+    }
+
+    public void OpenSettingsPanel()
+    {
+        settingsPanel.SetActive(!settingsPanel.activeSelf);
     }
 
 
