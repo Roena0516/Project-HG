@@ -31,6 +31,11 @@ public class LevelEditer : MonoBehaviour
 
     public GameObject settingsPanel;
 
+    public RectTransform rectTransform;
+    public Canvas canvasComponent;
+
+    public string selectedBeat;
+
     private Coroutine currentMoveSliderer;
 
     public int madi;
@@ -137,6 +142,8 @@ public class LevelEditer : MonoBehaviour
         rect132 = beat132.GetComponent<RectTransform>();
         rect148 = beat148.GetComponent<RectTransform>();
         rect164 = beat164.GetComponent<RectTransform>();
+
+        selectedBeat = "1_4";
 
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
 
@@ -1062,13 +1069,46 @@ public class LevelEditer : MonoBehaviour
 
     private void OnDropdownValueChanged(int index)
     {
-        string selectedOption = dropdown.options[index].text;
-        DropdownHandler(selectedOption);
+        selectedBeat = dropdown.options[index].text;
+        switch (dropdown.options[index].text)
+        {
+            case "1/3":
+                selectedBeat = "1_3";
+                break;
+            case "1/4":
+                selectedBeat = "1_4";
+                break;
+            case "1/6":
+                selectedBeat = "1_6";
+                break;
+            case "1/8":
+                selectedBeat = "1_8";
+                break;
+            case "1/12":
+                selectedBeat = "1_12";
+                break;
+            case "1/16":
+                selectedBeat = "1_16";
+                break;
+            case "1/24":
+                selectedBeat = "1_24";
+                break;
+            case "1/32":
+                selectedBeat = "1_32";
+                break;
+            case "1/48":
+                selectedBeat = "1_48";
+                break;
+            case "1/64":
+                selectedBeat = "1_64";
+                break;
+        }
+        DropdownHandler(selectedBeat);
     }
 
     public void DropdownHandler(string option)
     {
-        if (option == "1/3")
+        if (option == "1_3")
         {
             parentFolder13.SetActive(true);
             parentFolder14.SetActive(false);
@@ -1081,7 +1121,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/4")
+        if (option == "1_4")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(true);
@@ -1094,7 +1134,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/6")
+        if (option == "1_6")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1107,7 +1147,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/8")
+        if (option == "1_8")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1120,7 +1160,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/12")
+        if (option == "1_12")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1133,7 +1173,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/16")
+        if (option == "1_16")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1146,7 +1186,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/24")
+        if (option == "1_24")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1159,7 +1199,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/32")
+        if (option == "1_32")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1172,7 +1212,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(false);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/48")
+        if (option == "1_48")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1185,7 +1225,7 @@ public class LevelEditer : MonoBehaviour
             parentFolder148.SetActive(true);
             parentFolder164.SetActive(false);
         }
-        if (option == "1/64")
+        if (option == "1_64")
         {
             parentFolder13.SetActive(false);
             parentFolder14.SetActive(false);
@@ -1207,11 +1247,13 @@ public class LevelEditer : MonoBehaviour
         {
             gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.down);
             CalcCurrentMusicTime();
+            //StartCoroutine(GridModify());
         }
         if (Input.GetKey(KeyCode.S))
         {
             gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.up);
             CalcCurrentMusicTime();
+            //StartCoroutine(GridModify());
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -1240,7 +1282,31 @@ public class LevelEditer : MonoBehaviour
         }
 
         UpdateMusicTime();
-        UpdateInputFieldValue();
+        if (settingsPanel.activeSelf)
+        {
+            UpdateInputFieldValue();
+        }
+    }
+
+    private IEnumerator GridModify()
+    {
+        Transform buttonParent = gridFolder.transform.Find("Buttons").Find(selectedBeat);
+        //GameObject button;
+
+        for (int i = 0; i < buttonParent.childCount; i++)
+        {
+            GameObject button = buttonParent.GetChild(i).gameObject;
+            RectTransform targetRect = button.GetComponent<RectTransform>();
+
+            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(canvasComponent.worldCamera, targetRect.position);
+            bool isVisible = RectTransformUtility.RectangleContainsScreenPoint(rectTransform, screenPos, canvasComponent.worldCamera);
+
+            button.SetActive(isVisible);
+
+            yield return null;
+        }
+
+        yield break;
     }
 
     public TMP_InputField BPMInput;
@@ -1486,6 +1552,10 @@ public class LevelEditer : MonoBehaviour
     public void OpenSettingsPanel()
     {
         settingsPanel.SetActive(!settingsPanel.activeSelf);
+        if (settingsPanel.activeSelf)
+        {
+
+        }
     }
 
 
