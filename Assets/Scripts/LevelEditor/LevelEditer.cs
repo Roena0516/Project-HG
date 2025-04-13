@@ -1425,7 +1425,7 @@ public class LevelEditer : MonoBehaviour
                 positionX = 158f;
             }
 
-            float positionY = -211f + (320f * note.beat);
+            float positionY = -211f + (320f * note.beat) + gridFolder.transform.position.y;
 
             if (note.type == "normal")
             {
