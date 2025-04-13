@@ -1389,6 +1389,9 @@ public class LevelEditer : MonoBehaviour
             level = container.info.level;
             eventName = container.info.eventName;
 
+            SetEventInstance(eventName);
+            SetScrollSpeed();
+
             saveManager.notes = container.notes;
 
             Debug.Log("Chart loaded successfully!");
@@ -1479,6 +1482,11 @@ public class LevelEditer : MonoBehaviour
     public void SetBPM(string inputed)
     {
         float.TryParse(inputed, out BPM);
+        SetScrollSpeed();
+    }
+
+    private void SetScrollSpeed()
+    {
         scrollSpeed = 160f / (1000f * 60f / BPM);
     }
 
@@ -1500,7 +1508,12 @@ public class LevelEditer : MonoBehaviour
     public void SetEventName(string inputed)
     {
         eventName = inputed;
-        eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
+        SetEventInstance(eventName);
+    }
+
+    private void SetEventInstance(string name)
+    {
+        eventInstance = RuntimeManager.CreateInstance($"event:/{name}");
 
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
 
