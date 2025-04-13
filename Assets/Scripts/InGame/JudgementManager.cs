@@ -88,12 +88,8 @@ public class JudgementManager : MonoBehaviour
     {
         for (int i = 0; i < 4; i++)
         {
-            Color temp = fastIndicators[i].color;
-            temp.a = 0f;
-            fastIndicators[i].color = temp;
-            temp = slowIndicators[i].color;
-            temp.a = 0f;
-            slowIndicators[i].color = temp;
+            fastIndicators[i].color = fastIndicators[i].color.SetAlpha(0f);
+            slowIndicators[i].color = slowIndicators[i].color.SetAlpha(0f);
         }
 
         yield break;
