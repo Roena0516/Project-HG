@@ -604,6 +604,8 @@ public class SongListShower : MonoBehaviour
         SongListInfoSetter setter = contentFolder.transform.GetChild(n).GetComponent<SongListInfoSetter>();
 
         settings.SetFileName($"{setter.filePath[selectedDifficulty - 1]}");
+        settings.songTitle = setter.title;
+        settings.songArtist = setter.artist;
 
         SceneManager.LoadSceneAsync("InGame");
     }

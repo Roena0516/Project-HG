@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,10 +24,18 @@ public class LineInputChecker : MonoBehaviour
 
     public List<bool> isHolding;
 
+    public List<GameObject> buttons;
+
     private bool isSpeedHold;
     public bool isAutoPlay;
 
     private Coroutine repeatCoroutine;
+
+    public List<float> originX;
+    public float originY;
+
+    public List<Coroutine> currentDownButtonRoutines;
+    public List<Coroutine> currentUpButtonRoutines;
 
     public static LineInputChecker Instance { get; private set; }
 
@@ -180,9 +189,19 @@ public class LineInputChecker : MonoBehaviour
         isAutoPlay = settings.isAutoPlay;
         Debug.Log($"Start Time : {startTime}");
 
+        isHolding = new List<bool>();
+        currentDownButtonRoutines = new List<Coroutine>();
+        currentUpButtonRoutines = new List<Coroutine>();
+        originX = new List<float>();
+        originY = buttons[0].transform.position.y;
+
         for (int i = 0; i < 4; i++)
         {
             isHolding.Add(false);
+            currentDownButtonRoutines.Add(null);
+            currentUpButtonRoutines.Add(null);
+            originX.Add(0);
+            originX[i] = buttons[i].transform.position.x;
         }
     }
 
@@ -250,6 +269,12 @@ public class LineInputChecker : MonoBehaviour
         judgementManager.Judge(raneNumber, currentTimeMs);
 
         StartCoroutine(DownLines(raneNumber));
+
+        if (currentDownButtonRoutines[raneNumber] != null)
+        {
+            StopCoroutine(currentDownButtonRoutines[raneNumber]);
+        }
+        currentDownButtonRoutines[raneNumber] = StartCoroutine(DownButton(raneNumber));
     }
     private void UpInput(int raneNumber)
     {
@@ -260,6 +285,38 @@ public class LineInputChecker : MonoBehaviour
         judgementManager.UpJudge(raneNumber, currentTimeMs);
 
         StartCoroutine(UpLines(raneNumber));
+
+        if (currentUpButtonRoutines[raneNumber] != null)
+        {
+            StopCoroutine(currentUpButtonRoutines[raneNumber]);
+        }
+        currentUpButtonRoutines[raneNumber] = StartCoroutine(UpButton(raneNumber));
+    }
+
+    private IEnumerator DownButton(int raneNumber)
+    {
+        Transform T = buttons[raneNumber].transform;
+
+        float elapsedTime = 0f;
+        Vector3 startPos = new Vector3(originX[raneNumber], T.position.y, 0f);
+        float duration = 0.05f;
+        Vector3 targetPos = new Vector3(originX[raneNumber], originY - 0.325f, 0f);
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            float easedT = Mathf.Sin(t * Mathf.PI * 0.5f);
+
+            T.position = Vector3.Lerp(startPos, targetPos, easedT);
+
+            yield return null;
+        }
+
+        T.position = targetPos;
+
+        currentDownButtonRoutines[raneNumber] = null;
+
+        yield break;
     }
 
     private IEnumerator DownLines(int lineNumber)
@@ -267,9 +324,9 @@ public class LineInputChecker : MonoBehaviour
         SpriteRenderer renderer = Lines[lineNumber].GetComponent<SpriteRenderer>();
 
         float elapsedTime = 0f;
-        float startAlpha = 0f;
-        float duration = 0.0625f;
-        float targetAlpha = 0.2f;
+        float startAlpha = 0.1f;
+        float duration = 0.01f;
+        float targetAlpha = 0.3f;
 
         while (elapsedTime < duration)
         {
@@ -286,14 +343,40 @@ public class LineInputChecker : MonoBehaviour
         yield break;
     }
 
+    private IEnumerator UpButton(int raneNumber)
+    {
+        Transform T = buttons[raneNumber].transform;
+
+        float elapsedTime = 0f;
+        Vector3 startPos = new Vector3(originX[raneNumber], T.position.y, 0f);
+        float duration = 0.05f;
+        Vector3 targetPos = new Vector3(originX[raneNumber], originY, 0f);
+        while (elapsedTime < duration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / duration);
+            float easedT = Mathf.Sin(t * Mathf.PI * 0.5f);
+
+            T.position = Vector3.Lerp(startPos, targetPos, easedT);
+
+            yield return null;
+        }
+
+        T.position = targetPos;
+
+        currentUpButtonRoutines[raneNumber] = null;
+
+        yield break;
+    }
+
     private IEnumerator UpLines(int lineNumber)
     {
         SpriteRenderer renderer = Lines[lineNumber].GetComponent<SpriteRenderer>();
 
         float elapsedTime = 0f;
-        float startAlpha = 0.25f;
-        float duration = 0.0625f;
-        float targetAlpha = 0f;
+        float startAlpha = 0.35f;
+        float duration = 0.01f;
+        float targetAlpha = 0.1f;
 
         while (elapsedTime < duration)
         {
