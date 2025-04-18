@@ -25,7 +25,8 @@ public class SettingsManager : MonoBehaviour
     private static readonly string filePath = Application.streamingAssetsPath + "/settings.json";
 
     public string eventName;
-
+    public string songTitle;
+    public string songArtist;
     public string fileName;
 
     public MainInputAction action;

@@ -7,6 +7,7 @@ using System.Linq;
 
 public class JudgementManager : MonoBehaviour
 {
+    private float perfectp = 25f;
     private float perfect = 40f;
     private float great = 60f;
     private float good = 110f;
@@ -25,10 +26,18 @@ public class JudgementManager : MonoBehaviour
     public bool isFC;
 
     public TextMeshProUGUI judgeText;
+    public TextMeshProUGUI plusJudgeText;
     public TextMeshProUGUI fastSlow;
     public TextMeshProUGUI comboText;
-    public TextMeshProUGUI rateText;
-    public TextMeshProUGUI judgeCountText;
+    public TextMeshProUGUI comboTitleText;
+    public TextMeshPro rateText;
+    public TextMeshPro perfectpCountText;
+    public TextMeshPro perfectCountText;
+    public TextMeshPro greatCountText;
+    public TextMeshPro goodCountText;
+    public TextMeshPro missCountText;
+    public TextMeshPro titleText;
+    public TextMeshPro artistText;
     public TextMeshProUGUI FCAPText;
     public TextMeshProUGUI speedText;
 
@@ -61,6 +70,7 @@ public class JudgementManager : MonoBehaviour
         Color tempColor = judgeText.color;
         tempColor.a = 0f;
         judgeText.color = tempColor;
+        plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
         fastSlow.color = tempColor;
         rate = 100f;
 
@@ -71,6 +81,7 @@ public class JudgementManager : MonoBehaviour
         noteTypeRate["hold"] = 0f;
         noteTypeRate["up"] = 0f;
 
+        judgeCount["PerfectP"] = 0;
         judgeCount["Perfect"] = 0;
         judgeCount["Great"] = 0;
         judgeCount["Good"] = 0;
@@ -78,6 +89,8 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Miss"] = 0;
 
         speedText.text = $"{settings.settings.speed:F1}";
+        titleText.text = settings.songTitle;
+        artistText.text = settings.songArtist;
 
         StartCoroutine(IndicatorSetter());
         ClearCombo();
@@ -132,6 +145,12 @@ public class JudgementManager : MonoBehaviour
                 SetHoldInputed(note);
                 break;
             }
+            if (timeDifference <= perfectp && note.type == "normal" && raneNumber + 1 == note.position && !note.isInputed)
+            {
+                PerformAction(note, "PerfectP", currentTimeMs);
+                AddCombo(1);
+                break;
+            }
             if (timeDifference <= perfect && note.type == "normal" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Perfect", currentTimeMs);
@@ -183,7 +202,7 @@ public class JudgementManager : MonoBehaviour
 
             if (timeDifference <= perfect && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
-                PerformAction(note, "Perfect", currentTimeMs);
+                PerformAction(note, "PerfectP", currentTimeMs);
                 AddCombo(1);
                 break;
             }
@@ -224,17 +243,23 @@ public class JudgementManager : MonoBehaviour
     {
         combo += amount;
         comboText.text = $"{combo}";
+        comboTitleText.color = comboTitleText.color.SetAlpha(1f);
     }
 
     public void ClearCombo()
     {
         combo = 0;
         comboText.text = $"";
+        comboTitleText.color = comboTitleText.color.SetAlpha(0f);
     }
 
     public void UpdateJudgeCountText()
     {
-        judgeCountText.text = $"{judgeCount["Miss"]}/{judgeCount["Bad"]}/{judgeCount["Good"]}/{judgeCount["Great"]}/{judgeCount["Perfect"]}";
+        perfectpCountText.text = $"{judgeCount["PerfectP"]}";
+        perfectCountText.text = $"{judgeCount["Perfect"]}";
+        greatCountText.text = $"{judgeCount["Great"]}";
+        goodCountText.text = $"{judgeCount["Good"]}";
+        missCountText.text = $"{judgeCount["Miss"] + judgeCount["Bad"]}";
     }
 
     public void PerformAction(NoteClass note, string judgement, double currentTimeMs)
@@ -284,7 +309,7 @@ public class JudgementManager : MonoBehaviour
 
         if (judgement != "Miss")
         {
-            particle.EmitParticle(note.position - 1);
+            //particle.EmitParticle(note.position - 1);
         }
 
         if (gameManager.isSyncRoom && judgement != "Miss")
@@ -317,7 +342,16 @@ public class JudgementManager : MonoBehaviour
         int index = position - 1;
         tempColor.a = 1f;
         judgeText.color = tempColor;
-        judgeText.text = $"{judgement}";
+        if (judgement == "PerfectP")
+        {
+            judgeText.text = "PERFECT";
+            plusJudgeText.color = plusJudgeText.color.SetAlpha(1f);
+        }
+        else
+        {
+            judgeText.text = $"{judgement.ToUpper()}";
+            plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
+        }
         if (Ms > 0)
         {
             tempColor = fastSlow.color;
@@ -355,6 +389,8 @@ public class JudgementManager : MonoBehaviour
         tempColor = judgeText.color;
         tempColor.a = 0;
         judgeText.color = tempColor;
+
+        plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
 
         tempColor = fastSlow.color;
         tempColor.a = 0;

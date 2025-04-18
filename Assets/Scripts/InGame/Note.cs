@@ -95,7 +95,7 @@ public class Note : MonoBehaviour
     {
         if (noteClass.type == "hold" && noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0 && noteClass.ms - (line.currentTime * 1000f) >= -160))
         {
-            line.judgementManager.PerformAction(noteClass, "Perfect", noteClass.ms);
+            line.judgementManager.PerformAction(noteClass, "PerfectP", noteClass.ms);
             line.judgementManager.AddCombo(1);
         }
     }
@@ -104,7 +104,7 @@ public class Note : MonoBehaviour
     {
         if (line.isAutoPlay && !noteClass.isInputed && (noteClass.ms - (line.currentTime * 1000f) <= 0))
         {
-            line.judgementManager.PerformAction(noteClass, "Perfect", noteClass.ms);
+            line.judgementManager.PerformAction(noteClass, "PerfectP", noteClass.ms);
             line.judgementManager.AddCombo(1);
         }
     }
