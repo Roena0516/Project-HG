@@ -297,26 +297,14 @@ public class LineInputChecker : MonoBehaviour
         }
     }
 
-    //private void PerformHold()
-    //{
-    //    var filteredNotes = noteGenerator.notes
-    //    .Where(note => Mathf.Abs((float)(note.ms - (currentTime * 1000))) <= 160)
-    //    .ToList();
-
-    //    foreach (NoteClass note in filteredNotes)
-    //    {
-    //        if (note.type == "hold" && note.isInputed && (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -160))
-    //        {
-    //            judgementManager.PerformAction(note, "Perfect", note.ms);
-    //            judgementManager.AddCombo(1);
-    //            break;
-    //        }
-    //    }
-    //}
-
-    private void DownInput(int raneNumber)
+    public void DownInput(int raneNumber, double inputTime = -1)
     {
-        currentTimeMs = currentTime * 1000f;
+        if (inputTime < 0)
+        {
+            inputTime = currentTime;
+        }
+
+        currentTimeMs = inputTime * 1000f;
 
         isHolding[raneNumber] = true;
 
@@ -331,9 +319,14 @@ public class LineInputChecker : MonoBehaviour
         currentDownButtonRoutines[raneNumber] = StartCoroutine(DownButton(raneNumber));
     }
 
-    private void UpInput(int raneNumber)
+    public void UpInput(int raneNumber, double inputTime = -1)
     {
-        currentTimeMs = currentTime * 1000f;
+        if (inputTime < 0)
+        {
+            inputTime = currentTime;
+        }
+
+        currentTimeMs = inputTime * 1000f;
 
         isHolding[raneNumber] = false;
 
