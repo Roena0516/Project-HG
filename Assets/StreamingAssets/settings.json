@@ -1,11 +1,11 @@
 {
-    "sync": 0.0,
+    "sync": -119.0,
     "speed": 3.999998092651367,
     "effectOption": "None",
     "KeyBinds": [
         "<Keyboard>/s",
         "<Keyboard>/d",
-        "<Keyboard>/semicolon",
-        "<Keyboard>/quote"
+        "<Keyboard>/l",
+        "<Keyboard>/semicolon"
     ]
 }

@@ -134,7 +134,8 @@ TextureImporter:
     secondaryTextures: []
     spriteCustomMetadata:
       entries: []
-    nameFileIdTable: {}
+    nameFileIdTable:
+      Gear3 3_0: -2824542526001223008
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

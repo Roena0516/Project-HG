@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -37,7 +38,11 @@ public class LineInputChecker : MonoBehaviour
     public List<Coroutine> currentDownButtonRoutines;
     public List<Coroutine> currentUpButtonRoutines;
 
+    private bool isEnd = false;
+
     public static LineInputChecker Instance { get; private set; }
+
+    public Thread chartPlayThread;
 
     private void Awake()
     {
@@ -61,6 +66,7 @@ public class LineInputChecker : MonoBehaviour
 
     private void OnEnable()
     {
+#if UNITY_STANDALONE_OSX
         for (int i = 0; i < 4; i++)
         {
             LineActions[i].Enable();
@@ -68,6 +74,7 @@ public class LineInputChecker : MonoBehaviour
             LineActions[i].performed += Performed;
             LineActions[i].canceled += Canceled;
         }
+#endif
 
         speedUp.Enable();
         speedUp.started += Started;
@@ -80,6 +87,7 @@ public class LineInputChecker : MonoBehaviour
 
     private void OnDisable()
     {
+#if UNITY_STANDALONE_OSX
         for (int i = 0; i < 4; i++)
         {
             LineActions[i].Disable();
@@ -87,6 +95,7 @@ public class LineInputChecker : MonoBehaviour
             LineActions[i].performed -= Performed;
             LineActions[i].canceled -= Canceled;
         }
+#endif
 
         speedUp.Disable();
         speedUp.started -= Started;
@@ -184,11 +193,6 @@ public class LineInputChecker : MonoBehaviour
 
     private void Start()
     {
-        currentTimeMs = 0d;
-        startTime = Time.time;
-        isAutoPlay = settings.isAutoPlay;
-        Debug.Log($"Start Time : {startTime}");
-
         isHolding = new List<bool>();
         currentDownButtonRoutines = new List<Coroutine>();
         currentUpButtonRoutines = new List<Coroutine>();
@@ -203,11 +207,61 @@ public class LineInputChecker : MonoBehaviour
             originX.Add(0);
             originX[i] = buttons[i].transform.position.x;
         }
+
+        Play();
+    }
+
+    public void Play()
+    {
+        currentTimeMs = 0d;
+        startTime = Time.time;
+        isAutoPlay = settings.isAutoPlay;
+        Debug.Log($"Start Time : {startTime}");
+
+#if UNITY_STANDALONE_WIN
+
+        chartPlayThread = new Thread(ChartPlayWorker);
+        chartPlayThread.IsBackground = true;
+        chartPlayThread.Start(8000L);
+
+#endif
+    }
+
+    private void ChartPlayWorker(object param)
+    {
+        long frequency = (long)param;
+
+        long interval = 10000000 / frequency;
+        var stopwatch = new System.Diagnostics.Stopwatch();
+        stopwatch.Start();
+        long prevTick = stopwatch.ElapsedTicks;
+        long correction = 0;
+
+        while (!isEnd)
+        {
+            long now = stopwatch.ElapsedTicks;
+            long timeDiff = now - prevTick;
+
+            if (timeDiff >= interval - correction)
+            {
+                double progress = now / 10000000d;
+                currentTime = progress;
+
+                correction = timeDiff - interval;
+                if (correction > interval)
+                {
+                    correction = interval;
+                }
+
+                prevTick = now;
+            }
+        }
     }
 
     void Update()
     {
         currentTime = Time.time - startTime;
+        isEnd = gameManager.isLevelEnd;
 
         if (isHolding[0])
         {
@@ -276,6 +330,7 @@ public class LineInputChecker : MonoBehaviour
         }
         currentDownButtonRoutines[raneNumber] = StartCoroutine(DownButton(raneNumber));
     }
+
     private void UpInput(int raneNumber)
     {
         currentTimeMs = currentTime * 1000f;

@@ -14,7 +14,6 @@ public class Note : MonoBehaviour
     private LineInputChecker line;
     private JudgementManager judgement;
     private NoteGenerator noteGenerator;
-    private MusicPlayer music; 
 
     public NoteClass noteClass;
 
@@ -34,7 +33,6 @@ public class Note : MonoBehaviour
         line = LineInputChecker.Instance;
         judgement = JudgementManager.Instance;
         noteGenerator = NoteGenerator.Instance;
-        music = MusicPlayer.Instance;
 
         speed = noteGenerator.speed;
         dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
@@ -54,17 +52,6 @@ public class Note : MonoBehaviour
         StopCoroutine(moveNoteRoutine);
     }
 
-    //public void MoveNote()
-    //{
-    //    dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
-    //    double elapsedTime = line.currentTime - dropStartTime;
-    //    float progress = (float)(elapsedTime * speed / (startY - endY));
-    //    //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
-    //    progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
-    //    float currentY = Mathf.Lerp(startY, endY, progress);
-    //    transform.position = new Vector2(transform.position.x, currentY);
-    //}
-
     public IEnumerator MoveNote()
     {
         while(true)
@@ -72,7 +59,6 @@ public class Note : MonoBehaviour
             dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
             double elapsedTime = line.currentTime - dropStartTime;
             float progress = (float)(elapsedTime * speed / (startY - endY));
-            //float progress = (float)(elapsedTime * (12f / noteGenerator.speed));
             progress = Mathf.Clamp01(progress);  // 0 ~ 1 사이로 제한
             float currentY = Mathf.Lerp(startY, endY, progress);
             transform.position = new Vector2(transform.position.x, currentY);
@@ -111,11 +97,6 @@ public class Note : MonoBehaviour
 
     void Update()
     {
-        //if (ShouldSetNote() && !isSet)
-        //{
-        //    SetNote();
-        //}
-
         speed = noteGenerator.speed;
 
         Misser();
@@ -124,14 +105,4 @@ public class Note : MonoBehaviour
 
         AutoPlayPerformer();
     }
-
-    private bool ShouldSetNote()
-    {
-        double targetTime = (ms - noteGenerator.fallTime * 1d) / 1000d;
-        return line.currentTime >= targetTime;
-    }
-    //public void SetSpeed(float spd)
-    //{
-    //    speed = spd;
-    //}
 }
