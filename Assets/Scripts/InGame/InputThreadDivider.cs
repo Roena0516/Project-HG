@@ -168,6 +168,7 @@ public class InputThreadDivider : MonoBehaviour
     //private void OnChartProgress(ChartProgress data) => OnChartProgress(data.progress);
     //private void OnChartPlayerStarted(ChartPlayerStarted data) => OnChartPlayerStarted();
     //private void OnChartProgressAsync(ChartProgressAsync data) => OnChartProgressAsync(data.progress);
+#endif
 }
 
 
@@ -194,4 +195,3 @@ public class KeyUpAsync
     public int position { get; set; }
     public double time { get; set; }
 }
-#endif
