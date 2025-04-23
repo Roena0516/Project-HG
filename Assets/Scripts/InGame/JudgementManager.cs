@@ -270,15 +270,15 @@ public class JudgementManager : MonoBehaviour
         Debug.Log(noteTypeRate[note.type]);
         if (judgement == "Great")
         {
-            ChangeRate(noteTypeRate[note.type], 0.25f);
+            ChangeRate(noteTypeRate[note.type], 0.2f);
         }
         if (judgement == "Good")
         {
-            ChangeRate(noteTypeRate[note.type], 0.5f);
+            ChangeRate(noteTypeRate[note.type], 0.3f);
         }
         if (judgement == "Bad")
         {
-            ChangeRate(noteTypeRate[note.type], 0.75f);
+            ChangeRate(noteTypeRate[note.type], 1f);
         }
         if (judgement == "Miss")
         {
@@ -346,6 +346,11 @@ public class JudgementManager : MonoBehaviour
         {
             judgeText.text = "PERFECT";
             plusJudgeText.color = plusJudgeText.color.SetAlpha(1f);
+        }
+        else if (judgement == "Bad")
+        {
+            judgeText.text = "MISS";
+            plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
         }
         else
         {
