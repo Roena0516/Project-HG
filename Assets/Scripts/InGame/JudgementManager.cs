@@ -270,11 +270,11 @@ public class JudgementManager : MonoBehaviour
         Debug.Log(noteTypeRate[note.type]);
         if (judgement == "Great")
         {
-            ChangeRate(noteTypeRate[note.type], 0.2f);
+            ChangeRate(noteTypeRate[note.type], 0.25f);
         }
         if (judgement == "Good")
         {
-            ChangeRate(noteTypeRate[note.type], 0.3f);
+            ChangeRate(noteTypeRate[note.type], 0.5f);
         }
         if (judgement == "Bad")
         {
