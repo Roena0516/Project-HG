@@ -17,6 +17,7 @@ public class LineInputChecker : MonoBehaviour
     public NoteGenerator noteGenerator;
     public GameManager gameManager;
     private SettingsManager settings;
+    private InputThreadDivider divider;
 
     public MainInputAction action;
     private List<InputAction> LineActions;
@@ -43,6 +44,9 @@ public class LineInputChecker : MonoBehaviour
     public static LineInputChecker Instance { get; private set; }
 
     public Thread chartPlayThread;
+
+    private readonly Queue<Action> mainThreadQueue = new Queue<Action>();
+    private readonly object queueLock = new object();
 
     private void Awake()
     {
@@ -104,6 +108,18 @@ public class LineInputChecker : MonoBehaviour
         speedDown.Disable();
         speedDown.started -= Started;
         speedDown.canceled -= Canceled;
+    }
+
+    private void OnDestroy()
+    {
+#if UNITY_STANDALONE_WIN
+        isEnd = true;
+
+        if (chartPlayThread != null && chartPlayThread.IsAlive)
+        {
+            chartPlayThread.Join(100);
+        }
+#endif
     }
 
     public void SetSpeed(float duration)
@@ -219,11 +235,18 @@ public class LineInputChecker : MonoBehaviour
         Debug.Log($"Start Time : {startTime}");
 
 #if UNITY_STANDALONE_WIN
-
         chartPlayThread = new Thread(ChartPlayWorker);
         chartPlayThread.IsBackground = true;
         chartPlayThread.Start(8000L);
-
+        if (divider == null)
+        {
+            divider = InputThreadDivider.Instance;
+            if (divider == null)
+            {
+                Debug.LogError("InputThreadDivider.Instance is null");
+                return;
+            }
+        }
 #endif
     }
 
@@ -247,6 +270,9 @@ public class LineInputChecker : MonoBehaviour
                 double progress = now / 10000000d;
                 currentTime = progress;
 
+                divider.OnChartProgressAsync(progress);
+                divider.OnChartProgress(progress);
+
                 correction = timeDiff - interval;
                 if (correction > interval)
                 {
@@ -256,6 +282,8 @@ public class LineInputChecker : MonoBehaviour
                 prevTick = now;
             }
         }
+
+        Debug.Log("ChartPlayWorker 스레드 종료");
     }
 
     void Update()
@@ -263,21 +291,27 @@ public class LineInputChecker : MonoBehaviour
         currentTime = Time.time - startTime;
         isEnd = gameManager.isLevelEnd;
 
-        if (isHolding[0])
+        lock (queueLock)
         {
-            CheckHold(0);
+            while (mainThreadQueue.Count > 0)
+            {
+                var action = mainThreadQueue.Dequeue();
+                action?.Invoke();
+            }
         }
-        if (isHolding[1])
+
+        for (int i = 0; i < 4; i++)
         {
-            CheckHold(1);
+            if (isHolding[i])
+                CheckHold(i);
         }
-        if (isHolding[2])
+    }
+
+    public void EnqueueMainThreadAction(Action action)
+    {
+        lock (queueLock)
         {
-            CheckHold(2);
-        }
-        if (isHolding[3])
-        {
-            CheckHold(3);
+            mainThreadQueue.Enqueue(action);
         }
     }
 

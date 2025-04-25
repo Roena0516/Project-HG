@@ -236,15 +236,23 @@ public class MenuManager : MonoBehaviour
             settingsManager.LineActions[i].ApplyBindingOverride(LineActions[i].bindings[0].effectivePath);
         }
 
-        settingsManager.settings.KeyBinds = new()
+        settingsManager.SetKeyBinds(new()
         {
+#if UNITY_STANDALONE_OSX
+            $"{LineActions[0].bindings[0].effectivePath}",
             $"{LineActions[0].bindings[0].effectivePath}",
             $"{LineActions[1].bindings[0].effectivePath}",
             $"{LineActions[2].bindings[0].effectivePath}",
             $"{LineActions[3].bindings[0].effectivePath}"
-        };
+#elif UNITY_STANDALONE_WIN
+            $"{LineActions[0].bindings[0].ToDisplayString()}",
+            $"{LineActions[1].bindings[0].ToDisplayString()}",
+            $"{LineActions[2].bindings[0].ToDisplayString()}",
+            $"{LineActions[3].bindings[0].ToDisplayString()}"
+#endif
+        });
 
-        settingsManager.settings.sync = sync;
+        settingsManager.SetSync($"{sync}");
 
         settingsManager.SaveSettings();
     }

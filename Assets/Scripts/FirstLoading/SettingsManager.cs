@@ -9,12 +9,20 @@ public class GameSettings
     public float speed = 2.0f;
     public string effectOption = "None";
 
+
     public List<string> KeyBinds = new()
     {
+#if UNITY_STANDALONE_OSX
         "keyboard/D",
         "keyboard/F",
         "keyboard/J",
         "keyboard/K"
+#elif UNITY_STANDALONE_WIN
+        "D",
+        "F",
+        "J",
+        "K"
+#endif
     };
 }
 
@@ -69,7 +77,7 @@ public class SettingsManager : MonoBehaviour
                 LineActions[i].ApplyBindingOverride(settings.KeyBinds[i]);
             }
 
-            Debug.Log("settings.json loaded successfully!");
+            Debug.Log("settings.json loaded successfully");
         }
         else
         {
@@ -117,5 +125,10 @@ public class SettingsManager : MonoBehaviour
     public void SetSpeed(string inputed)
     {
         float.TryParse(inputed, out settings.speed);
+    }
+
+    public void SetKeyBinds(List<string> keys)
+    {
+        settings.KeyBinds = keys;
     }
 }
