@@ -250,6 +250,7 @@ public class LineInputChecker : MonoBehaviour
 #endif
     }
 
+#if UNITY_STANDALONE_WIN
     private void ChartPlayWorker(object param)
     {
         long frequency = (long)param;
@@ -283,8 +284,9 @@ public class LineInputChecker : MonoBehaviour
             }
         }
 
-        Debug.Log("ChartPlayWorker 스레드 종료");
+        Debug.Log("ChartPlayWorker ?????? ????");
     }
+#endif
 
     void Update()
     {
