@@ -240,7 +240,6 @@ public class MenuManager : MonoBehaviour
         {
 #if UNITY_STANDALONE_OSX
             $"{LineActions[0].bindings[0].effectivePath}",
-            $"{LineActions[0].bindings[0].effectivePath}",
             $"{LineActions[1].bindings[0].effectivePath}",
             $"{LineActions[2].bindings[0].effectivePath}",
             $"{LineActions[3].bindings[0].effectivePath}"

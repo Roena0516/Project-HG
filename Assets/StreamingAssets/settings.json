@@ -3,9 +3,9 @@
     "speed": 3.999998092651367,
     "effectOption": "None",
     "KeyBinds": [
-        "S",
-        "D",
-        "L",
-        ";"
+        "<Keyboard>/s",
+        "<Keyboard>/d",
+        "<Keyboard>/l",
+        "<Keyboard>/semicolon"
     ]
 }
