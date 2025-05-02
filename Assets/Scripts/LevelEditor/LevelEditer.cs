@@ -70,29 +70,7 @@ public class LevelEditer : MonoBehaviour
     private GameObject beat148;
     private GameObject beat164;
 
-    public GameObject parentFolder13;
-    public GameObject parentFolder14;
-    public GameObject parentFolder16;
-    public GameObject parentFolder18;
-    public GameObject parentFolder112;
-    public GameObject parentFolder116;
-    public GameObject parentFolder124;
-    public GameObject parentFolder132;
-    public GameObject parentFolder148;
-    public GameObject parentFolder164;
-
     public GameObject canvas;
-
-    private RectTransform rect13;
-    private RectTransform rect14;
-    private RectTransform rect16;
-    private RectTransform rect18;
-    private RectTransform rect112;
-    private RectTransform rect116;
-    private RectTransform rect124;
-    private RectTransform rect132;
-    private RectTransform rect148;
-    private RectTransform rect164;
 
     public TMP_Dropdown dropdown;
 
@@ -104,6 +82,20 @@ public class LevelEditer : MonoBehaviour
     public List<GameObject> beats116;
     public List<GameObject> beats124;
     public List<GameObject> beats132;
+
+    public GameObject gridPrefab;
+    public Transform gridContainer;
+    public Camera uiCamera;
+    public int maxVisibleRows = 40;
+    public float cellHeight = 160f; // 각 beat prefab의 높이
+
+    private List<GameObject> gridPool = new();
+    private float totalHeight;
+    private float scrollY;
+    private int currentTopIndex = -1;
+
+    private Dictionary<string, GameObject> beatPrefabMap;
+
 
     public static LevelEditer Instance { get; private set; }
 
@@ -128,22 +120,29 @@ public class LevelEditer : MonoBehaviour
         beat132 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat132");
         beat148 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat148");
         beat164 = Resources.Load<GameObject>("Prefabs/LevelEditor/Beats/Beat164");
+
+        beatPrefabMap = new Dictionary<string, GameObject>
+        {
+            { "1_3", beat13 },
+            { "1_4", beat14 },
+            { "1_6", beat16 },
+            { "1_8", beat18 },
+            { "1_12", beat112 },
+            { "1_16", beat116 },
+            { "1_24", beat124 },
+            { "1_32", beat132 },
+            { "1_48", beat148 },
+            { "1_64", beat164 }
+        };
     }
 
     private void Start()
     {
-        rect13 = beat13.GetComponent<RectTransform>();
-        rect14 = beat14.GetComponent<RectTransform>();
-        rect16 = beat16.GetComponent<RectTransform>();
-        rect18 = beat18.GetComponent<RectTransform>();
-        rect112 = beat112.GetComponent<RectTransform>();
-        rect116 = beat116.GetComponent<RectTransform>();
-        rect124 = beat124.GetComponent<RectTransform>();
-        rect132 = beat132.GetComponent<RectTransform>();
-        rect148 = beat148.GetComponent<RectTransform>();
-        rect164 = beat164.GetComponent<RectTransform>();
-
         selectedBeat = "1_4";
+        cellHeight = 160f;
+
+        CreateGridPool(4);
+        totalHeight = 9217 * cellHeight;
 
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
 
@@ -159,774 +158,6 @@ public class LevelEditer : MonoBehaviour
         madi = 192;
         madi2 = 288;
         madi3 = madi + madi2;
-
-        LevelEditorSetter();
-    }
-
-    private void LevelEditorSetter()
-    {
-        canvas.transform.localScale = Vector3.one;
-
-        int beatNum13 = 3;
-        float sizeDelta = 640f / (float)beatNum13;
-        for (int i = 0; i < madi2 * beatNum13; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat13, new Vector3(0, rect13.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder13.transform);
-            beats13.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum13, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum13, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum13, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum13, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum14 = 4;
-        sizeDelta = 640f / (float)beatNum14;
-        for (int i = 0; i < madi2 * beatNum14; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat14, new Vector3(0, rect14.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder14.transform);
-            beats14.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum14, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum14, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum14, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum14, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum16 = 6;
-        sizeDelta = 640f / (float)beatNum16;
-        for (int i = 0; i < madi2 * beatNum16; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect16.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder16.transform);
-            beats16.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum16, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum16, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum16, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum16, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum18 = 8;
-        sizeDelta = 640f / (float)beatNum18;
-        for (int i = 0; i < madi2 * beatNum18; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat18, new Vector3(0, rect18.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder18.transform);
-            beats18.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum18, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum18, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum18, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum18, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum112 = 12;
-        sizeDelta = 640f / (float)beatNum112;
-        for (int i = 0; i < madi2 * beatNum112; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat112, new Vector3(0, rect112.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder112.transform);
-            beats112.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum112, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum112, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum112, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum112, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum116 = 16;
-        sizeDelta = 640f / (float)beatNum116;
-        for (int i = 0; i < madi2 * beatNum116; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat116, new Vector3(0, rect116.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder116.transform);
-            beats116.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum116, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum116, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum116, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum116, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum124 = 24;
-        sizeDelta = 640f / (float)beatNum124;
-        for (int i = 0; i < madi2 * beatNum124; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat16, new Vector3(0, rect124.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder124.transform);
-            beats124.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum124, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum124, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum124, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum124, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        int beatNum132 = 32;
-        sizeDelta = 640f / (float)beatNum132;
-        for (int i = 0; i < madi2 * beatNum132; i++)
-        {
-            GameObject instantiateObject = Instantiate(beat132, new Vector3(0, rect132.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder132.transform);
-            beats132.Add(instantiateObject);
-            Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum132, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 1 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 2");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum132, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 2 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 3");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum132, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 3 Not Founded");
-            }
-            buttonTransform = instantiateObject.transform.Find("Btn 4");
-            if (buttonTransform != null)
-            {
-                Button buttonComponent = buttonTransform.GetComponent<Button>();
-                if (buttonComponent != null)
-                {
-                    buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum132, instantiateObject.transform));
-                }
-                else
-                {
-                    Debug.LogError("Button Component Not Founded");
-                }
-            }
-            else
-            {
-                Debug.LogError("Btn 4 Not Founded");
-            }
-        }
-
-        //int beatNum148 = 48;
-        //sizeDelta = 640 / beatNum148;
-        //for (int i = 0; i < madi * beatNum148; i++)
-        //{
-        //    GameObject instantiateObject = Instantiate(beat148, new Vector3(0, rect148.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder148.transform);
-        //    Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum148, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 1 Not Founded");
-        //    }
-        //    buttonTransform = instantiateObject.transform.Find("Btn 2");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum148, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 2 Not Founded");
-        //    }
-        //    buttonTransform = instantiateObject.transform.Find("Btn 3");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum148, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 3 Not Founded");
-        //    }
-        //    buttonTransform = instantiateObject.transform.Find("Btn 4");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum148, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 4 Not Founded");
-        //    }
-        //}
-
-        //int beatNum164 = 64;
-        //sizeDelta = 640 / beatNum164;
-        //for (int i = 0; i < madi * beatNum164; i++)
-        //{
-        //    GameObject instantiateObject = Instantiate(beat164, new Vector3(0, rect164.position.y + (sizeDelta * i), 0), Quaternion.identity, parentFolder164.transform);
-        //    Transform buttonTransform = instantiateObject.transform.Find("Btn 1");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(1, beatNum164, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 1 Not Founded");
-        //    }
-        //    buttonTransform = instantiateObject.transform.Find("Btn 2");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(2, beatNum164, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 2 Not Founded");
-        //    }
-        //    buttonTransform = instantiateObject.transform.Find("Btn 3");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(3, beatNum164, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 3 Not Founded");
-        //    }
-        //    buttonTransform = instantiateObject.transform.Find("Btn 4");
-        //    if (buttonTransform != null)
-        //    {
-        //        Button buttonComponent = buttonTransform.GetComponent<Button>();
-        //        if (buttonComponent != null)
-        //        {
-        //            buttonComponent.onClick.AddListener(() => ButtonClickHandler(4, beatNum164, instantiateObject.transform));
-        //        }
-        //        else
-        //        {
-        //            Debug.LogError("Button Component Not Founded");
-        //        }
-        //    }
-        //    else
-        //    {
-        //        Debug.LogError("Btn 4 Not Founded");
-        //    }
-        //}
-
-        //Debug.Log($"{rect13.position.y} {rect13.sizeDelta.y} {rect13.position.y + rect13.sizeDelta.y}");
-        //Debug.Log($"{rect14.position.y} {rect14.sizeDelta.y} {rect14.position.y + rect14.sizeDelta.y}");
     }
 
     private void ButtonClickHandler(int position, int beat, Transform buttonT)
@@ -935,9 +166,10 @@ public class LevelEditer : MonoBehaviour
 
         float realBeat = 0f;
 
+        int index = gridPool.IndexOf(buttonT.gameObject);
+
         if (beat == 3)
         {
-            int index = beats13.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -945,7 +177,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 4)
         {
-            int index = beats14.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -953,7 +184,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 6)
         {
-            int index = beats16.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -961,7 +191,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 8)
         {
-            int index = beats18.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -969,7 +198,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 12)
         {
-            int index = beats112.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -977,7 +205,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 16)
         {
-            int index = beats116.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -985,7 +212,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 24)
         {
-            int index = beats124.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -993,7 +219,6 @@ public class LevelEditer : MonoBehaviour
         }
         if (beat == 32)
         {
-            int index = beats132.IndexOf(buttonT.gameObject);
             if (index != -1)
             {
                 realBeat = (2f / (float)beat) * (index);
@@ -1070,190 +295,93 @@ public class LevelEditer : MonoBehaviour
     private void OnDropdownValueChanged(int index)
     {
         selectedBeat = dropdown.options[index].text;
+        int beatNum = 4;
         switch (dropdown.options[index].text)
         {
             case "1/3":
                 selectedBeat = "1_3";
+                beatNum = 3;
                 break;
             case "1/4":
                 selectedBeat = "1_4";
+                beatNum = 4;
                 break;
             case "1/6":
                 selectedBeat = "1_6";
+                beatNum = 6;
                 break;
             case "1/8":
                 selectedBeat = "1_8";
+                beatNum = 8;
                 break;
             case "1/12":
                 selectedBeat = "1_12";
+                beatNum = 12;
                 break;
             case "1/16":
                 selectedBeat = "1_16";
+                beatNum = 16;
                 break;
             case "1/24":
                 selectedBeat = "1_24";
+                beatNum = 24;
                 break;
             case "1/32":
                 selectedBeat = "1_32";
+                beatNum = 32;
                 break;
             case "1/48":
                 selectedBeat = "1_48";
+                beatNum = 48;
                 break;
             case "1/64":
                 selectedBeat = "1_64";
+                beatNum = 64;
                 break;
         }
-        DropdownHandler(selectedBeat);
-    }
 
-    public void DropdownHandler(string option)
-    {
-        if (option == "1_3")
+        GameObject beatPrefab = selectedBeat switch
         {
-            parentFolder13.SetActive(true);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_4")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(true);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_6")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(true);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_8")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(true);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_12")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(true);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_16")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(true);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_24")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(true);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_32")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(true);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_48")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(true);
-            parentFolder164.SetActive(false);
-        }
-        if (option == "1_64")
-        {
-            parentFolder13.SetActive(false);
-            parentFolder14.SetActive(false);
-            parentFolder16.SetActive(false);
-            parentFolder18.SetActive(false);
-            parentFolder112.SetActive(false);
-            parentFolder116.SetActive(false);
-            parentFolder124.SetActive(false);
-            parentFolder132.SetActive(false);
-            parentFolder148.SetActive(false);
-            parentFolder164.SetActive(true);
-        }
+            "1_3" => beat13,
+            "1_4" => beat14,
+            "1_6" => beat16,
+            "1_8" => beat18,
+            "1_12" => beat112,
+            "1_16" => beat116,
+            "1_24" => beat124,
+            "1_32" => beat132,
+            _ => beat14
+        };
 
+        cellHeight = beatPrefab.transform.Find("Btn 1").gameObject.GetComponent<RectTransform>().rect.height;
+        totalHeight = 9217 * cellHeight;
+
+        CreateGridPool(beatNum);
+
+        canvas.transform.localScale = Vector3.one;
+
+        scrollY = Mathf.Clamp(scrollY, 0, totalHeight - cellHeight * maxVisibleRows);
+        gridContainer.localPosition = new Vector3(0, -scrollY, 0);
+
+        int newTopIndex = Mathf.FloorToInt(scrollY / cellHeight);
+        if (newTopIndex != currentTopIndex)
+        {
+            currentTopIndex = newTopIndex;
+            UpdateVisibleGrids(newTopIndex);
+        }
     }
 
     private void Update()
     {
         if (Input.GetKey(KeyCode.W))
         {
-            gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.down);
+            scrollY += 1000f * Time.deltaTime;
             CalcCurrentMusicTime();
-            //StartCoroutine(GridModify());
         }
         if (Input.GetKey(KeyCode.S))
         {
-            gridFolder.transform.Translate(10f * Time.deltaTime * Vector2.up);
+            scrollY -= 1000f * Time.deltaTime;
             CalcCurrentMusicTime();
-            //StartCoroutine(GridModify());
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -1286,27 +414,82 @@ public class LevelEditer : MonoBehaviour
         {
             UpdateInputFieldValue();
         }
+
+        canvas.transform.localScale = Vector3.one;
+
+        scrollY = Mathf.Clamp(scrollY, 0, totalHeight - cellHeight * maxVisibleRows);
+        gridContainer.localPosition = new Vector3(0, -scrollY - 500, 0);
+
+        int newTopIndex = Mathf.FloorToInt(scrollY / cellHeight);
+        if (newTopIndex != currentTopIndex)
+        {
+            currentTopIndex = newTopIndex;
+            UpdateVisibleGrids(newTopIndex);
+        }
     }
 
-    private IEnumerator GridModify()
+    private void CreateGridPool(int beatNum)
     {
-        Transform buttonParent = gridFolder.transform.Find("Buttons").Find(selectedBeat);
-        //GameObject button;
+        gridPool.Clear(); // 기존 풀 제거
 
-        for (int i = 0; i < buttonParent.childCount; i++)
+        // 기존에 생성된 오브젝트 제거
+        foreach (Transform child in gridContainer)
         {
-            GameObject button = buttonParent.GetChild(i).gameObject;
-            RectTransform targetRect = button.GetComponent<RectTransform>();
-
-            Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(canvasComponent.worldCamera, targetRect.position);
-            bool isVisible = RectTransformUtility.RectangleContainsScreenPoint(rectTransform, screenPos, canvasComponent.worldCamera);
-
-            button.SetActive(isVisible);
-
-            yield return null;
+            Destroy(child.gameObject);
         }
 
-        yield break;
+        if (!beatPrefabMap.TryGetValue(selectedBeat, out GameObject prefab))
+        {
+            Debug.LogError($"선택된 Beat 프리셋({selectedBeat})에 해당하는 프리팹이 없습니다.");
+            return;
+        }
+
+        for (int i = 0; i < maxVisibleRows + 2; i++)
+        {
+            GameObject go = Instantiate(prefab, gridContainer);
+            go.SetActive(false);
+
+            // 각 버튼(1~4)을 찾아서 리스너 바인딩
+            for (int j = 1; j <= 4; j++)
+            {
+                Transform buttonTransform = go.transform.Find($"Btn {j}");
+                if (buttonTransform != null)
+                {
+                    int pos = j; // 클로저 캡처 방지
+                    Button btn = buttonTransform.GetComponent<Button>();
+                    if (btn != null)
+                    {
+                        btn.onClick.RemoveAllListeners(); // 혹시 모르니 리스너 초기화
+                        btn.onClick.AddListener(() => ButtonClickHandler(pos, beatNum, go.transform));
+                    }
+                    else
+                    {
+                        Debug.LogWarning($"Button component not found in Btn {j}");
+                    }
+                }
+                else
+                {
+                    Debug.LogWarning($"Btn {j} not found in prefab.");
+                }
+            }
+
+            gridPool.Add(go);
+        }
+    }
+
+    private void UpdateVisibleGrids(int topIndex)
+    {
+        for (int i = 0; i < gridPool.Count; i++)
+        {
+            int beatIndex = topIndex + i;
+            if (beatIndex >= 9217)
+            {
+                gridPool[i].SetActive(false);
+                continue;
+            }
+            gridPool[i].SetActive(true);
+            gridPool[i].transform.localPosition = new Vector3(0, beatIndex * cellHeight, 0);
+        }
     }
 
     public TMP_InputField BPMInput;
@@ -1558,6 +741,7 @@ public class LevelEditer : MonoBehaviour
         Scene testScene = SceneManager.GetSceneByName("InGame");
         if (testScene.IsValid() && testScene.isLoaded)
         {
+            saveManager.notes.Sort((note1, note2) => note1.beat.CompareTo(note2.beat));
             SceneManager.SetActiveScene(testScene);
         }
     }
@@ -1570,18 +754,4 @@ public class LevelEditer : MonoBehaviour
 
         }
     }
-
-
-
-    //public void LoadFromJson()
-    //{
-    //    string path = Application.persistentDataPath + "/chartData.json";
-    //    if (File.Exists(path))
-    //    {
-    //        string json = File.ReadAllText(path);
-    //        NoteData loadedData = JsonUtility.FromJson<NoteData>(json);
-    //        notes = new List<Note>(loadedData.notes);
-    //    }
-    //}
-
 }

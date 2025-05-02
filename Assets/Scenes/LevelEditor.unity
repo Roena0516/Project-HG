@@ -12669,7 +12669,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 280}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1822265219
@@ -14051,16 +14051,6 @@ MonoBehaviour:
   level: 0
   difficulty: 
   noteType: 
-  parentFolder13: {fileID: 1202611135}
-  parentFolder14: {fileID: 198149271}
-  parentFolder16: {fileID: 1479446931}
-  parentFolder18: {fileID: 66865049}
-  parentFolder112: {fileID: 1156651930}
-  parentFolder116: {fileID: 1301533757}
-  parentFolder124: {fileID: 2138345386}
-  parentFolder132: {fileID: 393877011}
-  parentFolder148: {fileID: 511896888}
-  parentFolder164: {fileID: 1624916472}
   canvas: {fileID: 168869043}
   dropdown: {fileID: 451982104}
   beats13: []
@@ -14071,6 +14061,11 @@ MonoBehaviour:
   beats116: []
   beats124: []
   beats132: []
+  gridPrefab: {fileID: 0}
+  gridContainer: {fileID: 198149272}
+  uiCamera: {fileID: 1664780168}
+  maxVisibleRows: 40
+  cellHeight: 40
   BPMInput: {fileID: 1841429896}
   artistInput: {fileID: 1129083176}
   titleInput: {fileID: 496188239}
