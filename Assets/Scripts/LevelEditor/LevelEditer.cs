@@ -91,7 +91,7 @@ public class LevelEditer : MonoBehaviour
 
     private List<GameObject> gridPool = new();
     private float totalHeight;
-    private float scrollY;
+    public float scrollY;
     private int currentTopIndex = -1;
 
     private Dictionary<string, GameObject> beatPrefabMap;
@@ -166,63 +166,11 @@ public class LevelEditer : MonoBehaviour
 
         float realBeat = 0f;
 
-        int index = gridPool.IndexOf(buttonT.gameObject);
+        int index = currentTopIndex + gridPool.IndexOf(buttonT.gameObject);
 
-        if (beat == 3)
+        if (index != -1)
         {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 4)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 6)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 8)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 12)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 16)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 24)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
-        }
-        if (beat == 32)
-        {
-            if (index != -1)
-            {
-                realBeat = (2f / (float)beat) * (index);
-            }
+            realBeat = (2f / (float)beat) * (index);
         }
 
         Debug.Log($"Position : {position}, Beat : {realBeat} 1/{beat}, Type : {noteType}");
@@ -232,8 +180,8 @@ public class LevelEditer : MonoBehaviour
             saveManager.notes.Remove(saveManager.notes.Find(note => note.beat == realBeat && note.position == position));
             foreach (Transform child in notesFolder.transform)
             {
-                LevelEditerNoteManager levelEditerNoteManager = child.GetComponent<LevelEditerNoteManager>();
-                if (levelEditerNoteManager.noteClass.beat == realBeat && levelEditerNoteManager.noteClass.position == position)
+                LevelEditerNoteManager noteManager = child.GetComponent<LevelEditerNoteManager>();
+                if (noteManager.noteClass.beat == realBeat && noteManager.noteClass.position == position)
                 {
                     Destroy(child.gameObject);
                 }
@@ -263,33 +211,20 @@ public class LevelEditer : MonoBehaviour
 
         //Debug.Log(positionY);
 
-        if (noteType == "Normal")
+        GameObject prefab = noteType switch
         {
-            GameObject instantiateObject = Instantiate(normalPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
-            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
-            levelEditerNoteManager.noteClass.position = position;
-            levelEditerNoteManager.noteClass.beat = realBeat;
-            levelEditerNoteManager.noteClass.type = "normal";
-            saveManager.notes.Add(levelEditerNoteManager.noteClass);
-        }
-        if (noteType == "Hold")
-        {
-            GameObject instantiateObject = Instantiate(holdPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
-            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
-            levelEditerNoteManager.noteClass.position = position;
-            levelEditerNoteManager.noteClass.beat = realBeat;
-            levelEditerNoteManager.noteClass.type = "hold";
-            saveManager.notes.Add(levelEditerNoteManager.noteClass);
-        }
-        if (noteType == "Up")
-        {
-            GameObject instantiateObject = Instantiate(upPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
-            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
-            levelEditerNoteManager.noteClass.position = position;
-            levelEditerNoteManager.noteClass.beat = realBeat;
-            levelEditerNoteManager.noteClass.type = "up";
-            saveManager.notes.Add(levelEditerNoteManager.noteClass);
-        }
+            "Normal" => normalPrefab,
+            "Hold" => holdPrefab,
+            "Up" => upPrefab,
+            _ => null
+        };
+
+        GameObject instantiateObject = Instantiate(prefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+        LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+        levelEditerNoteManager.noteClass.position = position;
+        levelEditerNoteManager.noteClass.beat = realBeat;
+        levelEditerNoteManager.noteClass.type = noteType.ToLower();
+        saveManager.notes.Add(levelEditerNoteManager.noteClass);
     }
 
     private void OnDropdownValueChanged(int index)
@@ -361,7 +296,7 @@ public class LevelEditer : MonoBehaviour
         canvas.transform.localScale = Vector3.one;
 
         scrollY = Mathf.Clamp(scrollY, 0, totalHeight - cellHeight * maxVisibleRows);
-        gridContainer.localPosition = new Vector3(0, -scrollY, 0);
+        gridContainer.localPosition = new Vector3(0, -scrollY - 500, 0);
 
         int newTopIndex = Mathf.FloorToInt(scrollY / cellHeight);
         if (newTopIndex != currentTopIndex)
@@ -371,16 +306,27 @@ public class LevelEditer : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void InputHandler()
     {
+        canvas.transform.localScale = Vector3.one;
+
         if (Input.GetKey(KeyCode.W))
         {
+            //notesFolder.transform.Translate(1000f * Time.deltaTime * Vector2.down);
             scrollY += 1000f * Time.deltaTime;
             CalcCurrentMusicTime();
         }
         if (Input.GetKey(KeyCode.S))
         {
+            //notesFolder.transform.Translate(1000f * Time.deltaTime * Vector2.up);
             scrollY -= 1000f * Time.deltaTime;
+            CalcCurrentMusicTime();
+        }
+
+        float scroll = Input.GetAxis("Mouse ScrollWheel");
+        if (scroll != 0f)
+        {
+            scrollY += 1000f * scroll;
             CalcCurrentMusicTime();
         }
 
@@ -408,23 +354,33 @@ public class LevelEditer : MonoBehaviour
                 currentMoveSliderer = null;
             }
         }
+    }
 
-        UpdateMusicTime();
-        if (settingsPanel.activeSelf)
-        {
-            UpdateInputFieldValue();
-        }
-
-        canvas.transform.localScale = Vector3.one;
-
+    private void ScrollHandler()
+    {
         scrollY = Mathf.Clamp(scrollY, 0, totalHeight - cellHeight * maxVisibleRows);
-        gridContainer.localPosition = new Vector3(0, -scrollY - 500, 0);
+        gridContainer.localPosition = new Vector3(0, -scrollY - 500f, 0);
+
+        notesFolder.transform.position = new Vector3(0, -scrollY + 280f, 0);
 
         int newTopIndex = Mathf.FloorToInt(scrollY / cellHeight);
         if (newTopIndex != currentTopIndex)
         {
             currentTopIndex = newTopIndex;
             UpdateVisibleGrids(newTopIndex);
+        }
+    }
+
+    private void Update()
+    {
+        InputHandler();
+
+        ScrollHandler();
+
+        UpdateMusicTime();
+        if (settingsPanel.activeSelf)
+        {
+            UpdateInputFieldValue();
         }
     }
 
@@ -527,7 +483,7 @@ public class LevelEditer : MonoBehaviour
     private void CalcCurrentMusicTime()
     {
         canvas.transform.localScale = Vector3.one;
-        float musicTime = -(gridFolder.transform.position.y) / scrollSpeed / 2f;
+        float musicTime = scrollY / scrollSpeed / 2f;
         SetMusicTime((int)musicTime);
     }
 
@@ -538,8 +494,19 @@ public class LevelEditer : MonoBehaviour
             canvas.transform.localScale = Vector3.one;
             UpdateMusicTime();
             //gridFolder.transform.Translate(scrollSpeed * Time.deltaTime * Vector2.down);
-            gridFolder.transform.position = new Vector3(gridFolder.transform.position.x, -(scrollSpeed * currentMusicTime) * 2f, 0f);
-            
+            scrollY = (scrollSpeed * currentMusicTime) * 2f;
+            scrollY = Mathf.Clamp(scrollY, 0, totalHeight - cellHeight * maxVisibleRows);
+            gridContainer.localPosition = new Vector3(0, -scrollY - 500f, 0);
+
+            notesFolder.transform.position = new Vector3(0, -scrollY + 280f, 0);
+
+            int newTopIndex = Mathf.FloorToInt(scrollY / cellHeight);
+            if (newTopIndex != currentTopIndex)
+            {
+                currentTopIndex = newTopIndex;
+                UpdateVisibleGrids(newTopIndex);
+            }
+
             yield return null;
         }
 
@@ -579,6 +546,16 @@ public class LevelEditer : MonoBehaviour
 
             Debug.Log("Chart loaded successfully!");
 
+            scrollY = 0;
+            gridContainer.localPosition = new Vector3(0, -scrollY - 500f, 0);
+
+            int newTopIndex = Mathf.FloorToInt(scrollY / cellHeight);
+            if (newTopIndex != currentTopIndex)
+            {
+                currentTopIndex = newTopIndex;
+                UpdateVisibleGrids(newTopIndex);
+            }
+
             PlaceNotesFromLoadedFile();
         }
         else
@@ -611,32 +588,22 @@ public class LevelEditer : MonoBehaviour
                 positionX = 158f;
             }
 
-            float positionY = -211f + (320f * note.beat) + gridFolder.transform.position.y;
+            float positionY = -211f + (320f * note.beat);
+            notesFolder.transform.position = new Vector3(0, 280f, 0);
 
-            if (note.type == "normal")
+            GameObject prefab = note.type switch
             {
-                GameObject instantiateObject = Instantiate(normalPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
-                LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
-                levelEditerNoteManager.noteClass.position = note.position;
-                levelEditerNoteManager.noteClass.beat = note.beat;
-                levelEditerNoteManager.noteClass.type = "normal";
-            }
-            if (note.type == "hold")
-            {
-                GameObject instantiateObject = Instantiate(holdPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
-                LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
-                levelEditerNoteManager.noteClass.position = note.position;
-                levelEditerNoteManager.noteClass.beat = note.beat;
-                levelEditerNoteManager.noteClass.type = "hold";
-            }
-            if (note.type == "up")
-            {
-                GameObject instantiateObject = Instantiate(upPrefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
-                LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
-                levelEditerNoteManager.noteClass.position = note.position;
-                levelEditerNoteManager.noteClass.beat = note.beat;
-                levelEditerNoteManager.noteClass.type = "up";
-            }
+                "normal" => normalPrefab,
+                "hold" => holdPrefab,
+                "up" => upPrefab,
+                _ => null
+            };
+
+            GameObject instantiateObject = Instantiate(prefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
+            LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+            levelEditerNoteManager.noteClass.position = note.position;
+            levelEditerNoteManager.noteClass.beat = note.beat;
+            levelEditerNoteManager.noteClass.type = note.type;
         }
     }
 
