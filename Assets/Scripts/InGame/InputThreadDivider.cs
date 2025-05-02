@@ -137,7 +137,7 @@ public class InputThreadDivider : MonoBehaviour
 
     public void OnChartProgressAsync(double progress)
     {
-        Debug.Log($"비동기 입력 폴링 스레드 ID: {Thread.CurrentThread.ManagedThreadId}");
+        //Debug.Log($"비동기 입력 폴링 스레드 ID: {Thread.CurrentThread.ManagedThreadId}");
 
         for (int i = 0; i < pollingList.Length; i++)
         {

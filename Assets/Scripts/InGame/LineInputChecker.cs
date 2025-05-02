@@ -290,7 +290,7 @@ public class LineInputChecker : MonoBehaviour
 
     void Update()
     {
-        currentTime = Time.time - startTime;
+        //currentTime = Time.time - startTime;
         isEnd = gameManager.isLevelEnd;
 
         lock (queueLock)
