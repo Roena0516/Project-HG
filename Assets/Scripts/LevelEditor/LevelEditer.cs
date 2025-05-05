@@ -15,6 +15,9 @@ public class LevelEditer : MonoBehaviour
 {
     public int currentMusicTime = 0;
 
+    public AudioSource hitSoundSource;
+    public AudioClip hitSoundClip;
+
     public EventInstance eventInstance;
 
     public SaveManager saveManager;
@@ -158,6 +161,12 @@ public class LevelEditer : MonoBehaviour
         madi = 192;
         madi2 = 288;
         madi3 = madi + madi2;
+
+        if (hitSoundSource != null && hitSoundClip != null)
+        {
+            Debug.Log("Played");
+            hitSoundSource.PlayOneShot(hitSoundClip);
+        }
     }
 
     private void ButtonClickHandler(int position, int beat, Transform buttonT)
