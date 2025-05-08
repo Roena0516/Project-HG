@@ -9,16 +9,17 @@ using FMODUnity;
 using FMOD.Studio;
 using System.Collections;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 //using SFB;
 
 public class LevelEditer : MonoBehaviour
 {
+    public UnityEvent OnNoteHit = new UnityEvent();
+
     public int currentMusicTime = 0;
 
-    public AudioSource hitSoundSource;
-    public AudioClip hitSoundClip;
-
     public EventInstance eventInstance;
+    public EventInstance hitSoundInstance;
 
     public SaveManager saveManager;
 
@@ -90,15 +91,15 @@ public class LevelEditer : MonoBehaviour
     public Transform gridContainer;
     public Camera uiCamera;
     public int maxVisibleRows = 40;
-    public float cellHeight = 160f; // 각 beat prefab의 높이
+    public float cellHeight = 160f; // ?? beat prefab?? ????
 
     private List<GameObject> gridPool = new();
     private float totalHeight;
     public float scrollY;
+    public int scrollYInt;
     private int currentTopIndex = -1;
 
     private Dictionary<string, GameObject> beatPrefabMap;
-
 
     public static LevelEditer Instance { get; private set; }
 
@@ -139,6 +140,16 @@ public class LevelEditer : MonoBehaviour
         };
     }
 
+    private void SetHitSoundInstance()
+    {
+        hitSoundInstance = RuntimeManager.CreateInstance($"event:/tamb");
+
+        hitSoundInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+
+        hitSoundInstance.setVolume(1f);
+        hitSoundInstance.start();
+    }
+
     private void Start()
     {
         selectedBeat = "1_4";
@@ -162,11 +173,7 @@ public class LevelEditer : MonoBehaviour
         madi2 = 288;
         madi3 = madi + madi2;
 
-        if (hitSoundSource != null && hitSoundClip != null)
-        {
-            Debug.Log("Played");
-            hitSoundSource.PlayOneShot(hitSoundClip);
-        }
+        SetHitSoundInstance();
     }
 
     private void ButtonClickHandler(int position, int beat, Transform buttonT)
@@ -230,6 +237,7 @@ public class LevelEditer : MonoBehaviour
 
         GameObject instantiateObject = Instantiate(prefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
         LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+        levelEditerNoteManager.ms = (60f / BPM * 1000f) * realBeat;
         levelEditerNoteManager.noteClass.position = position;
         levelEditerNoteManager.noteClass.beat = realBeat;
         levelEditerNoteManager.noteClass.type = noteType.ToLower();
@@ -321,13 +329,11 @@ public class LevelEditer : MonoBehaviour
 
         if (Input.GetKey(KeyCode.W))
         {
-            //notesFolder.transform.Translate(1000f * Time.deltaTime * Vector2.down);
             scrollY += 1000f * Time.deltaTime;
             CalcCurrentMusicTime();
         }
         if (Input.GetKey(KeyCode.S))
         {
-            //notesFolder.transform.Translate(1000f * Time.deltaTime * Vector2.up);
             scrollY -= 1000f * Time.deltaTime;
             CalcCurrentMusicTime();
         }
@@ -352,6 +358,8 @@ public class LevelEditer : MonoBehaviour
         {
             isMusicPlaying = !isMusicPlaying;
             eventInstance.setPaused(!isMusicPlaying);
+
+            OnNoteHit.Invoke();
 
             if (currentMoveSliderer == null)
             {
@@ -395,9 +403,9 @@ public class LevelEditer : MonoBehaviour
 
     private void CreateGridPool(int beatNum)
     {
-        gridPool.Clear(); // 기존 풀 제거
+        gridPool.Clear(); // ???? ?? ????
 
-        // 기존에 생성된 오브젝트 제거
+        // ?????? ?????? ???????? ????
         foreach (Transform child in gridContainer)
         {
             Destroy(child.gameObject);
@@ -405,7 +413,7 @@ public class LevelEditer : MonoBehaviour
 
         if (!beatPrefabMap.TryGetValue(selectedBeat, out GameObject prefab))
         {
-            Debug.LogError($"선택된 Beat 프리셋({selectedBeat})에 해당하는 프리팹이 없습니다.");
+            Debug.LogError($"?????? Beat ??????({selectedBeat})?? ???????? ???????? ????????.");
             return;
         }
 
@@ -414,17 +422,17 @@ public class LevelEditer : MonoBehaviour
             GameObject go = Instantiate(prefab, gridContainer);
             go.SetActive(false);
 
-            // 각 버튼(1~4)을 찾아서 리스너 바인딩
+            // ?? ????(1~4)?? ?????? ?????? ??????
             for (int j = 1; j <= 4; j++)
             {
                 Transform buttonTransform = go.transform.Find($"Btn {j}");
                 if (buttonTransform != null)
                 {
-                    int pos = j; // 클로저 캡처 방지
+                    int pos = j; // ?????? ???? ????
                     Button btn = buttonTransform.GetComponent<Button>();
                     if (btn != null)
                     {
-                        btn.onClick.RemoveAllListeners(); // 혹시 모르니 리스너 초기화
+                        btn.onClick.RemoveAllListeners(); // ???? ?????? ?????? ??????
                         btn.onClick.AddListener(() => ButtonClickHandler(pos, beatNum, go.transform));
                     }
                     else
@@ -610,6 +618,7 @@ public class LevelEditer : MonoBehaviour
 
             GameObject instantiateObject = Instantiate(prefab, new Vector3(positionX, positionY, 0f), Quaternion.identity, notesFolder.transform);
             LevelEditerNoteManager levelEditerNoteManager = instantiateObject.GetComponent<LevelEditerNoteManager>();
+            levelEditerNoteManager.ms = (60f / BPM * 1000f) * note.beat;
             levelEditerNoteManager.noteClass.position = note.position;
             levelEditerNoteManager.noteClass.beat = note.beat;
             levelEditerNoteManager.noteClass.type = note.type;
