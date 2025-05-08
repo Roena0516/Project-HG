@@ -290,7 +290,9 @@ public class LineInputChecker : MonoBehaviour
 
     void Update()
     {
-        //currentTime = Time.time - startTime;
+#if UNITY_STANDALONE_OSX
+        currentTime = Time.time - startTime;
+#endif
         isEnd = gameManager.isLevelEnd;
 
         lock (queueLock)
