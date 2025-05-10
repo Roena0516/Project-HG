@@ -11922,7 +11922,7 @@ Transform:
   m_GameObject: {fileID: 1664780167}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14026,6 +14026,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1eaaffa0b703a481b99ccede91741d46, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnNoteHit:
+    m_PersistentCalls:
+      m_Calls: []
   currentMusicTime: 0
   saveManager: {fileID: 2016227767}
   normalPrefab: {fileID: 3833513963185199395, guid: b4b6c0e370ece4836a5e738fc6c71d5d, type: 3}
@@ -14067,6 +14070,7 @@ MonoBehaviour:
   maxVisibleRows: 40
   cellHeight: 40
   scrollY: 0
+  scrollYInt: 0
   BPMInput: {fileID: 1841429896}
   artistInput: {fileID: 1129083176}
   titleInput: {fileID: 496188239}
