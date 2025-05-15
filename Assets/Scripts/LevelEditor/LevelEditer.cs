@@ -354,7 +354,7 @@ public class LevelEditer : MonoBehaviour
             SetIsRemoving("Remove");
         }
 
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.E) && canvas.activeSelf)
         {
             isMusicPlaying = !isMusicPlaying;
             eventInstance.setPaused(!isMusicPlaying);
