@@ -25,7 +25,7 @@ public class SaveManager : MonoBehaviour
 
         info.artist = artist;
         info.bpm = BPM;
-        info.songFile = "asdf";
+        info.fileLocation = "asdf";
         info.title = title;
         info.eventName = eventName;
         info.level = level;

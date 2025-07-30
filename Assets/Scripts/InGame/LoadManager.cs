@@ -6,11 +6,14 @@ using UnityEngine.SceneManagement;
 [System.Serializable]
 public class SongInfoClass
 {
+    public int id;
     public string title;
+    public string jpTitle;
     public string artist;
+    public string jpArtist;
     public float bpm;
-    public string songFile;
     public string eventName;
+    public string fileLocation;
     public float level;
     public string difficulty;
 }

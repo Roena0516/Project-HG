@@ -20,7 +20,7 @@
 			"jpArtist": "いよわ",
 			"bpm": 220.0,
 			"eventName": "kyukurarin",
-			"fileLocation": "kyu-kurarin",
+			"fileLocation": "kyu_kurarin",
 			"level": 9.0,
 			"difficulty": "END"
 		},
@@ -32,7 +32,7 @@
 			"jpArtist": "ぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬぬ",
 			"bpm": 126.0,
 			"eventName": "mimukauwanicetry",
-			"fileLocation": "mimukauwa-nicetry",
+			"fileLocation": "mimukauwa_nicetry",
 			"level": 6.0,
 			"difficulty": "END"
 		},
@@ -44,7 +44,7 @@
 			"jpArtist": "n-buna",
 			"bpm": 120.0,
 			"eventName": "umiyurikaiteitan 3",
-			"fileLocation": "umiyuri-kaiteitan",
+			"fileLocation": "umiyuri_kaiteitan",
 			"level": 6.0,
 			"difficulty": "END"
 		},
