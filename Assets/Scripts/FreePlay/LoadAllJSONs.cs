@@ -2,6 +2,11 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 
+public class SongList
+{
+    public SongInfoClass[] songs;
+}
+
 public class LoadAllJSONs : MonoBehaviour
 {
     public List<SongInfoClass> songList = new List<SongInfoClass>();
@@ -27,38 +32,42 @@ public class LoadAllJSONs : MonoBehaviour
 
     private void Start()
     {
-        string[] directories = Directory.GetDirectories(Application.streamingAssetsPath, "*");
+        string[] songList = Directory.GetFiles(Application.streamingAssetsPath, "songList.json");
+        string songListJson = File.ReadAllText(songList[0]);
+        SongList songListContainer = JsonUtility.FromJson<SongList>(songListJson);
 
-        foreach (string folderPath in directories)
+        foreach (var song in songListContainer.songs)
         {
-            string[] jsonFiles = Directory.GetFiles(folderPath, "*.roena");
+            string[] directory = Directory.GetDirectories(Application.streamingAssetsPath, song.fileLocation);
 
-            foreach (string filePath in jsonFiles)
+            if (directory.Length == 0)
             {
-                string json = File.ReadAllText(filePath);
-                string decrypted = EncryptionHelper.Decrypt(json);
-
-                SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
-                tempSongInfoClass = container.info;
-
-                tempSongInfoClass.songFile = filePath;
-
-                string key = tempSongInfoClass.artist + "-" + tempSongInfoClass.title;
-                if (!songDictionary.ContainsKey(key))
-                {
-                    songDictionary[key] = new List<SongInfoClass>();
-                }
-                songDictionary[key].Add(tempSongInfoClass);
-
-                //foreach (SongInfoClass infoss in songDictionary[key])
-                //{
-                //    Debug.Log(infoss.title);
-                //    Debug.Log(infoss.songFile);
-                //    Debug.Log(infoss.difficulty);
-                //}
-                //Debug.Log("----");
-
+                Debug.LogWarning($"해당하는 폴더를 찾지 못했습니다: {song.fileLocation}");
+                continue;
             }
+
+            string[] jsonFiles = Directory.GetFiles(directory[0], song.difficulty + ".roena");
+
+            if (jsonFiles.Length == 0)
+            {
+                Debug.LogWarning($"다음 난이도의 채보 파일이 존재하지 않습니다: {directory[0]} {song.difficulty}");
+                continue;
+            }
+
+            string json = File.ReadAllText(jsonFiles[0]);
+            string decrypted = EncryptionHelper.Decrypt(json);
+
+            SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
+            tempSongInfoClass = container.info;
+
+            tempSongInfoClass.fileLocation = jsonFiles[0];
+
+            string key = tempSongInfoClass.artist + "-" + tempSongInfoClass.title;
+            if (!songDictionary.ContainsKey(key))
+            {
+                songDictionary[key] = new List<SongInfoClass>();
+            }
+            songDictionary[key].Add(tempSongInfoClass);
         }
 
         shower.Shower();
