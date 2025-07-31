@@ -8,6 +8,7 @@ public class GameSettings
     public float sync = 0f;
     public float speed = 2.0f;
     public string effectOption = "None";
+    public bool isKR = false;
 
 
     public List<string> KeyBinds = new()
@@ -42,6 +43,8 @@ public class SettingsManager : MonoBehaviour
     public List<InputAction> LineActions;
 
     public bool isAutoPlay;
+
+    public bool isKR;
 
     public static SettingsManager Instance { get; private set; }
 
@@ -130,5 +133,10 @@ public class SettingsManager : MonoBehaviour
     public void SetKeyBinds(List<string> keys)
     {
         settings.KeyBinds = keys;
+    }
+
+    public void SetToKR(bool setted)
+    {
+        settings.isKR = setted;
     }
 }
