@@ -19,10 +19,10 @@ public class SongListShower : MonoBehaviour
     public GameObject difficultyIndicator;
 
     public TextMeshProUGUI speedText;
-    public TextMeshProUGUI basicText;
-    public TextMeshProUGUI advancedText;
-    public TextMeshProUGUI expertText;
-    public TextMeshProUGUI masterText;
+    public TextMeshProUGUI bgnText;
+    public TextMeshProUGUI midText;
+    public TextMeshProUGUI endText;
+    public TextMeshProUGUI sndText;
 
     public GameObject syncInput;
     public GameObject speedInput;
@@ -124,24 +124,20 @@ public class SongListShower : MonoBehaviour
             List<SongInfoClass> songList = loader.songDictionary[key];
             foreach (SongInfoClass infos in songList)
             {
-                if (infos.difficulty == "Basic")
+                if (infos.difficulty == "BEGINNING")
                 {
-                    Debug.Log(infos.fileLocation);
                     setter.filePath[0] = infos.fileLocation;
                 }
-                if (infos.difficulty == "Advanced")
+                if (infos.difficulty == "MIDDLE")
                 {
-                    Debug.Log(infos.fileLocation);
                     setter.filePath[1] = infos.fileLocation;
                 }
-                if (infos.difficulty == "Expert")
+                if (infos.difficulty == "END")
                 {
-                    Debug.Log(infos.fileLocation);
                     setter.filePath[2] = infos.fileLocation;
                 }
-                if (infos.difficulty == "Master")
+                if (infos.difficulty == "STARTEND")
                 {
-                    Debug.Log(infos.fileLocation);
                     setter.filePath[3] = infos.fileLocation;
                 }
             }
@@ -178,10 +174,10 @@ public class SongListShower : MonoBehaviour
         speedUp = action.FreePlay.SpeedUp;
         speedDown = action.FreePlay.SpeedDown;
 
-        basicText.color = basicText.color.SetAlpha(0f);
-        advancedText.color = advancedText.color.SetAlpha(0f);
-        expertText.color = expertText.color.SetAlpha(0f);
-        masterText.color = masterText.color.SetAlpha(0f);
+        bgnText.color = bgnText.color.SetAlpha(0f);
+        midText.color = midText.color.SetAlpha(0f);
+        endText.color = endText.color.SetAlpha(0f);
+        sndText.color = sndText.color.SetAlpha(0f);
 
         //if (Instance == null)
         //{
@@ -374,46 +370,7 @@ public class SongListShower : MonoBehaviour
 
             SetDifficulty(selectedDifficulty, 1);
         }
-
-        //if (currentSetSongIndexRoutine == null)
-        //{
-        //    currentSetSongIndexRoutine = StartCoroutine(SetSongIndex(contentFolder.transform.GetChild(listNum).gameObject));
-        //}
     }
-
-    //private IEnumerator SetSongIndex(GameObject song)
-    //{
-    //    canvas.transform.localScale = Vector3.one;
-
-    //    Transform T = song.transform;
-
-    //    float elapsedTime = 0f;
-    //    Vector3 startPos = new Vector3(originX, T.position.y, 0f);
-    //    float duration = 0.25f;
-    //    Vector3 targetPos = new Vector3(originX - 20f, T.position.y, 0f);
-
-    //    while (elapsedTime < duration)
-    //    {
-    //        canvas.transform.localScale = Vector3.one;
-
-    //        elapsedTime += Time.deltaTime;
-    //        float t = Mathf.Clamp01(elapsedTime / duration);
-
-    //        float easedT = t;
-    //        easedT = Mathf.Sin(t * Mathf.PI * 0.5f);
-
-    //        T.position = Vector3.Lerp(startPos, targetPos, easedT);
-
-    //        yield return null;
-    //    }
-
-    //    canvas.transform.localScale = Vector3.one;
-    //    T.position = targetPos;
-
-    //    currentSetSongIndexRoutine = null;
-
-    //    yield break;
-    //}
 
     private IEnumerator SetSong(int index)
     {
@@ -451,41 +408,41 @@ public class SongListShower : MonoBehaviour
     {
         List<SongInfoClass> songList = loader.songDictionary[key];
 
-        basicText.color = basicText.color.SetAlpha(0f);
-        basicText.text = $"0";
-        advancedText.color = basicText.color.SetAlpha(0f);
-        advancedText.text = $"0";
-        expertText.color = basicText.color.SetAlpha(0f);
-        expertText.text = $"0";
-        masterText.color = basicText.color.SetAlpha(0f);
-        masterText.text = $"0";
+        bgnText.color = bgnText.color.SetAlpha(0f);
+        bgnText.text = $"0";
+        midText.color = midText.color.SetAlpha(0f);
+        midText.text = $"0";
+        endText.color = endText.color.SetAlpha(0f);
+        endText.text = $"0";
+        sndText.color = sndText.color.SetAlpha(0f);
+        sndText.text = $"0";
 
         foreach (SongInfoClass infos in songList)
         {
-            if (infos.difficulty == "Basic")
+            if (infos.difficulty == "BEGINNING")
             {
-                basicText.color = basicText.color.SetAlpha(1f);
-                basicText.text = $"{infos.level}";
+                bgnText.color = bgnText.color.SetAlpha(1f);
+                bgnText.text = $"{infos.level}";
             }
-            if (infos.difficulty == "Advanced")
+            if (infos.difficulty == "MIDDLE")
             {
-                advancedText.color = advancedText.color.SetAlpha(1f);
-                advancedText.text = $"{infos.level}";
+                midText.color = midText.color.SetAlpha(1f);
+                midText.text = $"{infos.level}";
             }
-            if (infos.difficulty == "Expert")
+            if (infos.difficulty == "END")
             {
-                expertText.color = expertText.color.SetAlpha(1f);
-                expertText.text = $"{infos.level}";
+                endText.color = endText.color.SetAlpha(1f);
+                endText.text = $"{infos.level}";
             }
-            if (infos.difficulty == "Master")
+            if (infos.difficulty == "STARTEND")
             {
-                masterText.color = masterText.color.SetAlpha(1f);
-                masterText.text = $"{infos.level}";
+                sndText.color = sndText.color.SetAlpha(1f);
+                sndText.text = $"{infos.level}";
             }
             if (infos.difficulty == null)
             {
-                masterText.color = masterText.color.SetAlpha(0f);
-                masterText.text = $"{infos.level}";
+                sndText.color = sndText.color.SetAlpha(0f);
+                sndText.text = $"{infos.level}";
             }
         }
     }
@@ -496,7 +453,7 @@ public class SongListShower : MonoBehaviour
         {
             if (toIndex == 1)
             {
-                if (basicText.color.a == 0)
+                if (bgnText.color.a == 0)
                 {
                     SetDifficulty(toIndex + index, index);
                     return;
@@ -504,7 +461,7 @@ public class SongListShower : MonoBehaviour
             }
             if (toIndex == 2)
             {
-                if (advancedText.color.a == 0)
+                if (midText.color.a == 0)
                 {
                     SetDifficulty(toIndex + index, index);
                     return;
@@ -512,7 +469,7 @@ public class SongListShower : MonoBehaviour
             }
             if (toIndex == 3)
             {
-                if (expertText.color.a == 0)
+                if (endText.color.a == 0)
                 {
                     SetDifficulty(toIndex + index, index);
                     return;
@@ -520,7 +477,7 @@ public class SongListShower : MonoBehaviour
             }
             if (toIndex == 4)
             {
-                if (masterText.color.a == 0)
+                if (sndText.color.a == 0)
                 {
                     return;
                 }

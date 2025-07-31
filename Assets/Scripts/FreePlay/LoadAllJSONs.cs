@@ -57,17 +57,24 @@ public class LoadAllJSONs : MonoBehaviour
             string json = File.ReadAllText(jsonFiles[0]);
             string decrypted = EncryptionHelper.Decrypt(json);
 
-            SongContainer container = JsonUtility.FromJson<SongContainer>(decrypted);
-            tempSongInfoClass = container.info;
+            SongInfoClass info = new();
 
-            tempSongInfoClass.fileLocation = jsonFiles[0];
+            info.fileLocation = jsonFiles[0];
+            info.difficulty = song.difficulty;
+            info.artist = song.artist;
+            info.jpArtist = song.jpArtist;
+            info.title = song.title;
+            info.jpTitle = song.jpTitle;
+            info.bpm = song.bpm;
+            info.eventName = song.eventName;
+            info.level = song.level;
 
-            string key = tempSongInfoClass.artist + "-" + tempSongInfoClass.title;
+            string key = info.artist + "-" + info.title;
             if (!songDictionary.ContainsKey(key))
             {
                 songDictionary[key] = new List<SongInfoClass>();
             }
-            songDictionary[key].Add(tempSongInfoClass);
+            songDictionary[key].Add(info);
         }
 
         shower.Shower();
