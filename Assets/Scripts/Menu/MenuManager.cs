@@ -229,6 +229,11 @@ public class MenuManager : MonoBehaviour
         settingsManager.isAutoPlay = setted;
     }
 
+    public void SetToKR(bool setted)
+    {
+        settingsManager.isKR = setted;
+    }
+
     public void SaveSettingsData()
     {
         for (int i = 0; i < 4; i++)
@@ -252,6 +257,7 @@ public class MenuManager : MonoBehaviour
         });
 
         settingsManager.SetSync($"{sync}");
+        settingsManager.SetToKR(settingsManager.isKR);
 
         settingsManager.SaveSettings();
     }

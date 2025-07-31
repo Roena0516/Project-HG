@@ -108,8 +108,16 @@ public class SongListShower : MonoBehaviour
 
             GameObject song = Instantiate(songPrefab, contentFolder.transform);
             Transform artistTitle = song.transform.Find("Artist-TitlePanel");
-            artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
-            artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
+            if (settings.settings.isKR)
+            {
+                artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
+                artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;
+            }
+            else
+            {
+                artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.jpTitle;
+                artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.jpArtist;
+            }
             song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
 
             SongListInfoSetter setter = song.GetComponent<SongListInfoSetter>();
