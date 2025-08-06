@@ -348,13 +348,15 @@ public class SongListShower : MonoBehaviour
 
     public void SpeedOneUp()
     {
-        settings.settings.speed += 0.1f;
+        settings.SetSpeed($"{(settings.settings.speed + 0.1f):F1}");
         speedText.text = $"{settings.settings.speed:F1}";
+        settings.SaveSettings();
     }
     public void SpeedOneDown()
     {
-        settings.settings.speed -= 0.1f;
+        settings.SetSpeed($"{(settings.settings.speed - 0.1f):F1}");
         speedText.text = $"{settings.settings.speed:F1}";
+        settings.SaveSettings();
     }
 
     [System.Obsolete]
@@ -575,10 +577,6 @@ public class SongListShower : MonoBehaviour
         SceneManager.LoadSceneAsync("InGame");
     }
 
-    public void SetSync(string inputed)
-    {
-        settings.SetSync(inputed);
-    }
     public void SetSpeed(string inputed)
     {
         settings.SetSpeed(inputed);
