@@ -61,7 +61,7 @@ public class NoteGenerator : MonoBehaviour
         randomRane.Add(4);
     }
 
-    void Start()
+    private void Start()
     {
         speed = 4.5f;
         distance = 9f;

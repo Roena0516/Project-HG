@@ -141,4 +141,9 @@ public class SettingsManager : MonoBehaviour
     {
         settings.isKR = setted;
     }
+
+    public void SetFirstStart(bool setted)
+    {
+        settings.isFirstStart = setted;
+    }
 }

@@ -12,8 +12,6 @@ public class LoadAllJSONs : MonoBehaviour
     public List<SongInfoClass> songList = new List<SongInfoClass>();
     public Dictionary<string, List<SongInfoClass>> songDictionary = new Dictionary<string, List<SongInfoClass>>();
 
-    private SongInfoClass tempSongInfoClass;
-
     public SongListShower shower;
 
     //public static LoadAllJSONs Instance { get; private set; }
