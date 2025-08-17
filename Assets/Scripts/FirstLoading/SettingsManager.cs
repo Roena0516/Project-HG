@@ -122,6 +122,21 @@ public class SettingsManager : MonoBehaviour
         fileName = inputed;
     }
 
+    public void SetSongTitle(string inputed)
+    {
+        songTitle = inputed;
+    }
+
+    public void SetSongArtist(string inputed)
+    {
+        songArtist = inputed;
+    }
+
+    public void SetEventName(string inputed)
+    {
+        eventName = inputed;
+    }
+
     public void SetSync(string inputed)
     {
         float.TryParse(inputed, out settings.sync);
