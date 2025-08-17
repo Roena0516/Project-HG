@@ -11,6 +11,7 @@ public class SongInfoClass
     public string jpTitle;
     public string artist;
     public string jpArtist;
+    public string category;
     public float bpm;
     public string eventName;
     public string fileLocation;

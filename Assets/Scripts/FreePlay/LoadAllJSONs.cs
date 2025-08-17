@@ -63,6 +63,7 @@ public class LoadAllJSONs : MonoBehaviour
             info.jpArtist = song.jpArtist;
             info.title = song.title;
             info.jpTitle = song.jpTitle;
+            info.category = song.category;
             info.bpm = song.bpm;
             info.eventName = song.eventName;
             info.level = song.level;
