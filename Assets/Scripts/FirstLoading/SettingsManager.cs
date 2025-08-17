@@ -5,6 +5,8 @@ using UnityEngine.InputSystem;
 
 public class GameSettings
 {
+    public bool isFirstStart = true;
+
     public float sync = 0f;
     public float speed = 2.0f;
     public string effectOption = "None";

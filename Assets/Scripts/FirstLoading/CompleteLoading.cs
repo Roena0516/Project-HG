@@ -13,6 +13,13 @@ public class CompleteLoading : MonoBehaviour
 
         DontDestroyOnLoad(settingsManager.gameObject);
 
-        SceneManager.LoadSceneAsync("Menu");
+        if (settingsManager.settings.isFirstStart)
+        {
+            SceneManager.LoadSceneAsync("Tutorial");
+        }
+        else
+        {
+            SceneManager.LoadSceneAsync("Menu");
+        }
     }
 }
