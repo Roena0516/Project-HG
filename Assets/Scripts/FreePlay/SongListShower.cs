@@ -125,6 +125,7 @@ public class SongListShower : MonoBehaviour
 
             setter.artist = info.artist;
             setter.title = info.title;
+            setter.eventName = info.eventName;
 
             List<SongInfoClass> songList = loader.songDictionary[key];
             foreach (SongInfoClass infos in songList)
@@ -559,8 +560,9 @@ public class SongListShower : MonoBehaviour
         SongListInfoSetter setter = contentFolder.transform.GetChild(n).GetComponent<SongListInfoSetter>();
 
         settings.SetFileName($"{setter.filePath[selectedDifficulty - 1]}");
-        settings.songTitle = setter.title;
-        settings.songArtist = setter.artist;
+        settings.SetSongTitle(setter.title);
+        settings.SetSongArtist(setter.artist);
+        settings.SetEventName(setter.eventName);
 
         SceneManager.LoadSceneAsync("InGame");
     }

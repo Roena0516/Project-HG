@@ -93,12 +93,9 @@ public class LoadManager : MonoBehaviour
             info = container.info;
             notes = container.notes;
 
-            settings.eventName = info.eventName;
-
             Debug.Log($"1{settings.eventName}");
 
             Debug.Log("Chart loaded successfully!");
-            Debug.Log($"{info.artist}");
         }
         else
         {
