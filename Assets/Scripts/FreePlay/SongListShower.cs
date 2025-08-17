@@ -43,9 +43,6 @@ public class SongListShower : MonoBehaviour
     private Coroutine repeatCoroutine;
 
     public SongInfoClass selectedSongInfo;
-    //private Coroutine currentSetSongIndexRoutine;
-
-    //public static SongListShower Instance { get; private set; }
 
     private void Start()
     {
@@ -186,15 +183,6 @@ public class SongListShower : MonoBehaviour
         midText.color = midText.color.SetAlpha(0f);
         endText.color = endText.color.SetAlpha(0f);
         sndText.color = sndText.color.SetAlpha(0f);
-
-        //if (Instance == null)
-        //{
-        //    Instance = this;
-        //}
-        //else
-        //{
-        //    Destroy(gameObject);
-        //}
     }
 
     [System.Obsolete]

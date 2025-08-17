@@ -58,6 +58,7 @@ public class GameManager : MonoBehaviour
             if (isSyncRoom)
             {
                 SceneManager.LoadSceneAsync("Menu");
+                return;
             }
             if (isTest)
             {
@@ -78,11 +79,14 @@ public class GameManager : MonoBehaviour
             SceneManager.LoadSceneAsync("FreePlay");
         }
 
-        if (isLevelEnd)
-        {
-            isLevelEnd = false;
-            StartCoroutine(ChangeToResult());
-        }
+        StartCoroutine(WaitForLevelEnd());
+    }
+
+    IEnumerator WaitForLevelEnd()
+    {
+        yield return new WaitUntil(() => isLevelEnd);
+        isLevelEnd = false;
+        StartCoroutine(ChangeToResult());
     }
 
     IEnumerator ChangeToResult()
