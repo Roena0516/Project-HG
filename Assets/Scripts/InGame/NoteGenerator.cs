@@ -64,7 +64,7 @@ public class NoteGenerator : MonoBehaviour
     private void Start()
     {
         speed = 4.5f;
-        distance = 9f;
+        distance = 6f - (-2.63f);
         spawnPosition1 = new Vector3(Lines[0].transform.position.x, transform.position.y, 0);
         spawnPosition2 = new Vector3(Lines[1].transform.position.x, transform.position.y, 0);
         spawnPosition3 = new Vector3(Lines[2].transform.position.x, transform.position.y, 0);
