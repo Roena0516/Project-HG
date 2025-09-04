@@ -30,14 +30,14 @@ public class JudgementManager : MonoBehaviour
     public TextMeshProUGUI fastSlow;
     public TextMeshProUGUI comboText;
     public TextMeshProUGUI comboTitleText;
-    public TextMeshPro rateText;
-    public TextMeshPro perfectpCountText;
-    public TextMeshPro perfectCountText;
-    public TextMeshPro greatCountText;
-    public TextMeshPro goodCountText;
-    public TextMeshPro missCountText;
-    public TextMeshPro titleText;
-    public TextMeshPro artistText;
+    public TextMeshProUGUI rateText;
+    public TextMeshProUGUI perfectpCountText;
+    public TextMeshProUGUI perfectCountText;
+    public TextMeshProUGUI greatCountText;
+    public TextMeshProUGUI goodCountText;
+    public TextMeshProUGUI missCountText;
+    public TextMeshProUGUI titleText;
+    public TextMeshProUGUI artistText;
     public TextMeshProUGUI FCAPText;
     public TextMeshProUGUI speedText;
 
