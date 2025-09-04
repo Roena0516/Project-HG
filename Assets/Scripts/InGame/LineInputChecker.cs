@@ -412,7 +412,7 @@ public class LineInputChecker : MonoBehaviour
         float elapsedTime = 0f;
         float startAlpha = 0f;
         float duration = 0.01f;
-        float targetAlpha = 0.1f;
+        float targetAlpha = 0.05f;
 
         while (elapsedTime < duration)
         {
@@ -460,7 +460,7 @@ public class LineInputChecker : MonoBehaviour
         SpriteRenderer renderer = Lines[lineNumber].GetComponent<SpriteRenderer>();
 
         float elapsedTime = 0f;
-        float startAlpha = 0.15f;
+        float startAlpha = 0.07f;
         float duration = 0.01f;
         float targetAlpha = 0f;
 
