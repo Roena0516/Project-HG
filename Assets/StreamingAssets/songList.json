@@ -27,6 +27,19 @@
       "difficulty": "NIGHTMARE"
     },
     {
+      "id": 2,
+      "title": "두근 어질",
+      "jpTitle": "きゅうくらりん",
+      "artist": "이요와",
+      "jpArtist": "いよわ",
+      "category": "vocaloid",
+      "bpm": 220.0,
+      "eventName": "kyukurarin",
+      "fileLocation": "kyu_kurarin",
+      "level": 5.0,
+      "difficulty": "ADVERSITY"
+    },
+    {
       "id": 3,
       "title": "미무카와 나이스 트라이",
       "jpTitle": "みむかｩわナイストライ",

@@ -27,6 +27,10 @@ public class SongListShower : MonoBehaviour
     public TextMeshProUGUI endText;
     public TextMeshProUGUI sndText;
 
+    public TextMeshProUGUI info_titleText;
+    public TextMeshProUGUI info_artistText;
+    public TextMeshProUGUI info_bpmText;
+
     public GameObject syncInput;
     public GameObject speedInput;
     public TMP_Dropdown dropdown;
@@ -146,7 +150,10 @@ public class SongListShower : MonoBehaviour
             setter.filePath.Add("");
 
             setter.artist = info.artist;
+            setter.jpArtist = info.jpArtist;
             setter.title = info.title;
+            setter.jpTitle = info.jpTitle;
+            setter.BPM = info.bpm;
             setter.eventName = info.eventName;
 
             List<SongInfoClass> songList = loader.songDictionary[key];
@@ -398,9 +405,17 @@ public class SongListShower : MonoBehaviour
 
             SongListInfoSetter setter = current.GetComponent<SongListInfoSetter>();
             DifficultySetter(setter.artist + "-" + setter.title);
+            SetInfoBoard(setter);
 
             SetDifficulty(selectedDifficulty, 1);
         }
+    }
+
+    private void SetInfoBoard(SongListInfoSetter setter)
+    {
+        info_titleText.text = $"{setter.title}";
+        info_artistText.text = $"{setter.artist}";
+        info_bpmText.text = $"{setter.BPM} BPM";
     }
 
     private IEnumerator SetSong(int index)
