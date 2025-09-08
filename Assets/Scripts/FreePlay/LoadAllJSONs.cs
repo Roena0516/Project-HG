@@ -14,20 +14,6 @@ public class LoadAllJSONs : MonoBehaviour
 
     public SongListShower shower;
 
-    //public static LoadAllJSONs Instance { get; private set; }
-
-    //private void Awake()
-    //{
-    //    if (Instance == null)
-    //    {
-    //        Instance = this;
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
-
     private void Start()
     {
         string[] songList = Directory.GetFiles(Application.streamingAssetsPath, "songList.json");
@@ -40,7 +26,7 @@ public class LoadAllJSONs : MonoBehaviour
 
             if (directory.Length == 0)
             {
-                Debug.LogWarning($"해당하는 폴더를 찾지 못했습니다: {song.fileLocation}");
+                Debug.LogWarning($"???????? ?????? ???? ??????????: {song.fileLocation}");
                 continue;
             }
 
@@ -48,7 +34,7 @@ public class LoadAllJSONs : MonoBehaviour
 
             if (jsonFiles.Length == 0)
             {
-                Debug.LogWarning($"다음 난이도의 채보 파일이 존재하지 않습니다: {directory[0]} {song.difficulty}");
+                Debug.LogWarning($"???? ???????? ???? ?????? ???????? ????????: {directory[0]} {song.difficulty}");
                 continue;
             }
 
@@ -72,8 +58,30 @@ public class LoadAllJSONs : MonoBehaviour
             if (!songDictionary.ContainsKey(key))
             {
                 songDictionary[key] = new List<SongInfoClass>();
+                SongInfoClass temp = new();
+
+                songDictionary[key].Add(temp);
+                songDictionary[key].Add(temp);
+                songDictionary[key].Add(temp);
+                songDictionary[key].Add(temp);
             }
-            songDictionary[key].Add(info);
+
+            if (song.difficulty == "MEMORY")
+            {
+                songDictionary[key][0] = info;
+            }
+            if (song.difficulty == "ADVERSITY")
+            {
+                songDictionary[key][1] = info;
+            }
+            if (song.difficulty == "NIGHTMARE")
+            {
+                songDictionary[key][2] = info;
+            }
+            if (song.difficulty == "INFERNO")
+            {
+                songDictionary[key][3] = info;
+            }
         }
 
         shower.Shower();

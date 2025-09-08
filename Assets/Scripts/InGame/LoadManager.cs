@@ -15,7 +15,7 @@ public class SongInfoClass
     public float bpm;
     public string eventName;
     public string fileLocation;
-    public float level;
+    public float level = 0;
     public string difficulty;
 }
 

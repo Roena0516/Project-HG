@@ -104,7 +104,9 @@ public class SongListShower : MonoBehaviour
             Debug.Log($"{info.artist} {info.title} {info.bpm}");
 
             GameObject song = Instantiate(songPrefab, contentFolder.transform);
-            Transform artistTitle = song.transform.Find("Artist-TitlePanel");
+            Transform left = song.transform.Find("Left");
+            Transform right = song.transform.Find("Right");
+            Transform artistTitle = left.Find("SongInfo");
             if (settings.settings.isKR)
             {
                 artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
@@ -115,7 +117,17 @@ public class SongListShower : MonoBehaviour
                 artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.jpTitle;
                 artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.jpArtist;
             }
-            song.transform.Find("BPMText").gameObject.GetComponent<TextMeshProUGUI>().text = $"{info.bpm}BPM";
+
+            string mem = loader.songDictionary[key][0].level > 0 ? $"{loader.songDictionary[key][0].level}" : "";
+            string adv = loader.songDictionary[key][1].level > 0 ? $"{loader.songDictionary[key][1].level}" : "";
+            string nmr = loader.songDictionary[key][2].level > 0 ? $"{loader.songDictionary[key][2].level}" : "";
+            string inf = loader.songDictionary[key][3].level > 0 ? $"{loader.songDictionary[key][3].level}" : "";
+
+            Transform difficulty = right.Find("Difficulty");
+            difficulty.transform.Find("MEM").gameObject.GetComponent<TextMeshProUGUI>().text = $"{mem}";
+            difficulty.transform.Find("ADV").gameObject.GetComponent<TextMeshProUGUI>().text = $"{adv}";
+            difficulty.transform.Find("NMR").gameObject.GetComponent<TextMeshProUGUI>().text = $"{nmr}";
+            difficulty.transform.Find("INF").gameObject.GetComponent<TextMeshProUGUI>().text = $"{inf}";
 
             SongListInfoSetter setter = song.GetComponent<SongListInfoSetter>();
             setter.filePath.Add("");
