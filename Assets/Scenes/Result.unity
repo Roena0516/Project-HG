@@ -758,10 +758,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Artist: {fileID: 1313556508}
   Title: {fileID: 208410286}
+  PerfectPlusCount: {fileID: 1397302256}
   PerfectCount: {fileID: 1365925008}
   GreatCount: {fileID: 452237199}
   GoodCount: {fileID: 669001134}
-  BadCount: {fileID: 0}
   MissCount: {fileID: 200889393}
   Rate: {fileID: 1339498684}
   FCAP: {fileID: 1127885063}
