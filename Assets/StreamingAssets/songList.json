@@ -64,6 +64,84 @@
       "fileLocation": "shoushitsu",
       "level": 8.0,
       "difficulty": "NIGHTMARE"
+    },
+    {
+      "id": 5,
+      "title": "하츠네 미쿠의 소실1",
+      "jpTitle": "初音ミクの消失",
+      "artist": "cosMo@폭주P",
+      "jpArtist": "cosMo@暴走P",
+      "category": "vocaloid",
+      "bpm": 240.0,
+      "eventName": "shoushitsu",
+      "fileLocation": "shoushitsu",
+      "level": 8.0,
+      "difficulty": "NIGHTMARE"
+    },
+    {
+      "id": 5,
+      "title": "하츠네 미쿠의 소실2",
+      "jpTitle": "初音ミクの消失",
+      "artist": "cosMo@폭주P",
+      "jpArtist": "cosMo@暴走P",
+      "category": "vocaloid",
+      "bpm": 240.0,
+      "eventName": "shoushitsu",
+      "fileLocation": "shoushitsu",
+      "level": 8.0,
+      "difficulty": "NIGHTMARE"
+    },
+    {
+      "id": 5,
+      "title": "하츠네 미쿠의 소실3",
+      "jpTitle": "初音ミクの消失",
+      "artist": "cosMo@폭주P",
+      "jpArtist": "cosMo@暴走P",
+      "category": "vocaloid",
+      "bpm": 240.0,
+      "eventName": "shoushitsu",
+      "fileLocation": "shoushitsu",
+      "level": 8.0,
+      "difficulty": "NIGHTMARE"
+    },
+    {
+      "id": 5,
+      "title": "하츠네 미쿠의 소실4",
+      "jpTitle": "初音ミクの消失",
+      "artist": "cosMo@폭주P",
+      "jpArtist": "cosMo@暴走P",
+      "category": "vocaloid",
+      "bpm": 240.0,
+      "eventName": "shoushitsu",
+      "fileLocation": "shoushitsu",
+      "level": 8.0,
+      "difficulty": "NIGHTMARE"
+    },
+    {
+      "id": 5,
+      "title": "하츠네 미쿠의 소실5",
+      "jpTitle": "初音ミクの消失",
+      "artist": "cosMo@폭주P",
+      "jpArtist": "cosMo@暴走P",
+      "category": "vocaloid",
+      "bpm": 240.0,
+      "eventName": "shoushitsu",
+      "fileLocation": "shoushitsu",
+      "level": 8.0,
+      "difficulty": "NIGHTMARE"
+    },
+    {
+      "id": 5,
+      "title": "하츠네 미쿠의 소실6",
+      "jpTitle": "初音ミクの消失",
+      "artist": "cosMo@폭주P",
+      "jpArtist": "cosMo@暴走P",
+      "category": "vocaloid",
+      "bpm": 240.0,
+      "eventName": "shoushitsu",
+      "fileLocation": "shoushitsu",
+      "level": 8.0,
+      "difficulty": "NIGHTMARE"
     }
   ]
 }

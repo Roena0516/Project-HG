@@ -53,7 +53,7 @@ public class SongListShower : MonoBehaviour
 
         settings = SettingsManager.Instance;
 
-        contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (viewPortFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
+        //contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (viewPortFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
         originX = contentFolder.transform.position.x;
         indicatorOriginX = difficultyIndicator.transform.position.x;
@@ -170,6 +170,8 @@ public class SongListShower : MonoBehaviour
                 }
             }
         }
+
+        SetList(1);
     }
 
     private void SetSelectedSongInfo(SongInfoClass info)
@@ -370,20 +372,23 @@ public class SongListShower : MonoBehaviour
         settings.SaveSettings();
     }
 
-    [System.Obsolete]
     private void SetList(int toIndex)
     {
-        if (toIndex > 0 && toIndex <= contentFolder.transform.GetChildCount())
+        if (toIndex > 0 && toIndex <= contentFolder.transform.childCount)
         {
             int prev = listNum;
             listNum = toIndex;
 
             Debug.Log(toIndex);
-            if (currentSetSongRoutine != null)
+
+            if (listNum > 3 && listNum < contentFolder.transform.childCount - 4)
             {
-                StopCoroutine(currentSetSongRoutine);
+                if (currentSetSongRoutine != null)
+                {
+                    StopCoroutine(currentSetSongRoutine);
+                }
+                currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
             }
-            currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
 
             Image prevImage = contentFolder.transform.GetChild(prev - 1).GetComponent<Image>();
             prevImage.color = prevImage.color.SetAlpha(0f);
@@ -407,7 +412,7 @@ public class SongListShower : MonoBehaviour
         float elapsedTime = 0f;
         Vector3 startPos = new Vector3(T.position.x, T.position.y, 0f);
         float duration = 0.15f;
-        Vector3 targetPos = new Vector3(originX, originY + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * index), 0f);
+        Vector3 targetPos = new Vector3(originX, originY - originY + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * index), 0f);
 
         while (elapsedTime < duration)
         {
