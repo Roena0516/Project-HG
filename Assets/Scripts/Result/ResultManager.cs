@@ -10,10 +10,10 @@ public class ResultManager : MonoBehaviour
 
     public TextMeshProUGUI Artist;
     public TextMeshProUGUI Title;
+    public TextMeshProUGUI PerfectPlusCount;
     public TextMeshProUGUI PerfectCount;
     public TextMeshProUGUI GreatCount;
     public TextMeshProUGUI GoodCount;
-    public TextMeshProUGUI BadCount;
     public TextMeshProUGUI MissCount;
     public TextMeshProUGUI Rate;
     public TextMeshProUGUI FCAP;
@@ -39,14 +39,18 @@ public class ResultManager : MonoBehaviour
     {
         Artist.text = loadManager.info.artist;
         Title.text= loadManager.info.title;
-
+        PerfectPlusCount.text = $"{judgementManager.judgeCount["PerfectP"]}";
         PerfectCount.text = $"{judgementManager.judgeCount["Perfect"]}";
         GreatCount.text = $"{judgementManager.judgeCount["Great"]}";
         GoodCount.text = $"{judgementManager.judgeCount["Good"]}";
-        BadCount.text = $"{judgementManager.judgeCount["Bad"]}";
-        MissCount.text = $"{judgementManager.judgeCount["Miss"]}";
+        MissCount.text = $"{judgementManager.judgeCount["Miss"] + judgementManager.judgeCount["Bad"]}";
 
         Rate.text = $"{judgementManager.rate:F2}%";
+
+        if (judgementManager.rate < 80)
+        {
+            FCAP.text = "FAILED";
+        }
 
         if (judgementManager.isFC)
         {
