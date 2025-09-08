@@ -4289,8 +4289,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -742, y: 207}
-  m_SizeDelta: {x: 992, y: 657}
+  m_AnchoredPosition: {x: -742, y: 206.99998}
+  m_SizeDelta: {x: 992, y: 639}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &1708615818
 MonoBehaviour:
@@ -4599,6 +4599,7 @@ MonoBehaviour:
   loader: {fileID: 1779595402}
   contentFolder: {fileID: 44610318}
   songListFolder: {fileID: 1916045515}
+  viewPortFolder: {fileID: 1708615816}
   songPrefab: {fileID: 7203529609370929433, guid: f80fdd38f230a4a50ba6ad1c5ad1f5dd, type: 3}
   canvas: {fileID: 1585021326}
   difficultyIndicator: {fileID: 104730655}

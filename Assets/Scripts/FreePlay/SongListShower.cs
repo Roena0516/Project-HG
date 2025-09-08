@@ -6,6 +6,7 @@ using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEngine.UI;
 
 public class SongListShower : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class SongListShower : MonoBehaviour
 
     public GameObject contentFolder;
     public GameObject songListFolder;
+    public GameObject viewPortFolder;
     public GameObject songPrefab;
     public GameObject canvas;
     public GameObject difficultyIndicator;
@@ -51,7 +53,7 @@ public class SongListShower : MonoBehaviour
 
         settings = SettingsManager.Instance;
 
-        contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (songListFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
+        contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (viewPortFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
         originX = contentFolder.transform.position.x;
         indicatorOriginX = difficultyIndicator.transform.position.x;
@@ -371,10 +373,9 @@ public class SongListShower : MonoBehaviour
     [System.Obsolete]
     private void SetList(int toIndex)
     {
-        //contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, contentFolder.transform.position.y + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * targetIndex), 0f);
-            //Debug.Log(contentFolder.transform.GetChildCount());
         if (toIndex > 0 && toIndex <= contentFolder.transform.GetChildCount())
         {
+            int prev = listNum;
             listNum = toIndex;
 
             Debug.Log(toIndex);
@@ -384,7 +385,13 @@ public class SongListShower : MonoBehaviour
             }
             currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
 
-            SongListInfoSetter setter = contentFolder.transform.GetChild(listNum - 1).GetComponent<SongListInfoSetter>();
+            Image prevImage = contentFolder.transform.GetChild(prev - 1).GetComponent<Image>();
+            prevImage.color = prevImage.color.SetAlpha(0f);
+
+            Transform current = contentFolder.transform.GetChild(listNum - 1);
+            current.GetComponent<Image>().color = current.GetComponent<Image>().color.SetAlpha(0.4f);
+
+            SongListInfoSetter setter = current.GetComponent<SongListInfoSetter>();
             DifficultySetter(setter.artist + "-" + setter.title);
 
             SetDifficulty(selectedDifficulty, 1);
