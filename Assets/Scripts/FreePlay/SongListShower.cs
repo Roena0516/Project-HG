@@ -5,6 +5,7 @@ using System.Collections;
 using System.IO;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Linq;
 
 public class SongListShower : MonoBehaviour
 {
@@ -94,7 +95,14 @@ public class SongListShower : MonoBehaviour
         {
             string key = pair.Key;
 
-            SongInfoClass info = loader.songDictionary[key][0];
+            SongInfoClass info = null;
+
+            if (loader.songDictionary.TryGetValue(key, out var songDifficulty))
+            {
+                info = songDifficulty
+                    .Take(4) // 0 ~ 3 인덱스
+                    .FirstOrDefault(s => s.level != 0); // level이 0이 아닌 첫 번째
+            }
 
             if (selectedSongInfo.artist == "")
             {
@@ -142,19 +150,19 @@ public class SongListShower : MonoBehaviour
             List<SongInfoClass> songList = loader.songDictionary[key];
             foreach (SongInfoClass infos in songList)
             {
-                if (infos.difficulty == "BEGINNING")
+                if (infos.difficulty == "MEMORY")
                 {
                     setter.filePath[0] = infos.fileLocation;
                 }
-                if (infos.difficulty == "MIDDLE")
+                if (infos.difficulty == "ADVERSITY")
                 {
                     setter.filePath[1] = infos.fileLocation;
                 }
-                if (infos.difficulty == "END")
+                if (infos.difficulty == "NIGHTMARE")
                 {
                     setter.filePath[2] = infos.fileLocation;
                 }
-                if (infos.difficulty == "STARTEND")
+                if (infos.difficulty == "INFERNO")
                 {
                     setter.filePath[3] = infos.fileLocation;
                 }
@@ -430,22 +438,22 @@ public class SongListShower : MonoBehaviour
 
         foreach (SongInfoClass infos in songList)
         {
-            if (infos.difficulty == "BEGINNING")
+            if (infos.difficulty == "MEMORY")
             {
                 bgnText.color = bgnText.color.SetAlpha(1f);
                 bgnText.text = $"{infos.level}";
             }
-            if (infos.difficulty == "MIDDLE")
+            if (infos.difficulty == "ADVERSITY")
             {
                 midText.color = midText.color.SetAlpha(1f);
                 midText.text = $"{infos.level}";
             }
-            if (infos.difficulty == "END")
+            if (infos.difficulty == "NIGHTMARE")
             {
                 endText.color = endText.color.SetAlpha(1f);
                 endText.text = $"{infos.level}";
             }
-            if (infos.difficulty == "STARTEND")
+            if (infos.difficulty == "INFERNO")
             {
                 sndText.color = sndText.color.SetAlpha(1f);
                 sndText.text = $"{infos.level}";
