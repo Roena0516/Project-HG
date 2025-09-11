@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class ResultClass : MonoBehaviour
@@ -20,5 +21,5 @@ public class Result
 
 public class ResultsContainer
 {
-    public Result[] results;
+    public List<Result> results;
 }

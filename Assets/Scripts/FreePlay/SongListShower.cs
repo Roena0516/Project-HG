@@ -56,7 +56,7 @@ public class SongListShower : MonoBehaviour
 
     public SongInfoClass selectedSongInfo;
 
-    private Result[] results;
+    private List<Result> results;
 
     private void Start()
     {
