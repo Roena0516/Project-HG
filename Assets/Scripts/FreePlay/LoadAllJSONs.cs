@@ -44,6 +44,7 @@ public class LoadAllJSONs : MonoBehaviour
             SongInfoClass info = new();
 
             info.fileLocation = jsonFiles[0];
+            info.id = song.id;
             info.difficulty = song.difficulty;
             info.artist = song.artist;
             info.jpArtist = song.jpArtist;
