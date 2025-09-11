@@ -7076,6 +7076,7 @@ GameObject:
   - component: {fileID: 1779595403}
   - component: {fileID: 1779595401}
   - component: {fileID: 1779595402}
+  - component: {fileID: 1779595404}
   m_Layer: 0
   m_Name: ListManager
   m_TagString: Untagged
@@ -7096,6 +7097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   loader: {fileID: 1779595402}
+  getResults: {fileID: 1779595404}
   contentFolder: {fileID: 44610318}
   songListFolder: {fileID: 1916045515}
   viewPortFolder: {fileID: 1708615816}
@@ -7110,6 +7112,9 @@ MonoBehaviour:
   info_titleText: {fileID: 1999774355}
   info_artistText: {fileID: 1740360592}
   info_bpmText: {fileID: 45137957}
+  info_rateText: {fileID: 127523758}
+  info_comboText: {fileID: 2085705969}
+  info_ratingText: {fileID: 419751550}
   syncInput: {fileID: 1534599114}
   speedInput: {fileID: 509688064}
   dropdown: {fileID: 1905051579}
@@ -7156,6 +7161,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1779595404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1779595400}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9b7e77bc10d0348fe9199bdb8f86d8e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1788057377
 GameObject:
   m_ObjectHideFlags: 0

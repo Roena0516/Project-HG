@@ -13,6 +13,7 @@ public class SongListShower : MonoBehaviour
     private SettingsManager settings;
 
     public LoadAllJSONs loader;
+    public GetResults getResults;
 
     public GameObject contentFolder;
     public GameObject songListFolder;
@@ -30,6 +31,10 @@ public class SongListShower : MonoBehaviour
     public TextMeshProUGUI info_titleText;
     public TextMeshProUGUI info_artistText;
     public TextMeshProUGUI info_bpmText;
+
+    public TextMeshProUGUI info_rateText;
+    public TextMeshProUGUI info_comboText;
+    public TextMeshProUGUI info_ratingText;
 
     public GameObject syncInput;
     public GameObject speedInput;
@@ -50,6 +55,8 @@ public class SongListShower : MonoBehaviour
     private Coroutine repeatCoroutine;
 
     public SongInfoClass selectedSongInfo;
+
+    private Result[] results;
 
     private void Start()
     {
@@ -97,12 +104,19 @@ public class SongListShower : MonoBehaviour
 
     public void Shower()
     {
+        // Result 리스트 불러오기
+        results = getResults.GetResultsAPI().results;
+
         foreach (var pair in loader.songDictionary)
         {
+
+            // songDictionary의 키
             string key = pair.Key;
 
+            // 노래 정보를 담아둘 클래스
             SongInfoClass info = null;
 
+            // 노래 정보 가져오기
             if (loader.songDictionary.TryGetValue(key, out var songDifficulty))
             {
                 info = songDifficulty
@@ -115,8 +129,10 @@ public class SongListShower : MonoBehaviour
                 SetSelectedSongInfo(info);
             }
 
-            Debug.Log($"{info.artist} {info.title} {info.bpm}");
+            Debug.Log($"{info.id} {info.artist} {info.title} {info.bpm}");
 
+
+            // 노래 리스트에 노래 추가
             GameObject song = Instantiate(songPrefab, contentFolder.transform);
             Transform left = song.transform.Find("Left");
             Transform right = song.transform.Find("Right");
@@ -132,6 +148,7 @@ public class SongListShower : MonoBehaviour
                 artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.jpArtist;
             }
 
+            // 난이도 텍스트 표시
             string mem = loader.songDictionary[key][0].level > 0 ? $"{loader.songDictionary[key][0].level}" : "";
             string adv = loader.songDictionary[key][1].level > 0 ? $"{loader.songDictionary[key][1].level}" : "";
             string nmr = loader.songDictionary[key][2].level > 0 ? $"{loader.songDictionary[key][2].level}" : "";
@@ -144,10 +161,30 @@ public class SongListShower : MonoBehaviour
             difficulty.transform.Find("INF").gameObject.GetComponent<TextMeshProUGUI>().text = $"{inf}";
 
             SongListInfoSetter setter = song.GetComponent<SongListInfoSetter>();
-            setter.filePath.Add("");
-            setter.filePath.Add("");
-            setter.filePath.Add("");
-            setter.filePath.Add("");
+
+            // 빈 기록
+            Result empty = new()
+            {
+                playerId = "1",
+                musicId = info.id,
+                rate = 0,
+                combo = 0,
+                perfectPlus = 0,
+                perfect = 0,
+                great = 0,
+                good = 0,
+                miss = 0,
+                played_at = ""
+            };
+
+            // 난이도 별 기록 리스트
+            if (setter.results[0] == null)
+            {
+                setter.results.Add(empty);
+                setter.results.Add(empty);
+                setter.results.Add(empty);
+                setter.results.Add(empty);
+            }
 
             setter.artist = info.artist;
             setter.jpArtist = info.jpArtist;
@@ -156,24 +193,59 @@ public class SongListShower : MonoBehaviour
             setter.BPM = info.bpm;
             setter.eventName = info.eventName;
 
+            // 난이도 따른 파일 경로 및 기록 지정
             List<SongInfoClass> songList = loader.songDictionary[key];
             foreach (SongInfoClass infos in songList)
             {
                 if (infos.difficulty == "MEMORY")
                 {
                     setter.filePath[0] = infos.fileLocation;
+
+                    // 해당 노래의 기록 불러오기
+                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    if (found != null)
+                    {
+                        setter.results[0] = found;
+                    }
+
+                    // id 저장
+                    setter.ids[0] = infos.id;
                 }
                 if (infos.difficulty == "ADVERSITY")
                 {
                     setter.filePath[1] = infos.fileLocation;
+
+                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    if (found != null)
+                    {
+                        setter.results[1] = found;
+                    }
+
+                    setter.ids[1] = infos.id;
                 }
                 if (infos.difficulty == "NIGHTMARE")
                 {
                     setter.filePath[2] = infos.fileLocation;
+
+                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    if (found != null)
+                    {
+                        setter.results[2] = found;
+                    }
+
+                    setter.ids[2] = infos.id;
                 }
                 if (infos.difficulty == "INFERNO")
                 {
                     setter.filePath[3] = infos.fileLocation;
+
+                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    if (found != null)
+                    {
+                        setter.results[3] = found;
+                    }
+
+                    setter.ids[3] = infos.id;
                 }
             }
         }
@@ -379,6 +451,27 @@ public class SongListShower : MonoBehaviour
         settings.SaveSettings();
     }
 
+    // id로 Result 가져오기
+    private Result GetResult(int musicId)
+    {
+        // 해당 id의 기록 불러오기
+        Result found = results.FirstOrDefault(r => r.musicId == musicId);
+        if (found == null)
+        {
+            Debug.LogError($"{musicId}의 기록이 존재하지 않습니다.");
+            return null;
+        }
+
+        return found;
+    }
+
+    // Result UI 변경
+    private void SetResult(Result result)
+    {
+        info_rateText.text = $"{result.rate}";
+        info_comboText.text = $"{result.combo}";
+    }
+
     private void SetList(int toIndex)
     {
         if (toIndex > 0 && toIndex <= contentFolder.transform.childCount)
@@ -404,10 +497,17 @@ public class SongListShower : MonoBehaviour
             current.GetComponent<Image>().color = current.GetComponent<Image>().color.SetAlpha(0.4f);
 
             SongListInfoSetter setter = current.GetComponent<SongListInfoSetter>();
+
             DifficultySetter(setter.artist + "-" + setter.title);
             SetInfoBoard(setter);
 
             SetDifficulty(selectedDifficulty, 1);
+
+            Result found = GetResult(setter.ids[selectedDifficulty - 1]);
+            if (found != null)
+            {
+                SetResult(found);
+            }
         }
     }
 

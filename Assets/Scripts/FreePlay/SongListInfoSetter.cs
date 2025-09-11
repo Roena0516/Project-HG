@@ -3,11 +3,14 @@ using UnityEngine;
 
 public class SongListInfoSetter : MonoBehaviour
 {
+    public List<int> ids = new() { 0, 0, 0, 0 };
     public string artist;
     public string jpArtist;
     public string title;
     public string jpTitle;
     public float BPM;
-    public List<string> filePath;
+    public List<string> filePath = new() { "", "", "", "" };
     public string eventName;
+
+    public List<Result> results;
 }
