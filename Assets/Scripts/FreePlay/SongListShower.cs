@@ -496,8 +496,22 @@ public class SongListShower : MonoBehaviour
         }
         if (found == null)
         {
-            Debug.LogError($"{musicId}의 기록이 존재하지 않습니다.");
-            return null;
+            // 빈 기록
+            Result empty = new()
+            {
+                playerId = "1",
+                musicId = musicId,
+                rate = 0,
+                combo = 0,
+                perfectPlus = 0,
+                perfect = 0,
+                great = 0,
+                good = 0,
+                miss = 0,
+                played_at = ""
+            };
+
+            return empty;
         }
 
         return found;
