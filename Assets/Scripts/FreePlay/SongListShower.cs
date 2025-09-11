@@ -178,12 +178,30 @@ public class SongListShower : MonoBehaviour
             };
 
             // 난이도 별 기록 리스트
-            if (setter.results[0] == null)
+            if (setter.results.Count == 0)
             {
                 setter.results.Add(empty);
                 setter.results.Add(empty);
                 setter.results.Add(empty);
                 setter.results.Add(empty);
+            }
+
+            // 난이도 별 채보 파일 경로 리스트
+            if (setter.filePath.Count == 0)
+            {
+                setter.filePath.Add("");
+                setter.filePath.Add("");
+                setter.filePath.Add("");
+                setter.filePath.Add("");
+            }
+
+            // 난이도 별 노래 id 리스트
+            if (setter.ids.Count == 0)
+            {
+                setter.ids.Add(0);
+                setter.ids.Add(0);
+                setter.ids.Add(0);
+                setter.ids.Add(0);
             }
 
             setter.artist = info.artist;
@@ -202,7 +220,11 @@ public class SongListShower : MonoBehaviour
                     setter.filePath[0] = infos.fileLocation;
 
                     // 해당 노래의 기록 불러오기
-                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    Result found = null;
+                    if (results != null)
+                    {
+                        found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    }
                     if (found != null)
                     {
                         setter.results[0] = found;
@@ -215,7 +237,11 @@ public class SongListShower : MonoBehaviour
                 {
                     setter.filePath[1] = infos.fileLocation;
 
-                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    Result found = null;
+                    if (results != null)
+                    {
+                        found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    }
                     if (found != null)
                     {
                         setter.results[1] = found;
@@ -227,7 +253,11 @@ public class SongListShower : MonoBehaviour
                 {
                     setter.filePath[2] = infos.fileLocation;
 
-                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    Result found = null;
+                    if (results != null)
+                    {
+                        found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    }
                     if (found != null)
                     {
                         setter.results[2] = found;
@@ -239,7 +269,11 @@ public class SongListShower : MonoBehaviour
                 {
                     setter.filePath[3] = infos.fileLocation;
 
-                    Result found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    Result found = null;
+                    if (results != null)
+                    {
+                        found = results.FirstOrDefault(r => r.musicId == infos.id);
+                    }
                     if (found != null)
                     {
                         setter.results[3] = found;
@@ -455,7 +489,11 @@ public class SongListShower : MonoBehaviour
     private Result GetResult(int musicId)
     {
         // 해당 id의 기록 불러오기
-        Result found = results.FirstOrDefault(r => r.musicId == musicId);
+        Result found = null;
+        if (results != null)
+        {
+            found = results.FirstOrDefault(r => r.musicId == musicId);
+        }
         if (found == null)
         {
             Debug.LogError($"{musicId}의 기록이 존재하지 않습니다.");
