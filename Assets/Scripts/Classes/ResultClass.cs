@@ -5,6 +5,7 @@ public class ResultClass : MonoBehaviour
 {
 }
 
+[System.Serializable]
 public class Result
 {
     public string playerId;
@@ -19,6 +20,7 @@ public class Result
     public string played_at;
 }
 
+[System.Serializable]
 public class ResultsContainer
 {
     public List<Result> results;

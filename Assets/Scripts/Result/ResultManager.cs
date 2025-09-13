@@ -73,6 +73,8 @@ public class ResultManager : MonoBehaviour
         {
             // 없으면 새 컨테이너 생성
             container = new ResultsContainer();
+
+            Debug.Log("result.json이 존재하지 않습니다.");
         }
 
         // 새로운 결과 추가

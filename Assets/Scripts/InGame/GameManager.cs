@@ -33,6 +33,8 @@ public class GameManager : MonoBehaviour
         isTest = SceneManager.GetSceneByName("LevelEditor").isLoaded;
         isSyncRoom = SceneManager.GetSceneByName("SyncRoom").isLoaded;
 
+        StartCoroutine(WaitForLevelEnd());
+
         if (isTest)
         {
             EventSystem[] eventSystems = FindObjectsOfType<EventSystem>();
@@ -78,8 +80,6 @@ public class GameManager : MonoBehaviour
             }
             SceneManager.LoadSceneAsync("FreePlay");
         }
-
-        StartCoroutine(WaitForLevelEnd());
     }
 
     IEnumerator WaitForLevelEnd()
