@@ -20377,6 +20377,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc00697042db4744882cfb6cf4c4107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  lineInputChecker: {fileID: 1299961083}
 --- !u!1 &1313420622
 GameObject:
   m_ObjectHideFlags: 0

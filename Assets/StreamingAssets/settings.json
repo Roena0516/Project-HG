@@ -1,13 +1,13 @@
 {
     "isFirstStart": false,
-    "sync": 60.0,
+    "sync": 0.0,
     "speed": 3.5999999046325685,
     "effectOption": "None",
     "isKR": true,
     "KeyBinds": [
-        "<Keyboard>/s",
-        "<Keyboard>/d",
-        "<Keyboard>/l",
-        "<Keyboard>/semicolon"
+        "S",
+        "D",
+        ";",
+        "'"
     ]
 }
