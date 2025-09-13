@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class LineInputChecker : MonoBehaviour
@@ -47,6 +48,8 @@ public class LineInputChecker : MonoBehaviour
 
     private readonly Queue<Action> mainThreadQueue = new Queue<Action>();
     private readonly object queueLock = new object();
+
+    public UnityEvent OnPlay = new UnityEvent();
 
     private void Awake()
     {
@@ -124,7 +127,7 @@ public class LineInputChecker : MonoBehaviour
 
     public void SetSpeed(float duration)
     {
-        if (settings.settings.speed + duration >= 1.0 && settings.settings.speed + duration <= 10.1)
+        if (settings.settings.speed + duration >= 1.0 && settings.settings.speed + duration <= 10.0)
         {
             settings.SetSpeed($"{settings.settings.speed += duration}");
             noteGenerator.speed = 4.5f * settings.settings.speed;
@@ -233,6 +236,8 @@ public class LineInputChecker : MonoBehaviour
         startTime = Time.time;
         isAutoPlay = settings.isAutoPlay;
         Debug.Log($"Start Time : {startTime}");
+
+        OnPlay.Invoke();
 
 #if UNITY_STANDALONE_WIN
         chartPlayThread = new Thread(ChartPlayWorker);

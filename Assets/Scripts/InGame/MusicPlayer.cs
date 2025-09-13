@@ -14,6 +14,7 @@ public class MusicPlayer : MonoBehaviour
     private SettingsManager settings;
     private LevelEditer levelEditer;
     public GameManager gameManager;
+    public LineInputChecker line;
 
     public static MusicPlayer Instance { get; private set; }
 
@@ -33,14 +34,33 @@ public class MusicPlayer : MonoBehaviour
     {
         settings = SettingsManager.Instance;
 
-        sync = (settings.settings.sync / 1000f) + 2.6f; // + 2f - 0.1f + 0.7f
-
-        StartCoroutine(StartSong());
+        sync = (settings.settings.sync / 1000f); // + 2f(beatDuration + 2000f) - 0.1f(WaitForSeconds(0.1f))f
     }
 
-    IEnumerator StartSong()
+    void OnEnable()
     {
-        yield return new WaitForSecondsRealtime(0.1f);
+        line.OnPlay.AddListener(OnPlayDetected);
+    }
+
+    void OnDisable()
+    {
+        line.OnPlay.RemoveListener(OnPlayDetected);
+    }
+
+    void Update()
+    {
+        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+    }
+
+    void OnDestroy()
+    {
+        eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        eventInstance.release();
+    }
+
+    void OnPlayDetected()
+    {
+        // Play가 실행되었을 때 동작
 
         int timeLinePosition = 0;
         if (!gameManager.isTest)
@@ -55,25 +75,13 @@ public class MusicPlayer : MonoBehaviour
         }
         eventInstance = RuntimeManager.CreateInstance($"event:/{eventName}");
 
-        Debug.Log($"2{eventName}");
+        Debug.Log($"{eventName}, sync: {sync}, currentTime: {line.currentTime}");
 
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
 
         eventInstance.setVolume(0.5f);
         eventInstance.setTimelinePosition(timeLinePosition);
 
-        yield return new WaitForSecondsRealtime(sync);
         eventInstance.start();
-    }
-
-    void Update()
-    {
-        eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-    }
-
-    void OnDestroy()
-    {
-        eventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-        eventInstance.release();
     }
 }

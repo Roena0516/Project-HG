@@ -7794,6 +7794,7 @@ MonoBehaviour:
   sync: 0.5
   eventName: 
   gameManager: {fileID: 1299961086}
+  line: {fileID: 1299961083}
 --- !u!4 &669266813
 Transform:
   m_ObjectHideFlags: 0

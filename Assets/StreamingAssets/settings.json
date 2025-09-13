@@ -3,7 +3,7 @@
     "sync": 0.0,
     "speed": 3.5999999046325685,
     "effectOption": "None",
-    "isKR": true,
+    "isKR": false,
     "KeyBinds": [
         "S",
         "D",
