@@ -47,6 +47,14 @@ public class MusicPlayer : MonoBehaviour
         line.OnPlay.RemoveListener(OnPlayDetected);
     }
 
+    IEnumerator StartSong()
+    {
+        yield return new WaitForSeconds(sync);
+
+        Debug.Log($"song is started, currentTime: {line.currentTime}");
+        eventInstance.start();
+    }
+
     void Update()
     {
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
@@ -82,6 +90,13 @@ public class MusicPlayer : MonoBehaviour
         eventInstance.setVolume(0.5f);
         eventInstance.setTimelinePosition(timeLinePosition);
 
-        eventInstance.start();
+        if (sync > 0)
+        {
+            StartCoroutine(StartSong());
+        }
+        else
+        {
+            eventInstance.start();
+        }
     }
 }
