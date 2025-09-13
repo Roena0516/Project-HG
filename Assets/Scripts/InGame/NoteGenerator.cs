@@ -219,7 +219,7 @@ public class NoteGenerator : MonoBehaviour
     {
         Note noteScript = note.GetComponent<Note>();
 
-        float ms = beatDuration;
+        float ms = beatDuration + 1000f;
 
         if (gameManager.isTest)
         {

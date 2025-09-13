@@ -34,7 +34,7 @@ public class MusicPlayer : MonoBehaviour
     {
         settings = SettingsManager.Instance;
 
-        sync = (settings.settings.sync / 1000f); // + 2f(beatDuration + 2000f) - 0.1f(WaitForSeconds(0.1f))f
+        sync = (settings.settings.sync / 1000f) + 0.8f;
     }
 
     void OnEnable()
@@ -90,13 +90,6 @@ public class MusicPlayer : MonoBehaviour
         eventInstance.setVolume(0.5f);
         eventInstance.setTimelinePosition(timeLinePosition);
 
-        if (sync > 0)
-        {
-            StartCoroutine(StartSong());
-        }
-        else
-        {
-            eventInstance.start();
-        }
+        StartCoroutine(StartSong());
     }
 }
