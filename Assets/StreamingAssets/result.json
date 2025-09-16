@@ -1,16 +1,16 @@
 {
-    "results": [
-        {
-            "playerId": "test",
-            "musicId": 0,
-            "rate": 99.57199096679688,
-            "combo": 623,
-            "perfectPlus": 1042,
-            "perfect": 112,
-            "great": 13,
-            "good": 0,
-            "miss": 2,
-            "played_at": ""
-        }
-    ]
+  "results": [
+    {
+      "playerId": "test",
+      "musicId": 0,
+      "rate": 99.57199096679688,
+      "combo": 623,
+      "perfectPlus": 1042,
+      "perfect": 112,
+      "great": 13,
+      "good": 0,
+      "miss": 2,
+      "played_at": ""
+    }
+  ]
 }

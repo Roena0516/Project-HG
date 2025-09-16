@@ -123,10 +123,10 @@ MonoBehaviour:
       Value: 256
       HasValue: 1
     DSPBufferLength:
-      Value: 32
+      Value: 0
       HasValue: 1
     DSPBufferCount:
-      Value: 2
+      Value: 0
       HasValue: 1
     Plugins:
       Value: []
@@ -380,8 +380,8 @@ MonoBehaviour:
   switchSettingsMigration: 1
   HasSourceProject: 1
   HasPlatforms: 1
-  sourceProjectPath: ../FMOD/Project-HG.fspro
-  sourceBankPath: ../FMOD/Build
+  sourceProjectPath: ../../fspro/Project-HG/Project-HG.fspro
+  sourceBankPath: ../../fspro/Project-HG/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
