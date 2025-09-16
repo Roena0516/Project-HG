@@ -31,14 +31,6 @@ public class MenuManager : MonoBehaviour
 
     public int settedButtonInputRane;
 
-    private Transform freePlayTransform;
-    private Transform settingsTransform;
-    private Transform syncRoomTransform;
-
-    private TextMeshProUGUI freePlay;
-    private TextMeshProUGUI settings;
-    private TextMeshProUGUI syncRoom;
-
     public Toggle setAutoPlayToggle;
 
     public List<InputAction> LineActions;
@@ -57,100 +49,6 @@ public class MenuManager : MonoBehaviour
         LineActions.Add(action.Temp.Line2Action);
         LineActions.Add(action.Temp.Line3Action);
         LineActions.Add(action.Temp.Line4Action);
-    }
-
-    [System.Obsolete]
-    private void OnEnable()
-    {
-        listUp.Enable();
-        listUp.started += Started;
-
-        listDown.Enable();
-        listDown.started += Started;
-
-        menuSelect.Enable();
-        menuSelect.started += Started;
-
-        exit.Enable();
-        exit.started += Started;
-
-        for (int i = 0; i < 4; i++)
-        {
-            LineActions[i].Enable();
-        }
-    }
-
-    [System.Obsolete]
-    private void OnDisable()
-    {
-        listUp.Disable();
-        listUp.started -= Started;
-
-        listDown.Disable();
-        listDown.started -= Started;
-
-        menuSelect.Disable();
-        menuSelect.started -= Started;
-
-        exit.Disable();
-        exit.started -= Started;
-
-        for (int i = 0; i < 4; i++)
-        {
-            LineActions[i].Disable();
-        }
-    }
-
-    [System.Obsolete]
-    void Started(InputAction.CallbackContext context)
-    {
-        string actionName = context.action.name;
-
-        switch (actionName)
-        {
-            case "ListUp":
-                SetMenu(selectedMenu + 1);
-                break;
-            case "ListDown":
-                SetMenu(selectedMenu - 1);
-                break;
-            case "MenuSelect":
-                SelectMenu(selectedMenu);
-                break;
-            case "Exit":
-                Debug.Log("Exited");
-                if (!isSet)
-                {
-                    settingsPanel.SetActive(false);
-                    isSet = true;
-                }
-                break;
-        }
-    }
-
-    private void SetMenu(int toIndex)
-    {
-        if (toIndex > 0 && toIndex <= menuCount)
-        {
-            selectedMenu = toIndex;   
-
-            freePlay.color = Color.white;
-            settings.color = Color.white;
-            syncRoom.color = Color.white;
-
-            if (selectedMenu == 1)
-            {
-                freePlay.color = Color.yellow;
-            }
-            if (selectedMenu == 2)
-            {
-                settings.color = Color.yellow;
-            }
-            if (selectedMenu == 3)
-            {
-                syncRoom.color = Color.yellow;
-            }
-        }
     }
 
     private void SelectMenu(int index)
@@ -274,21 +172,11 @@ public class MenuManager : MonoBehaviour
 
         sync = settingsManager.settings.sync;
 
-        freePlayTransform = menuFolder.transform.Find("FreePlay");
-        settingsTransform = menuFolder.transform.Find("Settings");
-        syncRoomTransform = menuFolder.transform.Find("SyncRoom");
-
-        freePlay = freePlayTransform.gameObject.GetComponent<TextMeshProUGUI>();
-        settings = settingsTransform.gameObject.GetComponent<TextMeshProUGUI>();
-        syncRoom = syncRoomTransform.gameObject.GetComponent<TextMeshProUGUI>();
-
         //setAutoPlayToggle.enabled = settingsManager.isAutoPlay;
 
         LineActions[0].ApplyBindingOverride(settingsManager.settings.KeyBinds[0]);
         LineActions[1].ApplyBindingOverride(settingsManager.settings.KeyBinds[1]);
         LineActions[2].ApplyBindingOverride(settingsManager.settings.KeyBinds[2]);
         LineActions[3].ApplyBindingOverride(settingsManager.settings.KeyBinds[3]);
-
-        SetMenu(1);
     }
 }
