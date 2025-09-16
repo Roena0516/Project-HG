@@ -13,17 +13,13 @@ public class MenuManager : MonoBehaviour
     public GameObject menuFolder;
 
     private SettingsManager settingsManager;
+    public CircleMenuController menuController;
 
     public GameObject settingsPanel;
 
-    private int selectedMenu;
     public int menuCount;
 
     public MainInputAction action;
-    private InputAction listUp;
-    private InputAction listDown;
-    private InputAction menuSelect;
-    private InputAction exit;
 
     public TextMeshProUGUI musicDelayValue;
 
@@ -40,10 +36,6 @@ public class MenuManager : MonoBehaviour
     private void Awake()
     {
         action = new MainInputAction();
-        listUp = action.Menu.ListUp;
-        listDown = action.Menu.ListDown;
-        menuSelect = action.Menu.MenuSelect;
-        exit = action.Menu.Exit;
 
         LineActions.Add(action.Temp.Line1Action);
         LineActions.Add(action.Temp.Line2Action);
@@ -51,9 +43,17 @@ public class MenuManager : MonoBehaviour
         LineActions.Add(action.Temp.Line4Action);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            SelectMenu(menuController.currentIndex + 1);
+        }
+    }
+
     private void SelectMenu(int index)
     {
-        if (index == 1)
+        if (index == 2)
         {
             if (isSet)
             {
@@ -61,7 +61,7 @@ public class MenuManager : MonoBehaviour
                 SceneManager.LoadSceneAsync("FreePlay");
             }
         }
-        if (index == 2)
+        if (index == 3)
         {
             Debug.Log("Settings");
             if (isSet)
@@ -70,7 +70,7 @@ public class MenuManager : MonoBehaviour
                 SetSettingsPanel();
             }
         }
-        if (index == 3)
+        if (index == 1)
         {
             if (isSet)
             {
@@ -164,8 +164,6 @@ public class MenuManager : MonoBehaviour
     {
         isSet = true;
         settedButtonInputRane = 0;
-
-        selectedMenu = 1;
         menuCount = menuFolder.transform.childCount;
 
         settingsManager = SettingsManager.Instance;

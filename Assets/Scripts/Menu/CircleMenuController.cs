@@ -22,6 +22,7 @@ public class CircleMenuController : MonoBehaviour
     // 내부 상태
     private float _offsetDeg = 0f;    // 현재 회전 오프셋(도)
     private Coroutine _moveCo;
+    public int currentIndex = 1;     // 현재 선택된 인덱스 (가운데 아이템이 기본 선택)
 
     void Start()
     {
@@ -40,14 +41,21 @@ public class CircleMenuController : MonoBehaviour
     {
         // 위 / 아래 입력
         if (Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow))
-            Move(-1); // 반시계(위로)
+            Move(1); // 반시계(위로)
         if (Input.GetKeyDown(KeyCode.S) || Input.GetKeyDown(KeyCode.DownArrow))
-            Move(1);  // 시계(아래로)
+            Move(-1);  // 시계(아래로)
     }
 
     public void Move(int dir) // dir: +1 아래(시계), -1 위(반시계)
     {
-        float target = _offsetDeg + stepAngleDeg * dir;
+        int newIndex = Mathf.Clamp(currentIndex + dir, 0, items.Count - 1);
+
+        // 범위를 벗어나면 이동 안 함
+        if (newIndex == currentIndex) return;
+
+        currentIndex = newIndex;
+
+        float target = (currentIndex - 1) * stepAngleDeg; // 가운데(index=1) 기준
         if (_moveCo != null) StopCoroutine(_moveCo);
         _moveCo = StartCoroutine(AnimateOffset(_offsetDeg, target, tweenDuration));
     }
@@ -73,21 +81,17 @@ public class CircleMenuController : MonoBehaviour
     {
         if (items == null || items.Count == 0 || circleRect == null) return;
 
-        // 반지름: 실제 배치에 사용하는 값 (원 이미지 스케일을 고려)
-        float r = (circleRect.rect.width * 0.5f); // circleRect가 parent의 중앙(0.5,0.5) 앵커/피벗일 때
+        float r = circleRect.rect.width * 0.5f;
 
         for (int i = 0; i < items.Count; i++)
         {
-            // 가운데 아이템이 index=1이라고 가정
-            int rel = i - 1;
+            int rel = i - 1; // 가운데(index=1) 기준
             float deg = centerAngleDeg + _offsetDeg + rel * stepAngleDeg;
             float rad = deg * Mathf.Deg2Rad;
 
-            // circleRect 자식이므로 circleRect 기준 로컬좌표 = anchoredPosition
             Vector2 p = new Vector2(Mathf.Cos(rad), Mathf.Sin(rad)) * r;
             items[i].anchoredPosition = p;
 
-            // 회전/스케일 영향 방지
             items[i].localRotation = Quaternion.identity;
             items[i].localScale = Vector3.one;
         }

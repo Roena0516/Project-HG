@@ -6756,6 +6756,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   menuFolder: {fileID: 531799689}
+  menuController: {fileID: 1891902738}
   settingsPanel: {fileID: 2042454103}
   menuCount: 0
   musicDelayValue: {fileID: 1293142901}
@@ -6785,6 +6786,7 @@ MonoBehaviour:
   - {fileID: 997921394}
   - {fileID: 1757379356}
   - {fileID: 1138074615}
+  currentIndex: 1
 --- !u!1 &1894505897
 GameObject:
   m_ObjectHideFlags: 0
