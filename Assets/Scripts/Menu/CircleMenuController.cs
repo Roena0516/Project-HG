@@ -9,15 +9,15 @@ public class CircleMenuController : MonoBehaviour
     public RectTransform circleRect;     // 원 이미지 RectTransform (지름 1324px)
     public float radius;
     [Tooltip("가운데(선택) 항목이 위치할 각도(도 단위, 0°=우, 90°=상, 180°=좌, 270°=하)")]
-    public float centerAngleDeg = 180f;
+    private float centerAngleDeg = 180f;
 
     [Header("Items")]
-    public List<RectTransform> items = new List<RectTransform>(); // 3개 넣기
+    public List<RectTransform> items = new List<RectTransform>();
     [Tooltip("한 칸 이동 시 회전 각도(도)")]
-    public float stepAngleDeg = 24f;
+    private float stepAngleDeg = 22.5f;
 
     [Header("Tween")]
-    public float tweenDuration = 0.18f;
+    private float tweenDuration = 0.18f;
 
     // 내부 상태
     private float _offsetDeg = 0f;    // 현재 회전 오프셋(도)

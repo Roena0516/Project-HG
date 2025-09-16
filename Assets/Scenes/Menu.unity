@@ -2476,7 +2476,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 412, y: 0}
-  m_SizeDelta: {x: 1324, y: 1324}
+  m_SizeDelta: {x: 1600, y: 1600}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1116066128
 MonoBehaviour:
@@ -6781,13 +6781,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   circleRect: {fileID: 1116066127}
   radius: 662
-  centerAngleDeg: 290
   items:
   - {fileID: 997921394}
   - {fileID: 1757379356}
   - {fileID: 1138074615}
-  stepAngleDeg: 24
-  tweenDuration: 0.18
 --- !u!1 &1894505897
 GameObject:
   m_ObjectHideFlags: 0
