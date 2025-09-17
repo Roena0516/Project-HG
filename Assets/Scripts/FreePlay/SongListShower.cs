@@ -520,8 +520,9 @@ public class SongListShower : MonoBehaviour
     // Result UI 변경
     private void SetResult(Result result)
     {
-        info_rateText.text = $"{result.rate}";
+        info_rateText.text = $"{result.rate:F2}%";
         info_comboText.text = $"{result.combo}";
+        info_ratingText.text = $"{result.rate * result.combo:F4}";
     }
 
     private void SetList(int toIndex)
