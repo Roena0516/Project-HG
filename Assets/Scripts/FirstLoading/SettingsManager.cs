@@ -35,6 +35,8 @@ public class SettingsManager : MonoBehaviour
 
     private static readonly string filePath = Application.streamingAssetsPath + "/settings.json";
 
+    private Player playerData;
+
     public string eventName;
     public string songTitle;
     public string songArtist;
@@ -160,5 +162,15 @@ public class SettingsManager : MonoBehaviour
     public void SetFirstStart(bool setted)
     {
         settings.isFirstStart = setted;
+    }
+
+    public void SetPlayerData(Player setted)
+    {
+        playerData = setted;
+    }
+
+    public Player GetPlayerData()
+    {
+        return playerData;
     }
 }

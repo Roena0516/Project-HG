@@ -8,38 +8,63 @@ public class CompleteLoading : MonoBehaviour
 
     private void Start()
     {
+        Player player = GetUser();
+
+        if (player == null)
+        {
+            return;
+        }
+
         settingsManager = SettingsManager.Instance;
-        settingsManager.LoadSettings(); // 설정 파일 로드
+        settingsManager.LoadSettings(); // ???? ???? ????
+        settingsManager.SetPlayerData(player);
 
         DontDestroyOnLoad(settingsManager.gameObject);
 
-        if (settingsManager.settings.isFirstStart) // 첫 입장일 때 실행되는 코드
+        if (settingsManager.settings.isFirstStart) // ?? ?????? ?? ???????? ????
         {
-            settingsManager.SetFirstStart(false); // 이제 첫 입장이 아님
+            settingsManager.SetFirstStart(false); // ???? ?? ?????? ????
 
-            StartTutorial(); // 튜토리얼 실행
+            StartTutorial(); // ???????? ????
         }
-        else // 평소에 실행되는 코드
+        else // ?????? ???????? ????
         {
-            SceneManager.LoadSceneAsync("Menu"); // 메인 메뉴로 이동
+            SceneManager.LoadSceneAsync("Menu"); // ???? ?????? ????
         }
+    }
+
+    private Player GetUser()
+    {
+        string[] userDataFile = Directory.GetFiles(Application.streamingAssetsPath, "userData.json");
+
+        if (userDataFile.Length == 0)
+        {
+            Debug.LogError("User Data is not found");
+            return null;
+        }
+
+        string json = File.ReadAllText(userDataFile[0]);
+
+        Player foundPlayer = JsonUtility.FromJson<Player>(json);
+
+        return foundPlayer;
     }
 
     private void StartTutorial()
     {
-        string[] directory = Directory.GetDirectories(Application.streamingAssetsPath, "system"); // system 폴더 불러오기
+        string[] directory = Directory.GetDirectories(Application.streamingAssetsPath, "system"); // system ???? ????????
         if (directory.Length == 0)
         {
-            Debug.LogWarning($"system 폴더를 찾지 못했습니다.");
+            Debug.LogWarning($"system ?????? ???? ??????????.");
         }
 
-        string[] jsonFiles = Directory.GetFiles(directory[0], "tutorial.roena"); // 튜토리얼 채보 파일 불러오기
+        string[] jsonFiles = Directory.GetFiles(directory[0], "tutorial.roena"); // ???????? ???? ???? ????????
         if (jsonFiles.Length == 0)
         {
-            Debug.LogWarning($"튜토리얼 파일이 존재하지 않습니다.");
+            Debug.LogWarning($"???????? ?????? ???????? ????????.");
         }
 
-        settingsManager.SetFileName(jsonFiles[0]); // LoadManager에서 사용할 파일 경로
-        SceneManager.LoadSceneAsync("Tutorial"); // 튜토리얼 씬으로 이동
+        settingsManager.SetFileName(jsonFiles[0]); // LoadManager???? ?????? ???? ????
+        SceneManager.LoadSceneAsync("Tutorial"); // ???????? ?????? ????
     }
 }
