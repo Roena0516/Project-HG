@@ -698,7 +698,7 @@ public class SongListShower : MonoBehaviour
         float elapsedTime = 0f;
         Vector3 startPos = new(T.position.x, T.position.y, 0f);
         float duration = 0.15f;
-        Vector3 targetPos = new(indicatorOriginX + 75f * index, T.position.y, 0f);
+        Vector3 targetPos = new(indicatorOriginX + 111.75f * index, T.position.y, 0f);
 
         while (elapsedTime < duration)
         {
