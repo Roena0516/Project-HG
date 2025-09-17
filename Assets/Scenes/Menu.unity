@@ -7080,6 +7080,10 @@ MonoBehaviour:
   settedButtonInputRane: 0
   setAutoPlayToggle: {fileID: 1347799517}
   LineActions: []
+  ratingText: {fileID: 1247416096}
+  ratingShadowText: {fileID: 1276554256}
+  playerNameText: {fileID: 1894543816}
+  playerNameShadowText: {fileID: 1958073430}
 --- !u!114 &1891902738
 MonoBehaviour:
   m_ObjectHideFlags: 0

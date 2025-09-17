@@ -33,6 +33,12 @@ public class MenuManager : MonoBehaviour
 
     private float sync;
 
+
+    [SerializeField] private TextMeshProUGUI ratingText;
+    [SerializeField] private TextMeshProUGUI ratingShadowText;
+    [SerializeField] private TextMeshProUGUI playerNameText;
+    [SerializeField] private TextMeshProUGUI playerNameShadowText;
+
     private void Awake()
     {
         action = new MainInputAction();
@@ -49,6 +55,16 @@ public class MenuManager : MonoBehaviour
         {
             SelectMenu(menuController.currentIndex + 1);
         }
+    }
+
+    private void SetPlayerInfos()
+    {
+        Player player = settingsManager.GetPlayerData();
+
+        ratingText.text = $"{player.rating:F4}";
+        ratingShadowText.text = $"{player.rating:F4}";
+        playerNameText.text = player.playerName;
+        playerNameShadowText.text = player.playerName;
     }
 
     private void SelectMenu(int index)
@@ -167,6 +183,8 @@ public class MenuManager : MonoBehaviour
         menuCount = menuFolder.transform.childCount;
 
         settingsManager = SettingsManager.Instance;
+
+        SetPlayerInfos();
 
         sync = settingsManager.settings.sync;
 
