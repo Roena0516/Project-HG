@@ -21,30 +21,10 @@ public class JudgementManager : MonoBehaviour
     public SyncRoomManager syncRoomManager;
     private SettingsManager settings;
     public ParticleManager particle;
+    [SerializeField] private UIManager UIManager;
 
     public bool isAP;
     public bool isFC;
-
-    public TextMeshProUGUI judgeText;
-    public TextMeshProUGUI plusJudgeText;
-    public TextMeshProUGUI fastSlow;
-    public TextMeshProUGUI comboText;
-    public TextMeshProUGUI comboTitleText;
-    public TextMeshProUGUI rateText;
-    public TextMeshProUGUI perfectpCountText;
-    public TextMeshProUGUI perfectCountText;
-    public TextMeshProUGUI greatCountText;
-    public TextMeshProUGUI goodCountText;
-    public TextMeshProUGUI missCountText;
-    public TextMeshProUGUI titleText;
-    public TextMeshProUGUI artistText;
-    public TextMeshProUGUI FCAPText;
-    public TextMeshProUGUI speedText;
-
-    public List<SpriteRenderer> fastIndicators;
-    public List<SpriteRenderer> slowIndicators;
-
-    private Coroutine currentJudgementRoutine;
 
     public Dictionary<string, float> noteTypeRate = new Dictionary<string, float>();
     public Dictionary<string, int> judgeCount = new Dictionary<string, int>();
@@ -67,11 +47,6 @@ public class JudgementManager : MonoBehaviour
     {
         settings = SettingsManager.Instance;
 
-        Color tempColor = judgeText.color;
-        tempColor.a = 0f;
-        judgeText.color = tempColor;
-        plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
-        fastSlow.color = tempColor;
         rate = 100f;
 
         isAP = false;
@@ -88,24 +63,9 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Bad"] = 0;
         judgeCount["Miss"] = 0;
 
-        speedText.text = $"{settings.settings.speed:F1}";
-        titleText.text = settings.songTitle;
-        artistText.text = settings.songArtist;
-
-        StartCoroutine(IndicatorSetter());
+        StartCoroutine(UIManager.IndicatorSetter());
         ClearCombo();
-        UpdateJudgeCountText();
-    }
-
-    private IEnumerator IndicatorSetter()
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            fastIndicators[i].color = fastIndicators[i].color.SetAlpha(0f);
-            slowIndicators[i].color = slowIndicators[i].color.SetAlpha(0f);
-        }
-
-        yield break;
+        UIManager.UpdateJudgeCountText(judgeCount);
     }
 
     public void CalcRate()
@@ -115,14 +75,6 @@ public class JudgementManager : MonoBehaviour
         noteTypeRate["normal"] = (noteGenerator.noteTypeCounts["normal"] > 0) ? (noteGenerator.noteTypeCounts["normal"] / rateAllNote * 100 / noteGenerator.noteTypeCounts["normal"]) : 0;
         noteTypeRate["hold"] = (noteGenerator.noteTypeCounts["hold"] > 0) ? (noteGenerator.noteTypeCounts["hold"] / rateAllNote * 100) / noteGenerator.noteTypeCounts["hold"] : 0;
         noteTypeRate["up"] = (noteGenerator.noteTypeCounts["up"] > 0) ? (noteGenerator.noteTypeCounts["up"] * 2 / rateAllNote * 100) / noteGenerator.noteTypeCounts["up"] : 0;
-        //foreach (var pair in noteGenerator.noteTypeCounts)
-        //{
-        //    Debug.Log($"{pair.Key}: {pair.Value}");
-        //}
-        //foreach (var pair in noteTypeRate)
-        //{
-        //    Debug.Log($"{pair.Key}: {pair.Value}");
-        //}
     }
 
     public void Judge(int raneNumber, double currentTimeMs)
@@ -239,36 +191,16 @@ public class JudgementManager : MonoBehaviour
         }
     }
 
-    private Coroutine comboPopInRoutine;
-
     public void AddCombo(int amount)
     {
         combo += amount;
-        comboText.text = $"{combo}";
-        comboTitleText.color = comboTitleText.color.SetAlpha(1f);
-
-        // 콤보 텍스트 팝인
-        if (comboPopInRoutine != null)
-        {
-            StopCoroutine(comboPopInRoutine);
-        }
-        comboPopInRoutine = StartCoroutine(PopIn(comboText.rectTransform));
+        UIManager.SetCombo(combo);
     }
 
     public void ClearCombo()
     {
         combo = 0;
-        comboText.text = $"";
-        comboTitleText.color = comboTitleText.color.SetAlpha(0f);
-    }
-
-    public void UpdateJudgeCountText()
-    {
-        perfectpCountText.text = $"{judgeCount["PerfectP"]}";
-        perfectCountText.text = $"{judgeCount["Perfect"]}";
-        greatCountText.text = $"{judgeCount["Great"]}";
-        goodCountText.text = $"{judgeCount["Good"]}";
-        missCountText.text = $"{judgeCount["Miss"] + judgeCount["Bad"]}";
+        UIManager.ClearCombo();
     }
 
     public void PerformAction(NoteClass note, string judgement, double currentTimeMs)
@@ -295,18 +227,18 @@ public class JudgementManager : MonoBehaviour
         }
         double Ms = note.ms - currentTimeMs;
         judgeCount[judgement]++;
-        UpdateJudgeCountText();
+        UIManager.UpdateJudgeCountText(judgeCount);
 
         if (note.isEndNote == true)
         {
             if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0)
             {
-                FCAPText.text = "FULL COMBO";
+                UIManager.SetFCAPText("FULL COMBO");
                 isFC = true;
             }
             if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0 && judgeCount["Good"] == 0 && judgeCount["Great"] == 0)
             {
-                FCAPText.text = "ALL PERFECT";
+                UIManager.SetFCAPText("ALL PERFECT");
                 isAP = true;
             }
 
@@ -314,12 +246,12 @@ public class JudgementManager : MonoBehaviour
 
             gameManager.isLevelEnd = true;
         }
-        StartCoroutine(JudegementTextShower(judgement, Ms, note.position));
+        StartCoroutine(UIManager.JudgementTextShower(judgement, Ms, note.position));
 
-        if (judgement != "Miss")
-        {
-            //particle.EmitParticle(note.position - 1);
-        }
+        //if (judgement != "Miss")
+        //{
+        //    particle.EmitParticle(note.position - 1);
+        //}
 
         if (gameManager.isSyncRoom && judgement != "Miss")
         {
@@ -332,148 +264,7 @@ public class JudgementManager : MonoBehaviour
     private void ChangeRate(float typeRate, float ratio)
     {
         rate -= typeRate * ratio;
-        rateText.text = $"{rate:F2}%";
-    }
-
-    IEnumerator JudegementTextShower(string judgement, double Ms, int position)
-    {
-        if (currentJudgementRoutine != null)
-        {
-            StopCoroutine(currentJudgementRoutine);
-        }
-        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement, Ms, position));
-        yield break;
-    }
-
-    private Coroutine popInRoutine;
-
-    private IEnumerator ShowJudgementTextRoutine(string judgement, double Ms, int position)
-    {
-        Color tempColor = judgeText.color;
-        int index = position - 1;
-        tempColor.a = 1f;
-        judgeText.color = tempColor;
-
-        // 텍스트 알파값 세팅
-        if (judgement == "PerfectP")
-        {
-            judgeText.text = "PERFECT";
-            plusJudgeText.color = plusJudgeText.color.SetAlpha(1f);
-        }
-        else if (judgement == "Bad")
-        {
-            judgeText.text = "MISS";
-            plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
-        }
-        else
-        {
-            judgeText.text = $"{judgement.ToUpper()}";
-            plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
-        }
-
-        // 판정 텍스트 팝인
-        if (popInRoutine != null)
-        {
-            StopCoroutine(popInRoutine);
-        }
-        popInRoutine = StartCoroutine(PopIn(judgeText.rectTransform));
-
-        // FAST / SLOW 처리
-        if (Ms > 0)
-        {
-            tempColor = fastSlow.color; tempColor.a = 1f;
-            fastSlow.color = tempColor;
-            fastSlow.text = $"+{(int)Ms}";
-
-            if (judgement != "Perfect")
-                StartCoroutine(IndicatorShower(index, true));
-        }
-        else if (Ms == 0)
-        {
-            tempColor = fastSlow.color; tempColor.a = 1f;
-            fastSlow.color = tempColor;
-            fastSlow.text = string.Empty;
-        }
-        else // Ms < 0
-        {
-            tempColor = fastSlow.color; tempColor.a = 1f;
-            fastSlow.color = tempColor;
-            fastSlow.text = $"{(int)Ms}";
-
-            if (judgement != "Perfect")
-                StartCoroutine(IndicatorShower(index, false));
-        }
-
-        // Perfect+
-        //if (plusJudgeText.color.a > 0.99f)
-        //    StartCoroutine(PopIn(plusJudgeText.rectTransform));
-
-        // 2초 유지
-        yield return new WaitForSeconds(2f);
-
-        // 숨기기
-        judgeText.color = judgeText.color.SetAlpha(0f);
-        plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
-        fastSlow.color = fastSlow.color.SetAlpha(0f);
-
-        currentJudgementRoutine = null;
-    }
-
-    // 살짝 작게 시작해서 원래 크기로 커지는 팝인 연출
-    private IEnumerator PopIn(RectTransform target, float fromScale = 0.3f, float toScale = 1f, float duration = 0.07f)
-    {
-        if (target == null) yield break;
-
-        Vector3 start = Vector3.one * fromScale;
-        Vector3 end = Vector3.one * toScale;
-
-        float t = 0f;
-        target.localScale = start;
-
-        // EaseOutSine Easing
-        float EaseOutSine(float t)
-        {
-            return Mathf.Sin((t * Mathf.PI) / 2f);
-        }
-
-        while (t < duration)
-        {
-            t += Time.deltaTime;
-            float p = Mathf.Clamp01(t / duration);
-            float e = EaseOutSine(p);
-            target.localScale = Vector3.LerpUnclamped(start, end, e);
-            yield return null;
-        }
-
-        target.localScale = end;
-    }
-
-    private IEnumerator IndicatorShower(int index, bool isFast)
-    {
-        Color tempColor;
-
-        if (isFast)
-        {
-            tempColor = fastIndicators[index].color;
-            tempColor.a = 1f;
-            fastIndicators[index].color = tempColor;
-
-            yield return new WaitForSeconds(1f);
-
-            tempColor.a = 0f;
-            fastIndicators[index].color = tempColor;
-        }
-        else
-        {
-            tempColor = slowIndicators[index].color;
-            tempColor.a = 1f;
-            slowIndicators[index].color = tempColor;
-
-            yield return new WaitForSeconds(1f);
-
-            tempColor.a = 0f;
-            slowIndicators[index].color = tempColor;
-        }
+        UIManager.ChangeRate(rate);
     }
 
 }

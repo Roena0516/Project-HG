@@ -20255,6 +20255,7 @@ MonoBehaviour:
   judgementManager: {fileID: 1299961085}
   noteGenerator: {fileID: 1238613732}
   gameManager: {fileID: 1299961086}
+  UIManager: {fileID: 1299961089}
   isHolding: 
   buttons:
   - {fileID: 1995116074}
@@ -20311,33 +20312,9 @@ MonoBehaviour:
   gameManager: {fileID: 1299961086}
   syncRoomManager: {fileID: 0}
   particle: {fileID: 1299961087}
+  UIManager: {fileID: 1299961089}
   isAP: 0
   isFC: 0
-  judgeText: {fileID: 1687371135}
-  plusJudgeText: {fileID: 1627467428}
-  fastSlow: {fileID: 1313420624}
-  comboText: {fileID: 280641272}
-  comboTitleText: {fileID: 1274935556}
-  rateText: {fileID: 1586768650}
-  perfectpCountText: {fileID: 2109003338}
-  perfectCountText: {fileID: 68994221}
-  greatCountText: {fileID: 449588978}
-  goodCountText: {fileID: 1231626108}
-  missCountText: {fileID: 1354695265}
-  titleText: {fileID: 1022943467}
-  artistText: {fileID: 1485168424}
-  FCAPText: {fileID: 1927130564}
-  speedText: {fileID: 1329598005}
-  fastIndicators:
-  - {fileID: 142133554}
-  - {fileID: 1532771679}
-  - {fileID: 775884886}
-  - {fileID: 2010966704}
-  slowIndicators:
-  - {fileID: 1211328672}
-  - {fileID: 2086743778}
-  - {fileID: 478717537}
-  - {fileID: 1657512831}
 --- !u!114 &1299961086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20395,6 +20372,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   levelText: {fileID: 585881130}
+  comboText: {fileID: 280641272}
+  comboTitleText: {fileID: 1274935556}
+  rateText: {fileID: 1586768650}
+  judgeText: {fileID: 1687371135}
+  plusJudgeText: {fileID: 1627467428}
+  fastSlow: {fileID: 1313420624}
+  perfectpCountText: {fileID: 2109003338}
+  perfectCountText: {fileID: 68994221}
+  greatCountText: {fileID: 449588978}
+  goodCountText: {fileID: 1231626108}
+  missCountText: {fileID: 1354695265}
+  titleText: {fileID: 1022943467}
+  artistText: {fileID: 1485168424}
+  FCAPText: {fileID: 1927130564}
+  speedText: {fileID: 1329598005}
+  fastIndicators: []
+  slowIndicators: []
   loadManager: {fileID: 1299961084}
 --- !u!1 &1313420622
 GameObject:

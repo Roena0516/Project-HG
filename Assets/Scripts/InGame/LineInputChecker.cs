@@ -17,6 +17,7 @@ public class LineInputChecker : MonoBehaviour
     public JudgementManager judgementManager;
     public NoteGenerator noteGenerator;
     public GameManager gameManager;
+    [SerializeField] private UIManager UIManager;
     private SettingsManager settings;
     private InputThreadDivider divider;
 
@@ -132,7 +133,7 @@ public class LineInputChecker : MonoBehaviour
             settings.SetSpeed($"{settings.settings.speed += duration}");
             noteGenerator.speed = 4.5f * settings.settings.speed;
             noteGenerator.fallTime = noteGenerator.distance / noteGenerator.speed * 1000f;
-            judgementManager.speedText.text = $"{settings.settings.speed:F1}";
+            UIManager.SetSpeedText();
         }
     }
 
