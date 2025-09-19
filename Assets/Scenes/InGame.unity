@@ -20209,6 +20209,7 @@ GameObject:
   - component: {fileID: 1299961086}
   - component: {fileID: 1299961087}
   - component: {fileID: 1299961088}
+  - component: {fileID: 1299961089}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -20263,6 +20264,9 @@ MonoBehaviour:
   isAutoPlay: 0
   originX: []
   originY: 0
+  OnPlay:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &1299961084
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20378,7 +20382,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bc00697042db4744882cfb6cf4c4107, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  lineInputChecker: {fileID: 1299961083}
+--- !u!114 &1299961089
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1299961081}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5691e03e9b6aa4590bdca8701449b550, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelText: {fileID: 585881130}
+  loadManager: {fileID: 1299961084}
 --- !u!1 &1313420622
 GameObject:
   m_ObjectHideFlags: 0

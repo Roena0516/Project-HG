@@ -8,6 +8,7 @@ public class SongListInfoSetter : MonoBehaviour
     public string jpArtist;
     public string title;
     public string jpTitle;
+    public string category;
     public float BPM;
     public List<string> filePath = new();
     public string eventName;

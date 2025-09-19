@@ -8,6 +8,7 @@ public class ResultManager : MonoBehaviour
 {
     private JudgementManager judgementManager;
     private LoadManager loadManager;
+    private SettingsManager settings;
 
     public TextMeshProUGUI Artist;
     public TextMeshProUGUI Title;
@@ -23,6 +24,7 @@ public class ResultManager : MonoBehaviour
     {
         judgementManager = JudgementManager.Instance;
         loadManager = LoadManager.Instance;
+        settings = SettingsManager.Instance;
 
         SaveResult();
         SetResult();
@@ -41,7 +43,7 @@ public class ResultManager : MonoBehaviour
     {
         Result newResult = new()
         {
-            playerId = "test",
+            playerId = $"{settings.GetPlayerData().id}",
             musicId = loadManager.info.id,
             rate = judgementManager.rate,
             combo = judgementManager.combo,

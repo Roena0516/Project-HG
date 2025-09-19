@@ -41,6 +41,13 @@ public class SettingsManager : MonoBehaviour
     public string songTitle;
     public string songArtist;
     public string fileName;
+    private SongInfoClass info;
+
+    public SongInfoClass Info
+    {
+        get => info;          // 값 가져오기
+        set => info = value;  // 값 설정하기
+    }
 
     public MainInputAction action;
 

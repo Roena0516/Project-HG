@@ -61,8 +61,8 @@ public class MenuManager : MonoBehaviour
     {
         Player player = settingsManager.GetPlayerData();
 
-        ratingText.text = $"{player.rating:F4}";
-        ratingShadowText.text = $"{player.rating:F4}";
+        ratingText.text = $"{player.rating:F3}";
+        ratingShadowText.text = $"{player.rating:F3}";
         playerNameText.text = player.playerName;
         playerNameShadowText.text = player.playerName;
     }

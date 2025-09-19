@@ -932,7 +932,6 @@ GameObject:
   - component: {fileID: 127523756}
   - component: {fileID: 127523759}
   - component: {fileID: 127523758}
-  - component: {fileID: 127523757}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -954,25 +953,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1901069527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 47.505, y: -65.505}
-  m_SizeDelta: {x: 95.01, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &127523757
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 127523755}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 114, y: 41}
+  m_Pivot: {x: 0.5, y: 0.49999943}
 --- !u!114 &127523758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1027,7 +1012,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1036,7 +1021,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -1083,7 +1068,6 @@ GameObject:
   - component: {fileID: 133578325}
   - component: {fileID: 133578328}
   - component: {fileID: 133578327}
-  - component: {fileID: 133578326}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -1105,25 +1089,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 277639568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 30.005, y: -32.495003}
-  m_SizeDelta: {x: 60.01, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 60, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &133578326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 133578324}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &133578327
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1178,7 +1148,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1696,7 +1666,6 @@ GameObject:
   m_Component:
   - component: {fileID: 277639568}
   - component: {fileID: 277639570}
-  - component: {fileID: 277639569}
   m_Layer: 5
   m_Name: Rating
   m_TagString: Untagged
@@ -1720,25 +1689,11 @@ RectTransform:
   - {fileID: 419751548}
   m_Father: {fileID: 1409141137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 375.83832, y: -56}
-  m_SizeDelta: {x: 95.01, y: 107}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 95, y: 107}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &277639569
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 277639567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
 --- !u!114 &277639570
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2335,7 +2290,6 @@ GameObject:
   - component: {fileID: 419751548}
   - component: {fileID: 419751551}
   - component: {fileID: 419751550}
-  - component: {fileID: 419751549}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -2357,25 +2311,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 277639568}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 47.505, y: -65.505}
-  m_SizeDelta: {x: 95.01, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 95, y: 41}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &419751549
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 419751547}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &419751550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2430,7 +2370,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2439,7 +2379,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}
@@ -4244,7 +4184,6 @@ GameObject:
   - component: {fileID: 1113083426}
   - component: {fileID: 1113083429}
   - component: {fileID: 1113083428}
-  - component: {fileID: 1113083427}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -4266,25 +4205,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1953156257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 25.005, y: -32.495003}
-  m_SizeDelta: {x: 50.01, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1113083427
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1113083425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &1113083428
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4339,7 +4264,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -7424,7 +7349,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1901069527}
   - component: {fileID: 1901069529}
-  - component: {fileID: 1901069528}
   m_Layer: 5
   m_Name: Rate
   m_TagString: Untagged
@@ -7448,25 +7372,11 @@ RectTransform:
   - {fileID: 127523756}
   m_Father: {fileID: 1409141137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 85.505005, y: -56}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 95.01, y: 107}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1901069528
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1901069526}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
 --- !u!114 &1901069529
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7504,7 +7414,6 @@ GameObject:
   - component: {fileID: 1903781279}
   - component: {fileID: 1903781282}
   - component: {fileID: 1903781281}
-  - component: {fileID: 1903781280}
   m_Layer: 5
   m_Name: Title
   m_TagString: Untagged
@@ -7526,25 +7435,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1901069527}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 20.005, y: -32.495003}
-  m_SizeDelta: {x: 40.01, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 40, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1903781280
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1903781278}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &1903781281
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7599,7 +7494,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -8004,7 +7899,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1953156257}
   - component: {fileID: 1953156259}
-  - component: {fileID: 1953156258}
   m_Layer: 5
   m_Name: Combo
   m_TagString: Untagged
@@ -8028,25 +7922,11 @@ RectTransform:
   - {fileID: 2085705967}
   m_Father: {fileID: 1409141137}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 230.67166, y: -56}
-  m_SizeDelta: {x: 50.01, y: 107}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 57, y: 107}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1953156258
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1953156256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 0
 --- !u!114 &1953156259
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8359,7 +8239,6 @@ GameObject:
   - component: {fileID: 2085705967}
   - component: {fileID: 2085705970}
   - component: {fileID: 2085705969}
-  - component: {fileID: 2085705968}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -8381,25 +8260,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1953156257}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 9.505, y: -65.505}
-  m_SizeDelta: {x: 19.01, y: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 57, y: 41}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &2085705968
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2085705966}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3245ec927659c4140ac4f8d17403cc18, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_HorizontalFit: 2
-  m_VerticalFit: 2
 --- !u!114 &2085705969
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8454,7 +8319,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -8463,7 +8328,7 @@ MonoBehaviour:
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
-  m_TextWrappingMode: 1
+  m_TextWrappingMode: 0
   m_wordWrappingRatios: 0.4
   m_overflowMode: 0
   m_linkedTextComponent: {fileID: 0}

@@ -91,12 +91,10 @@ public class LoadManager : MonoBehaviour
 
             NotesContainer container = JsonUtility.FromJson<NotesContainer>(decrypted);
 
-            info = container.info;
+            info = settings.Info;
             notes = container.notes;
 
-            Debug.Log($"1{settings.eventName}");
-
-            Debug.Log("Chart loaded successfully!");
+            Debug.Log($"Chart loaded successfully! eventName: {settings.eventName}, id: {info.id}");
         }
         else
         {

@@ -14,6 +14,7 @@ public class SongListShower : MonoBehaviour
 
     public LoadAllJSONs loader;
     public GetResults getResults;
+    private List<SongInfoClass> allOfInfos;
 
     public GameObject contentFolder;
     public GameObject songListFolder;
@@ -215,6 +216,12 @@ public class SongListShower : MonoBehaviour
             List<SongInfoClass> songList = loader.songDictionary[key];
             foreach (SongInfoClass infos in songList)
             {
+                if (allOfInfos == null)
+                {
+                    allOfInfos = new();
+                }
+                allOfInfos.Add(infos);
+
                 if (infos.difficulty == "MEMORY")
                 {
                     setter.filePath[0] = infos.fileLocation;
@@ -494,12 +501,12 @@ public class SongListShower : MonoBehaviour
         {
             found = results.FirstOrDefault(r => r.musicId == musicId);
         }
-        if (found == null)
+        if (found == null || found.playerId != $"{settings.GetPlayerData().id}")
         {
             // 빈 기록
             Result empty = new()
             {
-                playerId = "1",
+                playerId = $"{settings.GetPlayerData().id}",
                 musicId = musicId,
                 rate = 0,
                 combo = 0,
@@ -522,7 +529,7 @@ public class SongListShower : MonoBehaviour
     {
         info_rateText.text = $"{result.rate:F2}%";
         info_comboText.text = $"{result.combo}";
-        info_ratingText.text = $"{result.rate * result.combo:F4}";
+        info_ratingText.text = $"{result.rate * result.combo / 1000f:F3}";
     }
 
     private void SetList(int toIndex)
@@ -682,6 +689,22 @@ public class SongListShower : MonoBehaviour
                 }
             }
             selectedDifficulty = toIndex;
+
+            Transform current = contentFolder.transform.GetChild(listNum - 1);
+            SongListInfoSetter setter = current.GetComponent<SongListInfoSetter>();
+            Result found = GetResult(setter.ids[selectedDifficulty - 1]);
+            if (found != null)
+            {
+                SetResult(found);
+            }
+
+            SongInfoClass foundInfoClass = allOfInfos.FirstOrDefault(info => info.id == setter.ids[selectedDifficulty - 1]);
+            if (foundInfoClass == null)
+            {
+                Debug.LogError($"info is not found: {setter.ids[selectedDifficulty - 1]} id");
+            }
+            SetSelectedSongInfo(foundInfoClass);
+
             if (currentSetDifficultyRoutine != null)
             {
                 StopCoroutine(currentSetDifficultyRoutine);
@@ -763,6 +786,7 @@ public class SongListShower : MonoBehaviour
         settings.SetSongTitle(setter.title);
         settings.SetSongArtist(setter.artist);
         settings.SetEventName(setter.eventName);
+        settings.Info = selectedSongInfo;
 
         SceneManager.LoadSceneAsync("InGame");
     }
