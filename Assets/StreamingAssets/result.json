@@ -59,6 +59,18 @@
             "good": 128,
             "miss": 435,
             "played_at": ""
+        },
+        {
+            "playerId": "1",
+            "musicId": 4,
+            "rate": 96.59361267089844,
+            "combo": 243,
+            "perfectPlus": 671,
+            "perfect": 262,
+            "great": 88,
+            "good": 15,
+            "miss": 4,
+            "played_at": ""
         }
     ]
 }

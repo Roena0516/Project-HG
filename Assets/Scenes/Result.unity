@@ -780,6 +780,7 @@ MonoBehaviour:
   MissCount: {fileID: 200889393}
   Rate: {fileID: 1496170449}
   FCAP: {fileID: 1127885063}
+  Rank: {fileID: 1664453724}
 --- !u!1 &399554309
 GameObject:
   m_ObjectHideFlags: 0
