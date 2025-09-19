@@ -722,6 +722,7 @@ GameObject:
   m_Component:
   - component: {fileID: 371779187}
   - component: {fileID: 371779188}
+  - component: {fileID: 371779189}
   m_Layer: 0
   m_Name: ResultManager
   m_TagString: Untagged
@@ -756,6 +757,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47a2ffaa49f283a4a8279d336414d0d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UIManager: {fileID: 371779189}
+--- !u!114 &371779189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 371779186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5974062651fc44a14a0d1b2e8d16ea00, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  level: {fileID: 1652997789}
   Artist: {fileID: 1313556508}
   Title: {fileID: 208410286}
   PerfectPlusCount: {fileID: 1073426220}
