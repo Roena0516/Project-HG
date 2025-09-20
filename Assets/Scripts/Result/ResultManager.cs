@@ -1,8 +1,9 @@
+using FMOD.Studio;
 using System.Collections.Generic;
-using UnityEngine;
-using TMPro;
-using UnityEngine.SceneManagement;
 using System.IO;
+using TMPro;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ResultManager : MonoBehaviour
 {
@@ -10,6 +11,10 @@ public class ResultManager : MonoBehaviour
     private LoadManager loadManager;
     private SettingsManager settings;
     [SerializeField] private ResultUIManager UIManager;
+    [SerializeField] private ResultAPI resultAPI;
+
+    private string baseUrl = "https://prod.windeath44.wiki";
+    private string userId = "0";
 
     private void Start()
     {
@@ -32,9 +37,14 @@ public class ResultManager : MonoBehaviour
 
     private void SaveResult()
     {
+        userId = $"{settings.GetPlayerData().id}";
+
+        string rank = SetRank(judgementManager.rate);
+        string state = SetFCAP();
+
         Result newResult = new()
         {
-            playerId = $"{settings.GetPlayerData().id}",
+            playerId = userId,
             musicId = loadManager.info.id,
             rate = judgementManager.rate,
             combo = judgementManager.combo,
@@ -43,40 +53,100 @@ public class ResultManager : MonoBehaviour
             great = judgementManager.judgeCount["Great"],
             good = judgementManager.judgeCount["Good"],
             miss = judgementManager.judgeCount["Miss"] + judgementManager.judgeCount["Bad"],
-            played_at = ""
+            rank = rank,
+            state = state,
         };
 
-        // JSON 파일 경로
-        string path = Path.Combine(Application.streamingAssetsPath, "result.json");
-
-        ResultsContainer container;
-
-        // 기존 파일이 있으면 읽어서 역직렬화
-        if (File.Exists(path))
+        StartCoroutine(resultAPI.PostResultAPI(baseUrl, newResult, userId, onSuccess: (res) =>
         {
-            string json = File.ReadAllText(path);
-            container = JsonUtility.FromJson<ResultsContainer>(json);
+            Debug.Log($"Saved! id={res.gamePlayHistoryId}, rank={res.rank}, state={res.state}");
+        }, onError: (err) =>
+        {
+            Debug.LogWarning("Save failed: " + err);
+        }));
+    }
 
-            if (container.results == null)
-            {
-                container.results = new List<Result>();
-            }
+    private string SetFCAP()
+    {
+        string FCAP = "FAILED";
+
+        if (judgementManager.rate < 80)
+        {
+            FCAP = "FAILED";
+        }
+        if (judgementManager.isFC)
+        {
+            FCAP = "FULL COMBO";
+        }
+        if (judgementManager.isAP)
+        {
+            FCAP = "ALL PERFECT";
+        }
+
+        return FCAP;
+    }
+
+    private string SetRank(float rate)
+    {
+        string rank;
+
+        if (rate >= 99.75f)
+        {
+            rank = "SSS+";
+        }
+        else if (rate >= 99.5f)
+        {
+            rank = "SSS";
+        }
+        else if (rate >= 99.25f)
+        {
+            rank = "SS+";
+        }
+        else if (rate >= 99.0f)
+        {
+            rank = "SS";
+        }
+        else if (rate >= 98.5f)
+        {
+            rank = "S+";
+        }
+        else if (rate >= 98.0f)
+        {
+            rank = "S";
+        }
+        else if (rate >= 97.0f)
+        {
+            rank = "AAA";
+        }
+        else if (rate >= 96.0f)
+        {
+            rank = "AA";
+        }
+        else if (rate >= 95.0f)
+        {
+            rank = "A";
+        }
+        else if (rate >= 94.0f)
+        {
+            rank = "BBB";
+        }
+        else if (rate >= 93.0f)
+        {
+            rank = "BB";
+        }
+        else if (rate >= 92.0f)
+        {
+            rank = "B";
+        }
+        else if (rate >= 90.0f)
+        {
+            rank = "C";
         }
         else
         {
-            // 없으면 새 컨테이너 생성
-            container = new ResultsContainer();
-
-            Debug.Log("result.json이 존재하지 않습니다.");
+            rank = "D";
         }
 
-        // 새로운 결과 추가
-        container.results.Add(newResult);
-
-        // 다시 직렬화해서 저장
-        string newJson = JsonUtility.ToJson(container, true);
-        File.WriteAllText(path, newJson);
-
-        Debug.Log("result.json is successfully saved");
+        return rank;
     }
 }
