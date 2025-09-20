@@ -59,13 +59,14 @@ public class SongListShower : MonoBehaviour
 
     private List<Result> results;
 
+    private string baseUrl = "https://prod.windeath44.wiki/api";
+    private string accessToken;
+
     private void Start()
     {
         canvas.transform.localScale = Vector3.one;
 
         settings = SettingsManager.Instance;
-
-        //contentFolder.transform.position = new Vector3(contentFolder.transform.position.x, -1f * (viewPortFolder.transform.position.y / 2f) + (songPrefab.GetComponent<RectTransform>().sizeDelta.y / 2f), 0f);
 
         originX = contentFolder.transform.position.x;
         indicatorOriginX = difficultyIndicator.transform.position.x;
@@ -105,8 +106,21 @@ public class SongListShower : MonoBehaviour
 
     public void Shower()
     {
+        accessToken = $"{settings.GetPlayerData().accessToken}";
+
         // Result 리스트 불러오기
-        results = getResults.GetResultsAPI().results;
+        StartCoroutine(getResults.GetResultsAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: (resp) =>
+        {
+            foreach (var row in resp.data.values)
+            {
+                Debug.Log($"#{row.gamePlayHistoryId} music={row.musicId} rate={row.completionRate} rank={row.rank}");
+            }
+        }, onError: (error) =>
+        {
+            Debug.LogError($"Error fetching results: {error}");
+        }));
+
+        results = getResults.GetResultsAPIs().results;
 
         foreach (var pair in loader.songDictionary)
         {
@@ -175,7 +189,6 @@ public class SongListShower : MonoBehaviour
                 great = 0,
                 good = 0,
                 miss = 0,
-                played_at = ""
             };
 
             // 난이도 별 기록 리스트
@@ -515,7 +528,6 @@ public class SongListShower : MonoBehaviour
                 great = 0,
                 good = 0,
                 miss = 0,
-                played_at = ""
             };
 
             return empty;

@@ -8,13 +8,18 @@ public class ResultAPI : MonoBehaviour
 {
     SettingsManager settings;
 
-    public IEnumerator PostResultAPI(string baseUrl, Result result, string userId, Action<ResultResponse> onSuccess, Action<string> onError, int timeOutSec = 10)
+    public IEnumerator PostResultAPI(string baseUrl, ResultRequest result, string accessToken, Action<ResultResponse> onSuccess, Action<string> onError, int timeOutSec = 15)
     {
         settings = SettingsManager.Instance;
 
         if (string.IsNullOrEmpty(baseUrl))
         {
             onError?.Invoke("PostResultAPI: Base URL is empty");
+            yield break;
+        }
+        if (string.IsNullOrEmpty(accessToken))
+        {
+            onError?.Invoke("PostResultAPI: Access Token is empty");
             yield break;
         }
 
@@ -29,7 +34,7 @@ public class ResultAPI : MonoBehaviour
             req.timeout = timeOutSec;
 
             req.SetRequestHeader("Content-Type", "application/json");
-            req.SetRequestHeader("userId", userId);
+            req.SetRequestHeader("Authorization", $"Bearer {accessToken}");
 
             yield return req.SendWebRequest();
 

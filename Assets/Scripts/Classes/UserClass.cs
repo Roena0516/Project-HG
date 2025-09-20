@@ -8,6 +8,7 @@ public class UserClass : MonoBehaviour
 public class Player
 {
     public int id;
+    public string accessToken;
     public string playerName;
     public float rating;
 }

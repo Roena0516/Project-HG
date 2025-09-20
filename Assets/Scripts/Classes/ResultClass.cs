@@ -20,16 +20,14 @@ public class Result
     public long miss;
     public string rank;
     public string state;
-    public string played_at;
+    public string playedAt;
 }
 
 [System.Serializable]
-public class ResultResponse
+public class ResultRequest
 {
-    public long gamePlayHistoryId;
-    public string playerId;
     public long musicId;
-    public float rate;
+    public float completionRate;
     public long combo;
     public long perfectPlus;
     public long perfect;
@@ -38,7 +36,31 @@ public class ResultResponse
     public long miss;
     public string rank;
     public string state;
-    public string played_at;
+}
+
+[System.Serializable]
+public class ResultResponse
+{
+    public long gamePlayHistoryId;
+    public string playerId;
+    public long musicId;
+    public float completionRate;
+    public long combo;
+    public long perfectPlus;
+    public long perfect;
+    public long great;
+    public long good;
+    public long miss;
+    public string rank;
+    public string state;
+    public string playedAt;
+}
+
+[System.Serializable]
+public class CursorPageResultResponse
+{
+    public ResultResponse[] values;
+    public bool hasNext;
 }
 
 [Serializable]
@@ -46,6 +68,13 @@ public class ResponseEntity_ResultResponse
 {
     public string message;
     public ResultResponse data;
+}
+
+[System.Serializable]
+public class ResponseEntity_CursorPageResultResponse
+{
+    public string message;
+    public CursorPageResultResponse data;
 }
 
 [System.Serializable]

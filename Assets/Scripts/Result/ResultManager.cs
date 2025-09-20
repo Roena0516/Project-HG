@@ -13,8 +13,8 @@ public class ResultManager : MonoBehaviour
     [SerializeField] private ResultUIManager UIManager;
     [SerializeField] private ResultAPI resultAPI;
 
-    private string baseUrl = "https://prod.windeath44.wiki";
-    private string userId = "0";
+    private string baseUrl = "https://prod.windeath44.wiki/api";
+    private string accessToken;
 
     private void Start()
     {
@@ -37,16 +37,15 @@ public class ResultManager : MonoBehaviour
 
     private void SaveResult()
     {
-        userId = $"{settings.GetPlayerData().id}";
+        accessToken = $"{settings.GetPlayerData().accessToken}";
 
         string rank = SetRank(judgementManager.rate);
         string state = SetFCAP();
 
-        Result newResult = new()
+        ResultRequest newResult = new()
         {
-            playerId = userId,
             musicId = loadManager.info.id,
-            rate = judgementManager.rate,
+            completionRate = judgementManager.rate,
             combo = judgementManager.combo,
             perfectPlus = judgementManager.judgeCount["PerfectP"],
             perfect = judgementManager.judgeCount["Perfect"],
@@ -57,7 +56,7 @@ public class ResultManager : MonoBehaviour
             state = state,
         };
 
-        StartCoroutine(resultAPI.PostResultAPI(baseUrl, newResult, userId, onSuccess: (res) =>
+        StartCoroutine(resultAPI.PostResultAPI(baseUrl, newResult, accessToken, onSuccess: (res) =>
         {
             Debug.Log($"Saved! id={res.gamePlayHistoryId}, rank={res.rank}, state={res.state}");
         }, onError: (err) =>
