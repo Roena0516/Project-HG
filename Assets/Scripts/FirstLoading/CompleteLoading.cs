@@ -29,16 +29,19 @@ public class CompleteLoading : MonoBehaviour
             Debug.LogWarning("get rating failed: " + err);
         });
 
-        player = new()
+        if (myRating != null)
         {
-            id = myRating.playerId,
-            accessToken = accessToken,
-            playerName = myRating.playerId,
-            rating = myRating.rating,
-            ranking = myRating.ranking,
-            createdAt = myRating.createdAt,
-            updatedAt = myRating.updatedAt
-        };
+            player = new()
+            {
+                id = myRating.playerId,
+                accessToken = accessToken,
+                playerName = myRating.playerId,
+                rating = myRating.rating,
+                ranking = myRating.ranking,
+                createdAt = myRating.createdAt,
+                updatedAt = myRating.updatedAt
+            };
+        }
 
         settingsManager = SettingsManager.Instance;
         settingsManager.LoadSettings(); // ???? ???? ????

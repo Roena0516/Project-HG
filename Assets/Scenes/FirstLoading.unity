@@ -266,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 722627626}
   - component: {fileID: 722627625}
+  - component: {fileID: 722627627}
   m_Layer: 0
   m_Name: Loader
   m_TagString: Untagged
@@ -285,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 084331436803944ed998f94e3f2538f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  getUser: {fileID: 722627627}
 --- !u!4 &722627626
 Transform:
   m_ObjectHideFlags: 0
@@ -300,6 +302,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &722627627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 722627624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c725ee67b86c047639813f000ca4ae54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1598825781
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,46 +343,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acbc5a7604b804190b80027ff71683cc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sync: 0
-  speed: 0
   eventName: 
+  songTitle: 
+  songArtist: 
   fileName: 
-  Line1Action:
-    m_Name: Line 1
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 1b92b62f-d2ff-4e02-a2e3-0597bcccb5ce
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  Line2Action:
-    m_Name: Line 2
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: ea7363d1-fdba-4db4-a68d-4ae758abe30a
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  Line3Action:
-    m_Name: Line 3
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: c967e2a3-6489-4f51-8d36-f1d0886c3aac
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
-  Line4Action:
-    m_Name: Line 4
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: e9aa61c4-7e06-4e92-a1ec-71646b3b60a8
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings: []
-    m_Flags: 0
+  LineActions: []
+  isAutoPlay: 0
+  isKR: 0
 --- !u!4 &1598825783
 Transform:
   m_ObjectHideFlags: 0
