@@ -6,14 +6,39 @@ public class CompleteLoading : MonoBehaviour
 {
     private SettingsManager settingsManager;
 
-    private void Start()
+    [SerializeField] private GetUser getUser;
+
+    private string baseUrl = "https://prod.windeath44.wiki/api";
+    private string accessToken;
+
+    private async void Start()
     {
         Player player = GetUser();
-
         if (player == null)
         {
             return;
         }
+
+        accessToken = player.accessToken;
+
+        GetMyRatingResponse myRating = await getUser.GetUserRatingAPI(baseUrl, accessToken, onSuccess: (res) =>
+        {
+            Debug.Log($"get rating: {res.data.rating} ranking: {res.data.ranking}");
+        }, onError: (err) =>
+        {
+            Debug.LogWarning("get rating failed: " + err);
+        });
+
+        player = new()
+        {
+            id = myRating.playerId,
+            accessToken = accessToken,
+            playerName = myRating.playerId,
+            rating = myRating.rating,
+            ranking = myRating.ranking,
+            createdAt = myRating.createdAt,
+            updatedAt = myRating.updatedAt
+        };
 
         settingsManager = SettingsManager.Instance;
         settingsManager.LoadSettings(); // ???? ???? ????

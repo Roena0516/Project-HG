@@ -57,7 +57,7 @@ public class ResultManager : MonoBehaviour
 
         StartCoroutine(resultAPI.PostResultAPI(baseUrl, newResult, accessToken, onSuccess: (res) =>
         {
-            Debug.Log($"Saved! id={res.gamePlayHistoryId}, rank={res.rank}, state={res.state}");
+            Debug.Log($"Saved! musicId={newResult.musicId}, state={newResult.state}");
         }, onError: (err) =>
         {
             Debug.LogWarning("Save failed: " + err);
