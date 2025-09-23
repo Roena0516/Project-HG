@@ -14,6 +14,7 @@ public class MenuManager : MonoBehaviour
 
     private SettingsManager settingsManager;
     public CircleMenuController menuController;
+    [SerializeField] private SettingsListMover settingsListMover;
 
     public GameObject settingsPanel;
 
@@ -83,7 +84,9 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                SetSettingsPanel();
+                //SetSettingsPanel();
+                settingsListMover.SettingsListSetter();
+
             }
         }
         if (index == 1)

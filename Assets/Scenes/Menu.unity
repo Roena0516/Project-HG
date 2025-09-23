@@ -7616,6 +7616,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuFolder: {fileID: 531799689}
   menuController: {fileID: 1891902738}
+  settingsListMover: {fileID: 1513147432}
   settingsPanel: {fileID: 2042454103}
   menuCount: 0
   musicDelayValue: {fileID: 1293142901}
