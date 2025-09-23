@@ -6,9 +6,10 @@ public class ResultClass : MonoBehaviour
 {
 }
 
-[System.Serializable]
+[Serializable]
 public class Result
 {
+    public long gamePlayHistoryId;
     public string playerId;
     public long musicId;
     public float rate;
@@ -23,7 +24,7 @@ public class Result
     public string playedAt;
 }
 
-[System.Serializable]
+[Serializable]
 public class ResultRequest
 {
     public long musicId;
@@ -34,11 +35,10 @@ public class ResultRequest
     public long great;
     public long good;
     public long miss;
-    public string rank;
     public string state;
 }
 
-[System.Serializable]
+[Serializable]
 public class ResultResponse
 {
     public long gamePlayHistoryId;
@@ -56,10 +56,10 @@ public class ResultResponse
     public string playedAt;
 }
 
-[System.Serializable]
+[Serializable]
 public class CursorPageResultResponse
 {
-    public ResultResponse[] values;
+    public List<ResultResponse> values;
     public bool hasNext;
 }
 
@@ -70,14 +70,14 @@ public class ResponseEntity_ResultResponse
     public ResultResponse data;
 }
 
-[System.Serializable]
+[Serializable]
 public class ResponseEntity_CursorPageResultResponse
 {
     public string message;
     public CursorPageResultResponse data;
 }
 
-[System.Serializable]
+[Serializable]
 public class ResultsContainer
 {
     public List<Result> results;

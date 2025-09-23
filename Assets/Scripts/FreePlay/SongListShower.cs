@@ -104,23 +104,50 @@ public class SongListShower : MonoBehaviour
         Debug.Log($"value : {dropdown.value}");
     }
 
-    public void Shower()
+    public async void Shower()
     {
         accessToken = $"{settings.GetPlayerData().accessToken}";
 
         // Result 리스트 불러오기
-        StartCoroutine(getResults.GetResultsAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: (resp) =>
-        {
-            foreach (var row in resp.data.values)
-            {
-                Debug.Log($"#{row.gamePlayHistoryId} music={row.musicId} rate={row.completionRate} rank={row.rank}");
-            }
-        }, onError: (error) =>
-        {
-            Debug.LogError($"Error fetching results: {error}");
-        }));
+        //StartCoroutine(getResults.GetResultsAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: (resp) =>
+        //{
+        //    foreach (var row in resp.data.values)
+        //    {
+        //        Debug.Log($"#{row.gamePlayHistoryId} music={row.musicId} rate={row.completionRate} rank={row.rank}");
+        //    }
+        //}, onError: (error) =>
+        //{
+        //    Debug.LogError($"Error fetching results: {error}");
+        //}));
 
-        results = getResults.GetResultsAPIs().results;
+        //results = getResults.GetResultsAPIs().results;
+
+        CursorPageResultResponse res = await getResults.GetBestResultAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: resp => Debug.Log("best ok"), onError: err => Debug.LogError(err));
+
+        if (res != null)
+        {
+            foreach (ResultResponse item in res.values)
+            {
+                Result inputResult = new()
+                {
+                    gamePlayHistoryId = item.gamePlayHistoryId,
+                    playerId = item.playerId,
+                    musicId = item.musicId,
+                    rate = item.completionRate,
+                    combo = item.combo,
+                    perfectPlus = item.perfectPlus,
+                    perfect = item.perfect,
+                    great = item.great,
+                    good = item.good,
+                    miss = item.miss,
+                    rank = item.rank,
+                    state = item.state,
+                    playedAt = item.playedAt
+                };
+
+                results.Add(inputResult);
+            }
+        }
 
         foreach (var pair in loader.songDictionary)
         {

@@ -5,9 +5,9 @@
     "effectOption": "None",
     "isKR": false,
     "KeyBinds": [
-        "S",
-        "D",
-        ";",
-        "'"
+        "<Keyboard>/s",
+        "<Keyboard>/d",
+        "<Keyboard>/l",
+        "<Keyboard>/semicolon"
     ]
 }

@@ -52,7 +52,6 @@ public class ResultManager : MonoBehaviour
             great = judgementManager.judgeCount["Great"],
             good = judgementManager.judgeCount["Good"],
             miss = judgementManager.judgeCount["Miss"] + judgementManager.judgeCount["Bad"],
-            rank = rank,
             state = state,
         };
 
@@ -67,7 +66,7 @@ public class ResultManager : MonoBehaviour
 
     private string SetFCAP()
     {
-        string FCAP = "FAILED";
+        string FCAP = "CLEAR";
 
         if (judgementManager.rate < 80)
         {

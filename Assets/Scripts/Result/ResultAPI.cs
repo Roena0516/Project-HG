@@ -23,7 +23,7 @@ public class ResultAPI : MonoBehaviour
             yield break;
         }
 
-        string url = $"{baseUrl}/game/game-play-history";
+        string url = $"{baseUrl}/game/rhythm-game-play-history";
         string jsonData = JsonUtility.ToJson(result);
 
         using (var req = new UnityWebRequest(url, UnityWebRequest.kHttpVerbPOST))
