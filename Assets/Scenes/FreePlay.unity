@@ -198,6 +198,52 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &17830485
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 17830487}
+  - component: {fileID: 17830486}
+  m_Layer: 0
+  m_Name: Animator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &17830486
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17830485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fb163da32e308b409b4da1986dd3746, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FreePlayAnimation
+  _songListPanel: {fileID: 1916045516}
+  _songInfoPanel: {fileID: 64882763}
+--- !u!4 &17830487
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17830485}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &44610318
 GameObject:
   m_ObjectHideFlags: 0
@@ -7478,6 +7524,7 @@ MonoBehaviour:
     fileLocation: 
     level: 0
     difficulty: 
+  _animator: {fileID: 17830486}
 --- !u!114 &1779595402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8132,6 +8179,7 @@ GameObject:
   - component: {fileID: 1916045516}
   - component: {fileID: 1916045519}
   - component: {fileID: 1916045520}
+  - component: {fileID: 1916045521}
   m_Layer: 5
   m_Name: SongList
   m_TagString: Untagged
@@ -8182,6 +8230,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_ShowMaskGraphic: 1
+--- !u!111 &1916045521
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1916045515}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 0}
+  m_Animations:
+  - {fileID: 7400000, guid: f8ccd7a208623b64ea2042644df38795, type: 2}
+  - {fileID: 7400000, guid: 2d7fe1b65d859be46a1a25fc1f3db8d4, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0
 --- !u!1 &1927599366
 GameObject:
   m_ObjectHideFlags: 0
@@ -9001,6 +9067,7 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 1638053020}
+  - {fileID: 17830487}
   - {fileID: 1779595403}
   - {fileID: 1585021330}
   - {fileID: 15461850}

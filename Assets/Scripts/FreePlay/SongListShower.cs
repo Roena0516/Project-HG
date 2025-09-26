@@ -56,6 +56,7 @@ public class SongListShower : MonoBehaviour
     private Coroutine repeatCoroutine;
 
     public SongInfoClass selectedSongInfo;
+    [SerializeField] private FreePlayAnimation _animator;
 
     private List<Result> results;
 
@@ -332,7 +333,9 @@ public class SongListShower : MonoBehaviour
         }
 
         SetList(1);
-    }
+
+        _animator.ShowSongList();
+   }
 
     private void SetSelectedSongInfo(SongInfoClass info)
     {

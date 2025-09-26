@@ -1,0 +1,11 @@
+{
+    "asset": "15af7c3033be4ac4e801bea13ee9704f",
+    "fileName": "0199880e-8732-7b41-ace4-93453f8547d3.pose.json",
+    "prompt": "EaseOut으로 자연스럽게 UI가 왼쪽에서 오른쪽으로 이동하는 애니메이션",
+    "negativePrompt": "",
+    "model": "a9c27ca4-3ec9-43e8-96cd-ee891aba64c5",
+    "modelName": "Text to Motion",
+    "customSeed": 2028462942,
+    "w3CTraceId": "d7fac465118b90a90e0b2275d662c450",
+    "isTrimmed": false
+}
