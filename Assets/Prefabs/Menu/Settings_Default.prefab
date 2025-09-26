@@ -212,6 +212,8 @@ GameObject:
   - component: {fileID: 3973734039805645749}
   - component: {fileID: 4951739908648569622}
   - component: {fileID: 4103061291589046225}
+  - component: {fileID: 7901237631447368708}
+  - component: {fileID: 7477382167165235906}
   m_Layer: 5
   m_Name: Settings_Default
   m_TagString: Untagged
@@ -278,6 +280,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9aa3e6d89f6c14b598efaf4bd46dc684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!222 &7901237631447368708
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410267914375726713}
+  m_CullTransparentMesh: 1
+--- !u!114 &7477382167165235906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6410267914375726713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 0.73333335, b: 0.9607843, a: 0}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 7482667652216324306, guid: db750325989564987a34393247d883b4, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &7189401211802265915
 GameObject:
   m_ObjectHideFlags: 0

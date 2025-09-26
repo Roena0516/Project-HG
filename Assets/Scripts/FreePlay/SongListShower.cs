@@ -580,7 +580,7 @@ public class SongListShower : MonoBehaviour
 
             Debug.Log(toIndex);
 
-            if (listNum > 3 && listNum < contentFolder.transform.childCount - 4)
+            if (listNum > 4 && listNum < contentFolder.transform.childCount - 2)
             {
                 if (currentSetSongRoutine != null)
                 {
@@ -625,8 +625,8 @@ public class SongListShower : MonoBehaviour
 
         float elapsedTime = 0f;
         Vector3 startPos = new Vector3(T.position.x, T.position.y, 0f);
-        float duration = 0.15f;
-        Vector3 targetPos = new Vector3(originX, originY - originY + (songPrefab.GetComponent<RectTransform>().sizeDelta.y * index), 0f);
+        float duration = 0.125f;
+        Vector3 targetPos = new Vector3(originX, (songPrefab.GetComponent<RectTransform>().sizeDelta.y * index) - 8f, 0f);
 
         while (elapsedTime < duration)
         {
@@ -761,7 +761,7 @@ public class SongListShower : MonoBehaviour
         float elapsedTime = 0f;
         Vector3 startPos = new(T.position.x, T.position.y, 0f);
         float duration = 0.15f;
-        Vector3 targetPos = new(indicatorOriginX + 111.75f * index, T.position.y, 0f);
+        Vector3 targetPos = new(indicatorOriginX + 109.75f * index, T.position.y, 0f);
 
         while (elapsedTime < duration)
         {

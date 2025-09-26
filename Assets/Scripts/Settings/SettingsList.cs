@@ -4,41 +4,40 @@ using UnityEngine;
 public class SettingsList : MonoBehaviour
 {
     public List<SettingComponent> settingsList;
+    public SettingsListMover settingsListMover;
 
     private void Start()
     {
-        settingsList = new();
-
-        settingsList.Add(new SettingComponent()
+        settingsList = new()
         {
-            title = "Display Mode",
-            value = new()
+            new SettingComponent()
+            {
+                title = "Display Mode",
+                value = new()
             {
                 "Fullscreen Window",
                 "Fullscreen",
                 "Window"
             },
-            initialIndex = 0,
-            category = "display"
-        });
-
-        settingsList.Add(new SettingComponent()
-        {
-            title = "Display Resolution",
-            value = new()
+                initialIndex = 0,
+                category = "display"
+            },
+            new SettingComponent()
+            {
+                title = "Display Resolution",
+                value = new()
             {
                 "1600 X 900",
                 "1920 X 1080",
                 "2560 X 1440"
             },
-            initialIndex = 1,
-            category = "display"
-        });
-
-        settingsList.Add(new SettingComponent()
-        {
-            title = "Frame Limit",
-            value = new()
+                initialIndex = 1,
+                category = "display"
+            },
+            new SettingComponent()
+            {
+                title = "Frame Limit",
+                value = new()
             {
                 "30",
                 "60",
@@ -46,8 +45,11 @@ public class SettingsList : MonoBehaviour
                 "165",
                 "Unlimited"
             },
-            initialIndex = 4,
-            category = "display"
-        });
+                initialIndex = 4,
+                category = "display"
+            }
+        };
+
+        settingsListMover.SettingsListSetter();
     }
 }

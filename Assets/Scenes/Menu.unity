@@ -1654,10 +1654,10 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 1178786957}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 50}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 546, y: -42}
+  m_SizeDelta: {x: 1028, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &584128923
 MonoBehaviour:
@@ -2267,6 +2267,7 @@ GameObject:
   - component: {fileID: 945515331}
   - component: {fileID: 945515333}
   - component: {fileID: 945515332}
+  - component: {fileID: 945515334}
   m_Layer: 5
   m_Name: background_1
   m_TagString: Untagged
@@ -2331,6 +2332,21 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 945515330}
   m_CullTransparentMesh: 1
+--- !u!114 &945515334
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 945515330}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfabb0440166ab443bba8876756fdfa9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Shadow
+  m_EffectColor: {r: 0, g: 0, b: 0, a: 0.5}
+  m_EffectDistance: {x: -10, y: 10}
+  m_UseGraphicAlpha: 0
 --- !u!1 &955688388
 GameObject:
   m_ObjectHideFlags: 0
@@ -3349,10 +3365,10 @@ RectTransform:
   - {fileID: 584128922}
   m_Father: {fileID: 879097889}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 84}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 546, y: -42}
+  m_SizeDelta: {x: 1092, y: 84}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178786958
 MonoBehaviour:
@@ -4856,6 +4872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c3ae6b76eac4332b9b263b8b0012c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  settingsListMover: {fileID: 1513147432}
 --- !u!4 &1513147434
 Transform:
   m_ObjectHideFlags: 0
@@ -6221,7 +6238,6 @@ MonoBehaviour:
   m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
-  m_Version: 2
   m_TaaSettings:
     m_Quality: 3
     m_FrameInfluence: 0.1
@@ -6229,6 +6245,7 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!114 &1740091627
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8406,7 +8423,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2042454104
 RectTransform:
   m_ObjectHideFlags: 0

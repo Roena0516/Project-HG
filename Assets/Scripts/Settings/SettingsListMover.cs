@@ -119,25 +119,27 @@ public class SettingsListMover : MonoBehaviour
                 {
                     StopCoroutine(currentSetSongRoutine);
                 }
-                currentSetSongRoutine = StartCoroutine(SetSong(listNum - 1));
+                currentSetSongRoutine = StartCoroutine(SetSong(listNum));
             }
 
             // 이전 선택 항목 비활성 비주얼
-            Image prevImage = contentFolder.transform.GetChild(prev - 1).GetComponent<Image>();
+            Image prevImage = contentFolder.transform.GetChild(prev).GetComponent<Image>();
             prevImage.color = prevImage.color.SetAlpha(0f);
 
-            Image prevLeftArrow = prevImage.transform.Find("LeftArrow").GetComponent<Image>();
-            Image prevRightArrow = prevImage.transform.Find("RightArrow").GetComponent<Image>();
+            Transform prevRight = prevImage.gameObject.transform.Find("Right");
+            Image prevLeftArrow = prevRight.Find("LeftArrow").GetComponent<Image>();
+            Image prevRightArrow = prevRight.Find("RightArrow").GetComponent<Image>();
             prevLeftArrow.color = prevLeftArrow.color.SetAlpha(0f);
             prevRightArrow.color = prevRightArrow.color.SetAlpha(0f);
 
             // 현재 선택 항목 활성 비주얼
-            Transform current = contentFolder.transform.GetChild(listNum - 1);
+            Transform current = contentFolder.transform.GetChild(listNum);
             Image currentBg = current.GetComponent<Image>();
             currentBg.color = currentBg.color.SetAlpha(0.4f);
 
-            Image currentLeftArrow = current.Find("LeftArrow").GetComponent<Image>();
-            Image currentRightArrow = current.Find("RightArrow").GetComponent<Image>();
+            Transform currentRight = current.gameObject.transform.Find("Right");
+            Image currentLeftArrow = currentRight.Find("LeftArrow").GetComponent<Image>();
+            Image currentRightArrow = currentRight.Find("RightArrow").GetComponent<Image>();
             currentLeftArrow.color = currentLeftArrow.color.SetAlpha(1f);
             currentRightArrow.color = currentRightArrow.color.SetAlpha(1f);
 

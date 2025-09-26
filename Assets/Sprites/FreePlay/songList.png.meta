@@ -8,6 +8,9 @@ TextureImporter:
   - first:
       213: 1714236024531046093
     second: songList_1
+  - first:
+      213: 2376082483031308274
+    second: songList_2
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -119,10 +122,10 @@ TextureImporter:
       name: songList_0
       rect:
         serializedVersion: 2
-        x: 591
-        y: 787
-        width: 413
-        height: 82
+        x: 67
+        y: 719
+        width: 937
+        height: 150
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -141,10 +144,10 @@ TextureImporter:
       name: songList_1
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1004
-        height: 781
+        x: 531
+        y: 791
+        width: 473
+        height: 74
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -155,6 +158,28 @@ TextureImporter:
       bones: []
       spriteID: dcec957f4903ac710800000000000000
       internalID: 1714236024531046093
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: songList_2
+      rect:
+        serializedVersion: 2
+        x: 11
+        y: 127
+        width: 993
+        height: 586
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f7fb16ed6a89f020800000000000000
+      internalID: 2376082483031308274
       vertices: []
       indices: 
       edges: []
@@ -175,6 +200,7 @@ TextureImporter:
     nameFileIdTable:
       songList_0: -1799858982115661335
       songList_1: 1714236024531046093
+      songList_2: 2376082483031308274
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
