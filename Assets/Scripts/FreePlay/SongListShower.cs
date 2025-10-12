@@ -333,8 +333,6 @@ public class SongListShower : MonoBehaviour
         }
 
         SetList(1);
-
-        _animator.ShowSongList();
    }
 
     private void SetSelectedSongInfo(SongInfoClass info)
@@ -371,6 +369,8 @@ public class SongListShower : MonoBehaviour
         midText.color = midText.color.SetAlpha(0f);
         endText.color = endText.color.SetAlpha(0f);
         sndText.color = sndText.color.SetAlpha(0f);
+
+        _animator.ShowSongList();
     }
 
     [System.Obsolete]

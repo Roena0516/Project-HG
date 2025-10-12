@@ -9,7 +9,7 @@ public class FreePlayAnimation : MonoBehaviour
 
     public void ShowSongList()
     {
-        _songListPanel.DOAnchorPosX(1000, 0);
-        _songListPanel.DOAnchorPosX(-1000, 0.5f).SetEase(Ease.InOutCubic);
+        _songListPanel.DOAnchorPosX(750, 0);
+        _songListPanel.DOAnchorPosX(-250, 0.5f).SetEase(Ease.InOutCubic);
     }
 }
