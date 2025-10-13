@@ -1,5 +1,8 @@
+using System.Collections;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 
 public class CompleteLoading : MonoBehaviour
@@ -13,11 +16,15 @@ public class CompleteLoading : MonoBehaviour
 
     private async void Start()
     {
+#if UNITY_WEBGL
+        Player player = await GetUserInWebGL();
+#else
         Player player = GetUser();
         if (player == null)
         {
             return;
         }
+#endif
 
         accessToken = player.accessToken;
 
@@ -44,20 +51,24 @@ public class CompleteLoading : MonoBehaviour
         }
 
         settingsManager = SettingsManager.Instance;
-        settingsManager.LoadSettings(); // ???? ???? ????
+#if UNITY_WEBGL
+        await settingsManager.LoadSettingsInWebGL();
+#else
+        settingsManager.LoadSettings();
+#endif
         settingsManager.SetPlayerData(player);
 
         DontDestroyOnLoad(settingsManager.gameObject);
 
-        if (settingsManager.settings.isFirstStart) // ?? ?????? ?? ???????? ????
+        if (settingsManager.settings.isFirstStart)
         {
-            settingsManager.SetFirstStart(false); // ???? ?? ?????? ????
+            settingsManager.SetFirstStart(false);
 
-            StartTutorial(); // ???????? ????
+            StartTutorial();
         }
-        else // ?????? ???????? ????
+        else
         {
-            await SceneManager.LoadSceneAsync("Menu"); // ???? ?????? ????
+            await SceneManager.LoadSceneAsync("Menu");
         }
     }
 
@@ -76,6 +87,38 @@ public class CompleteLoading : MonoBehaviour
         Player foundPlayer = JsonUtility.FromJson<Player>(json);
 
         return foundPlayer;
+    }
+
+    private async Task<Player> GetUserInWebGL()
+    {
+        string path = Path.Combine(Application.streamingAssetsPath, "userData.json");
+
+        using (UnityWebRequest req = UnityWebRequest.Get(path))
+        {
+            var op = req.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            if (req.result == UnityWebRequest.Result.ConnectionError ||
+                req.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"[WebGL] Failed to load userData.json: {req.error}");
+                return null;
+            }
+
+            string json = req.downloadHandler.text;
+            Player foundPlayer = null;
+            try
+            {
+                foundPlayer = JsonUtility.FromJson<Player>(json);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"[WebGL] JSON Parse Error: {e.Message}");
+            }
+
+            return foundPlayer;
+        }
     }
 
     private void StartTutorial()

@@ -1,6 +1,8 @@
 using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using UnityEngine.Networking;
 
 public class SongList
 {
@@ -14,7 +16,20 @@ public class LoadAllJSONs : MonoBehaviour
 
     public SongListShower shower;
 
+#if UNITY_WEBGL
+    private async void Start()
+    {
+        await GetAllInWebGL();
+#else
     private void Start()
+    {
+        GetAll();
+#endif
+
+        shower.Shower();
+    }
+
+    private void GetAll()
     {
         string[] songList = Directory.GetFiles(Application.streamingAssetsPath, "songList.json");
         string songListJson = File.ReadAllText(songList[0]);
@@ -26,7 +41,7 @@ public class LoadAllJSONs : MonoBehaviour
 
             if (directory.Length == 0)
             {
-                Debug.LogWarning($"???????? ?????? ???? ??????????: {song.fileLocation}");
+                Debug.LogWarning($"missing directory: {song.fileLocation}");
                 continue;
             }
 
@@ -34,7 +49,7 @@ public class LoadAllJSONs : MonoBehaviour
 
             if (jsonFiles.Length == 0)
             {
-                Debug.LogWarning($"???? ???????? ???? ?????? ???????? ????????: {directory[0]} {song.difficulty}");
+                Debug.LogWarning($"missing file: {directory[0]} {song.difficulty}");
                 continue;
             }
 
@@ -84,8 +99,93 @@ public class LoadAllJSONs : MonoBehaviour
                 songDictionary[key][3] = info;
             }
         }
+    }
 
-        shower.Shower();
+    public async Task GetAllInWebGL()
+    {
+        string songListPath = $"{Application.streamingAssetsPath}/songList.json";
+
+        using (UnityWebRequest songListReq = UnityWebRequest.Get(songListPath))
+        {
+            var op = songListReq.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            if (songListReq.result != UnityWebRequest.Result.Success)
+            {
+                Debug.LogError($"[WebGL] Failed to load songList.json: {songListReq.error}");
+                return;
+            }
+
+            string songListJson = songListReq.downloadHandler.text;
+            SongList songListContainer = JsonUtility.FromJson<SongList>(songListJson);
+
+            if (songListContainer == null || songListContainer.songs == null)
+            {
+                Debug.LogError("[WebGL] songListContainer is null or empty.");
+                return;
+            }
+
+            foreach (var song in songListContainer.songs)
+            {
+                // StreamingAssets/song.fileLocation/
+                string songFolderUrl = $"{Application.streamingAssetsPath}/{song.fileLocation}/";
+                string songFileUrl = $"{songFolderUrl}{song.difficulty}.roena";
+
+                using (UnityWebRequest req = UnityWebRequest.Get(songFileUrl))
+                {
+                    var subOp = req.SendWebRequest();
+                    while (!subOp.isDone)
+                        await Task.Yield();
+
+                    if (req.result != UnityWebRequest.Result.Success)
+                    {
+                        Debug.LogWarning($"[WebGL] missing file: {songFileUrl}");
+                        continue;
+                    }
+
+                    string encrypted = req.downloadHandler.text;
+                    string decrypted = EncryptionHelper.Decrypt(encrypted);
+
+                    SongInfoClass info = new()
+                    {
+                        fileLocation = songFileUrl,
+                        id = song.id,
+                        difficulty = song.difficulty,
+                        artist = song.artist,
+                        jpArtist = song.jpArtist,
+                        title = song.title,
+                        jpTitle = song.jpTitle,
+                        category = song.category,
+                        bpm = song.bpm,
+                        eventName = song.eventName,
+                        level = song.level
+                    };
+
+                    string key = info.artist + "-" + info.title;
+                    if (!songDictionary.ContainsKey(key))
+                    {
+                        songDictionary[key] = new List<SongInfoClass> { new(), new(), new(), new() };
+                    }
+
+                    switch (song.difficulty)
+                    {
+                        case "MEMORY":
+                            songDictionary[key][0] = info;
+                            break;
+                        case "ADVERSITY":
+                            songDictionary[key][1] = info;
+                            break;
+                        case "NIGHTMARE":
+                            songDictionary[key][2] = info;
+                            break;
+                        case "INFERNO":
+                            songDictionary[key][3] = info;
+                            break;
+                    }
+                }
+            }
+        }
     }
 
     [System.Serializable]

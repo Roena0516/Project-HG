@@ -1,7 +1,9 @@
 using System.Collections.Generic;
 using System.IO;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Networking;
 
 public class GameSettings
 {
@@ -97,6 +99,34 @@ public class SettingsManager : MonoBehaviour
         {
             Debug.LogError("settings.json not found at: " + filePath);
             SaveSettings();
+        }
+    }
+
+    public async Task LoadSettingsInWebGL()
+    {
+        using (UnityWebRequest req = UnityWebRequest.Get(filePath))
+        {
+            var op = req.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            if (req.result == UnityWebRequest.Result.ConnectionError ||
+                req.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"[WebGL] Failed to load settings.json: {req.error}");
+                return;
+            }
+
+            string json = req.downloadHandler.text;
+            if (!string.IsNullOrEmpty(json))
+            {
+                settings = JsonUtility.FromJson<GameSettings>(json);
+                Debug.Log("[WebGL] Settings loaded successfully.");
+            }
+            else
+            {
+                Debug.LogError("[WebGL] settings.json is empty.");
+            }
         }
     }
 
