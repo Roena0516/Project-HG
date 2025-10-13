@@ -16,11 +16,12 @@ public class CompleteLoading : MonoBehaviour
     private string accessToken;
 
 #if UNITY_WEBGL
-    private void Awake()
+    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
+    static void ConfigureFMOD()
     {
         FMOD.RESULT result;
 
-        uint dspBufferLength = 512;
+        uint dspBufferLength = 1024;
         int dspBufferCount = 2;
         result = RuntimeManager.CoreSystem.setDSPBufferSize(dspBufferLength, dspBufferCount);
         Debug.Log($"[WebGL] FMOD DSP Buffer set to {dspBufferLength} x {dspBufferCount}, Result: {result}");
