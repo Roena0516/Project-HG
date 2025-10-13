@@ -20,7 +20,7 @@ public class LoadAllJSONs : MonoBehaviour
     private async void Start()
     {
         await GetAllInWebGL();
-#else
+#elif UNITY_STANDALONE || UNITY_EDITOR
     private void Start()
     {
         GetAll();

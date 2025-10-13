@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
+using FMODUnity;
 
 public class CompleteLoading : MonoBehaviour
 {
@@ -14,11 +15,23 @@ public class CompleteLoading : MonoBehaviour
     private string baseUrl = "https://prod.windeath44.wiki/api";
     private string accessToken;
 
+#if UNITY_WEBGL
+    private void Awake()
+    {
+        FMOD.RESULT result;
+
+        uint dspBufferLength = 512;
+        int dspBufferCount = 2;
+        result = RuntimeManager.CoreSystem.setDSPBufferSize(dspBufferLength, dspBufferCount);
+        Debug.Log($"[WebGL] FMOD DSP Buffer set to {dspBufferLength} x {dspBufferCount}, Result: {result}");
+    }
+#endif
+
     private async void Start()
     {
 #if UNITY_WEBGL
         Player player = await GetUserInWebGL();
-#else
+#elif UNITY_STANDALONE || UNITY_EDITOR
         Player player = GetUser();
         if (player == null)
         {
@@ -53,7 +66,7 @@ public class CompleteLoading : MonoBehaviour
         settingsManager = SettingsManager.Instance;
 #if UNITY_WEBGL
         await settingsManager.LoadSettingsInWebGL();
-#else
+#elif UNITY_STANDALONE || UNITY_EDITOR
         settingsManager.LoadSettings();
 #endif
         settingsManager.SetPlayerData(player);
