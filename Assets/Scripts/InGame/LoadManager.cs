@@ -2,6 +2,8 @@ using UnityEngine;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Threading.Tasks;
+using UnityEngine.Networking;
 
 [System.Serializable]
 public class SongInfoClass
@@ -58,14 +60,22 @@ public class LoadManager : MonoBehaviour
         }
     }
 
+#if UNITY_WEBGL
+    private async void Start()
+#elif UNITY_STANDALONE || UNITY_EDITOR
     private void Start()
+#endif
     {
         settings = SettingsManager.Instance;
         levelEditer = LevelEditer.Instance;
 
         if (!SceneManager.GetSceneByName("LevelEditor").isLoaded)
         {
+#if UNITY_WEBGL
+            await LoadFromJsonInWebGL(Path.Combine(settings.fileName));
+#elif UNITY_STANDALONE || UNITY_EDITOR
             LoadFromJson(Path.Combine(settings.fileName));
+#endif
         }
         else
         {
@@ -99,6 +109,41 @@ public class LoadManager : MonoBehaviour
         else
         {
             Debug.LogError("File not found at: " + filePath);
+        }
+    }
+
+    public async Task LoadFromJsonInWebGL(string filePath)
+    {
+        string json = null;
+        using (UnityWebRequest req = UnityWebRequest.Get(filePath))
+        {
+            var op = req.SendWebRequest();
+            while (!op.isDone)
+                await Task.Yield();
+
+            if (req.result == UnityWebRequest.Result.ConnectionError ||
+                req.result == UnityWebRequest.Result.ProtocolError)
+            {
+                Debug.LogError($"[WebGL] Failed to load chart file: {filePath}\nError: {req.error}");
+                return;
+            }
+
+            json = req.downloadHandler.text;
+        }
+
+        try
+        {
+            string decrypted = EncryptionHelper.Decrypt(json);
+            NotesContainer container = JsonUtility.FromJson<NotesContainer>(decrypted);
+
+            info = settings.Info;
+            notes = container.notes;
+
+            Debug.Log($"Chart loaded successfully! eventName: {settings.eventName}, id: {info.id}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"JSON Parse or Decrypt Error: {e.Message}");
         }
     }
 

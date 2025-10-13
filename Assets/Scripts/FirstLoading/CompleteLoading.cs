@@ -15,19 +15,6 @@ public class CompleteLoading : MonoBehaviour
     private string baseUrl = "https://prod.windeath44.wiki/api";
     private string accessToken;
 
-#if UNITY_WEBGL
-    [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
-    static void ConfigureFMOD()
-    {
-        FMOD.RESULT result;
-
-        uint dspBufferLength = 1024;
-        int dspBufferCount = 2;
-        result = RuntimeManager.CoreSystem.setDSPBufferSize(dspBufferLength, dspBufferCount);
-        Debug.Log($"[WebGL] FMOD DSP Buffer set to {dspBufferLength} x {dspBufferCount}, Result: {result}");
-    }
-#endif
-
     private async void Start()
     {
 #if UNITY_WEBGL
