@@ -15,7 +15,7 @@ public class GameSettings
 
     public List<string> KeyBinds = new()
     {
-#if UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE_OSX || UNITY_WEBGL
         "keyboard/D",
         "keyboard/F",
         "keyboard/J",
