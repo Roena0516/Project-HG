@@ -74,7 +74,7 @@ public class LineInputChecker : MonoBehaviour
 
     private void OnEnable()
     {
-#if UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE_OSX || UNITY_WEBGL
         for (int i = 0; i < 4; i++)
         {
             LineActions[i].Enable();
@@ -95,7 +95,7 @@ public class LineInputChecker : MonoBehaviour
 
     private void OnDisable()
     {
-#if UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE_OSX || UNITY_WEBGL
         for (int i = 0; i < 4; i++)
         {
             LineActions[i].Disable();
@@ -296,7 +296,7 @@ public class LineInputChecker : MonoBehaviour
 
     void Update()
     {
-#if UNITY_STANDALONE_OSX
+#if UNITY_STANDALONE_OSX || UNITY_WEBGL
         currentTime = Time.time - startTime;
 #endif
         isEnd = gameManager.isLevelEnd;
