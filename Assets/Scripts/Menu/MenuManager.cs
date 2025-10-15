@@ -87,9 +87,10 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                //SetSettingsPanel();
-                settingsListMover.SettingsListSetter();
 
+                _animator.FadeIn(onComplete: () => {
+                    SceneManager.LoadSceneAsync("Settings");
+                });
             }
         }
         if (index == 1)
