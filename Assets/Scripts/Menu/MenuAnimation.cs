@@ -7,7 +7,7 @@ public class MenuAnimation : MonoBehaviour
 {
     [SerializeField] private Image _fadeImage;
 
-    public void FadeIn( float duration = 0.75f, Action onComplete = null )
+    public void FadeIn( float duration = 0.5f, Action onComplete = null )
     {
         _fadeImage.color = _fadeImage.color.SetAlpha(0f);
         _fadeImage
@@ -17,7 +17,7 @@ public class MenuAnimation : MonoBehaviour
             .SetAutoKill(true);
     }
 
-    public void FadeOut( float duration = 0.75f, Action onComplete = null )
+    public void FadeOut( float duration = 0.5f, Action onComplete = null )
     {
         _fadeImage.color = _fadeImage.color.SetAlpha(1f);
         _fadeImage

@@ -484,7 +484,10 @@ public class SongListShower : MonoBehaviour
                     SelectSong(listNum - 1);
                     break;
                 case "ExitSongList":
-                    SceneManager.LoadScene("Menu");
+                    _animator.FadeIn(onComplete: () =>
+                    {
+                        SceneManager.LoadScene("Menu");
+                    });
                     break;
                 case "SpeedUp":
                     SpeedOneUp();
