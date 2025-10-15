@@ -108,12 +108,12 @@ public class SettingsListMover : MonoBehaviour
 
     private void SetList(int toIndex)
     {
-        if (toIndex > 0 && toIndex <= contentFolder.transform.childCount)
+        if (toIndex > 0 && toIndex <= contentFolder.transform.childCount - 1)
         {
             int prev = listNum;
             listNum = toIndex;
 
-            if (listNum > 3 && listNum < contentFolder.transform.childCount - 4)
+            if (listNum > 3 && listNum < contentFolder.transform.childCount - 5)
             {
                 if (currentSetSongRoutine != null)
                 {
