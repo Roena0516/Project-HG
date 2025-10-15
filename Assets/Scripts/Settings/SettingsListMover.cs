@@ -1,17 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
+using DG.Tweening;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SettingsListMover : MonoBehaviour
 {
-    private SettingsManager settings;
+    //private SettingsManager settings;
     [SerializeField] private SettingsList settingsListComponent;
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject contentFolder;
     [SerializeField] private GameObject defaultSettingPrefab;
+    [SerializeField] private GameObject _categoryContentFolder;
+    [SerializeField] private GameObject _categoryPrefab;
+    [SerializeField] private GameObject _selectedCategory;
 
     private int listNum = 1;
     private float originX;
@@ -19,6 +23,8 @@ public class SettingsListMover : MonoBehaviour
     private bool isHold;
 
     private List<SettingComponent> settingsList;
+    private int currentCategoryIndex = 0;
+    private float categoryOriginX;
 
     private Coroutine currentSetSongRoutine;
     private Coroutine repeatCoroutine;
@@ -27,10 +33,11 @@ public class SettingsListMover : MonoBehaviour
     {
         canvas.transform.localScale = Vector3.one;
 
-        settings = SettingsManager.Instance;
+        //settings = SettingsManager.Instance;
 
         originX = contentFolder.transform.position.x;
         originY = contentFolder.transform.position.y;
+        categoryOriginX = _selectedCategory.transform.localPosition.x;
 
         listNum = 1;
     }
@@ -47,6 +54,16 @@ public class SettingsListMover : MonoBehaviour
         {
             SetList(listNum + 1);
             BeginRepeat("Down");
+        }
+
+        // 카테고리 전환
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            ChangeCategory(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.RightShift))
+        {
+            ChangeCategory(1);
         }
 
         // 뗐을 때 반복 중지
@@ -82,28 +99,35 @@ public class SettingsListMover : MonoBehaviour
     {
         settingsList = settingsListComponent.settingsList;
 
-        foreach (SettingComponent item in settingsList)
+        // 카테고리 프리팹 생성
+        CategoryListSetter();
+
+        // 첫 번째 카테고리로 시작
+        RefreshSettingsList();
+    }
+
+    private void CategoryListSetter()
+    {
+        List<string> categories = settingsListComponent.categories;
+
+        foreach (string category in categories)
         {
-            // add setting into list
-            GameObject settingObject = Instantiate(defaultSettingPrefab, contentFolder.transform);
-            Transform left = settingObject.transform.Find("Left");
-            Transform settingTitle = left.Find("Title");
-            settingTitle.GetComponent<TextMeshProUGUI>().text = item.title;
+            // 카테고리 프리팹 인스턴스화
+            GameObject categoryObject = Instantiate(_categoryPrefab, _categoryContentFolder.transform);
 
-            // set setting's value
-            Transform right = settingObject.transform.Find("Right");
-            Transform settingValue = right.Find("Title");
-            settingValue.GetComponent<TextMeshProUGUI>().text = item.value[item.initialIndex];
+            // Text 자식 찾기
+            Transform textTransform = categoryObject.transform.Find("Text");
 
-            SettingObjectComponent settingObjectComponent = settingObject.GetComponent<SettingObjectComponent>();
-
-            settingObjectComponent.data.title = item.title;
-            settingObjectComponent.data.value = item.value;
-            settingObjectComponent.data.initialIndex = item.initialIndex;
-            settingObjectComponent.data.category = item.category;
+            if (textTransform != null)
+            {
+                // TextMeshProUGUI 컴포넌트에 카테고리 이름 설정
+                TextMeshProUGUI textComponent = textTransform.GetComponent<TextMeshProUGUI>();
+                if (textComponent != null)
+                {
+                    textComponent.text = category;
+                }
+            }
         }
-
-        SetList(1);
     }
 
     private void SetList(int toIndex)
@@ -200,5 +224,79 @@ public class SettingsListMover : MonoBehaviour
             }
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    private void ChangeCategory(int direction)
+    {
+        List<string> categories = settingsListComponent.categories;
+
+        // 카테고리 인덱스 변경
+        currentCategoryIndex += direction;
+
+        // 범위 제한
+        if (currentCategoryIndex < 0)
+        {
+            currentCategoryIndex = 0;
+            return;
+        }
+        if (currentCategoryIndex >= categories.Count)
+        {
+            currentCategoryIndex = categories.Count - 1;
+            return;
+        }
+
+        // _selectedCategory 이동 (DOTween 사용) - 절대 위치 계산
+        Vector3 currentPos = _selectedCategory.transform.localPosition;
+        Vector3 targetPos = new Vector3(
+            categoryOriginX + (currentCategoryIndex * 164f),
+            currentPos.y,
+            currentPos.z
+        );
+
+        _selectedCategory.transform.DOLocalMove(targetPos, 0.2f).SetEase(Ease.OutSine);
+
+        // 설정 리스트 새로고침
+        RefreshSettingsList();
+    }
+
+    private void RefreshSettingsList()
+    {
+        // 기존 설정 아이템 모두 제거
+        foreach (Transform child in contentFolder.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 현재 카테고리 가져오기
+        string currentCategory = settingsListComponent.categories[currentCategoryIndex];
+
+        // 현재 카테고리에 해당하는 설정만 추가
+        foreach (SettingComponent item in settingsList)
+        {
+            if (item.category == currentCategory)
+            {
+                // add setting into list
+                GameObject settingObject = Instantiate(defaultSettingPrefab, contentFolder.transform);
+                Transform left = settingObject.transform.Find("Left");
+                Transform settingTitle = left.Find("Title");
+                settingTitle.GetComponent<TextMeshProUGUI>().text = item.title;
+
+                // set setting's value
+                Transform right = settingObject.transform.Find("Right");
+                Transform settingValue = right.Find("Title");
+                settingValue.GetComponent<TextMeshProUGUI>().text = item.value[item.initialIndex];
+
+                SettingObjectComponent settingObjectComponent = settingObject.GetComponent<SettingObjectComponent>();
+
+                settingObjectComponent.data.title = item.title;
+                settingObjectComponent.data.value = item.value;
+                settingObjectComponent.data.initialIndex = item.initialIndex;
+                settingObjectComponent.data.category = item.category;
+            }
+        }
+
+        // 리스트 초기화
+        listNum = 1;
+        SetList(1);
     }
 }

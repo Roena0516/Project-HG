@@ -63,9 +63,9 @@ public class CompleteLoading : MonoBehaviour
         _localizationManager = LocalizationManager.Instance;
 
 #if UNITY_STANDALONE || UNITY_EDITOR
-        _localizationManager.LoadLanguage("kr");
+        _localizationManager.LoadLanguage("ko");
 #else
-        StartCoroutine(_localizationManager.LoadInWebGL("kr"));
+        StartCoroutine(_localizationManager.LoadInWebGL("ko"));
 #endif
 
         DontDestroyOnLoad(settingsManager.gameObject);
