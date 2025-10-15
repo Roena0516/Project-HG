@@ -9,6 +9,7 @@ using FMODUnity;
 public class CompleteLoading : MonoBehaviour
 {
     private SettingsManager settingsManager;
+    private LocalizationManager _localizationManager;
 
     [SerializeField] private GetUser getUser;
 
@@ -58,6 +59,14 @@ public class CompleteLoading : MonoBehaviour
         await settingsManager.LoadSettingsInWebGL();
 #endif
         settingsManager.SetPlayerData(player);
+
+        _localizationManager = LocalizationManager.Instance;
+
+#if UNITY_STANDALONE || UNITY_EDITOR
+        _localizationManager.LoadLanguage("kr");
+#else
+        StartCoroutine(_localizationManager.LoadInWebGL("kr"));
+#endif
 
         DontDestroyOnLoad(settingsManager.gameObject);
 

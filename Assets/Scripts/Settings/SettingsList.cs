@@ -4,39 +4,50 @@ using UnityEngine;
 public class SettingsList : MonoBehaviour
 {
     public List<SettingComponent> settingsList;
+    public List<string> categories;
     public SettingsListMover settingsListMover;
+    private LocalizationManager _localizationManager;
 
-    private void Start()
+    private void Awake()
     {
+        _localizationManager = LocalizationManager.Instance;
+        categories = new()
+        {
+            "DISPLAY",
+            "GAME",
+            "SOUND",
+            "ACCOUNT"
+        };
+
         settingsList = new()
         {
             new SettingComponent()
             {
-                title = "Display Mode",
+                title = _localizationManager.GetText("display_mode"),
                 value = new()
-            {
-                "Fullscreen Window",
-                "Fullscreen",
-                "Window"
-            },
+                {
+                    _localizationManager.GetText("fullscreen_window"),
+                    _localizationManager.GetText("fullscreen"),
+                    _localizationManager.GetText("window")
+                },
                 initialIndex = 0,
-                category = "display"
+                category = categories[0]
             },
             new SettingComponent()
             {
-                title = "Display Resolution",
+                title = _localizationManager.GetText("display_resolution"),
                 value = new()
-            {
-                "1600 X 900",
-                "1920 X 1080",
-                "2560 X 1440"
-            },
+                {
+                    "1600 X 900",
+                    "1920 X 1080",
+                    "2560 X 1440"
+                },
                 initialIndex = 1,
-                category = "display"
+                category = categories[0]
             },
             new SettingComponent()
             {
-                title = "Frame Limit",
+                title = _localizationManager.GetText("frame_limit"),
                 value = new()
             {
                 "30",
@@ -46,7 +57,7 @@ public class SettingsList : MonoBehaviour
                 "Unlimited"
             },
                 initialIndex = 4,
-                category = "display"
+                category = categories[0]
             }
         };
 
