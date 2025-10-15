@@ -1,8 +1,10 @@
 {
-  "display_mode": "디스플레이 모드",
-  "fullscreen_window": "전체 화면 창모드",
-  "fullscreen": "전체 화면",
-  "window": "창모드",
-  "display_resolution": "디스플레이 해상도",
-  "frame_limit": "프레임 제한"
+  "entries": [
+    { "key": "display_mode", "value": "디스플레이 모드" },
+    { "key": "fullscreen_window", "value": "전체 화면 창모드" },
+    { "key": "fullscreen", "value": "전체 화면" },
+    { "key": "window", "value": "창모드" },
+    { "key": "display_resolution", "value": "디스플레이 해상도" },
+    { "key": "frame_limit", "value": "프레임 제한" }
+  ]
 }
