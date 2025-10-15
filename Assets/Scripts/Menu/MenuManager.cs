@@ -81,7 +81,7 @@ public class MenuManager : MonoBehaviour
                  });
             }
         }
-        if (index == 3)
+        if (index == 1)
         {
             Debug.Log("Settings");
             if (isSet)
@@ -93,7 +93,7 @@ public class MenuManager : MonoBehaviour
                 });
             }
         }
-        if (index == 1)
+        if (index == 3)
         {
             if (isSet)
             {
