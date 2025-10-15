@@ -60,10 +60,10 @@ public class LoadManager : MonoBehaviour
         }
     }
 
-#if UNITY_WEBGL
-    private async void Start()
-#elif UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
     private void Start()
+#else
+    private async void Start()
 #endif
     {
         settings = SettingsManager.Instance;
@@ -71,10 +71,10 @@ public class LoadManager : MonoBehaviour
 
         if (!SceneManager.GetSceneByName("LevelEditor").isLoaded)
         {
-#if UNITY_WEBGL
-            await LoadFromJsonInWebGL(Path.Combine(settings.fileName));
-#elif UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
             LoadFromJson(Path.Combine(settings.fileName));
+#else
+            await LoadFromJsonInWebGL(Path.Combine(settings.fileName));  
 #endif
         }
         else

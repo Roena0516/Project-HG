@@ -15,6 +15,7 @@ public class MenuManager : MonoBehaviour
     private SettingsManager settingsManager;
     public CircleMenuController menuController;
     [SerializeField] private SettingsListMover settingsListMover;
+    [SerializeField] private MenuAnimation _animator;
 
     public GameObject settingsPanel;
 
@@ -75,7 +76,9 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                SceneManager.LoadSceneAsync("FreePlay");
+                _animator.FadeIn(onComplete: () => {
+                    SceneManager.LoadSceneAsync("FreePlay");
+                 });
             }
         }
         if (index == 3)

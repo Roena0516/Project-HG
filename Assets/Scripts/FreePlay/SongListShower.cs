@@ -109,20 +109,6 @@ public class SongListShower : MonoBehaviour
     {
         accessToken = $"{settings.GetPlayerData().accessToken}";
 
-        // Result 리스트 불러오기
-        //StartCoroutine(getResults.GetResultsAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: (resp) =>
-        //{
-        //    foreach (var row in resp.data.values)
-        //    {
-        //        Debug.Log($"#{row.gamePlayHistoryId} music={row.musicId} rate={row.completionRate} rank={row.rank}");
-        //    }
-        //}, onError: (error) =>
-        //{
-        //    Debug.LogError($"Error fetching results: {error}");
-        //}));
-
-        //results = getResults.GetResultsAPIs().results;
-
         CursorPageResultResponse res = await getResults.GetBestResultAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: resp => Debug.Log("best ok"), onError: err => Debug.LogError(err));
 
         if (res != null)
@@ -333,6 +319,9 @@ public class SongListShower : MonoBehaviour
         }
 
         SetList(1);
+
+        _animator.FadeOut();
+        _animator.ShowPanels();
    }
 
     private void SetSelectedSongInfo(SongInfoClass info)
@@ -369,8 +358,6 @@ public class SongListShower : MonoBehaviour
         midText.color = midText.color.SetAlpha(0f);
         endText.color = endText.color.SetAlpha(0f);
         sndText.color = sndText.color.SetAlpha(0f);
-
-        _animator.ShowSongList();
     }
 
     [System.Obsolete]

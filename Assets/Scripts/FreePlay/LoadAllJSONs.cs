@@ -16,14 +16,14 @@ public class LoadAllJSONs : MonoBehaviour
 
     public SongListShower shower;
 
-#if UNITY_WEBGL
-    private async void Start()
-    {
-        await GetAllInWebGL();
-#elif UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
     private void Start()
     {
         GetAll();
+#else
+    private async void Start()
+    {
+        await GetAllInWebGL();
 #endif
 
         shower.Shower();

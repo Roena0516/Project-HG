@@ -17,14 +17,14 @@ public class CompleteLoading : MonoBehaviour
 
     private async void Start()
     {
-#if UNITY_WEBGL
-        Player player = await GetUserInWebGL();
-#elif UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR  
         Player player = GetUser();
         if (player == null)
         {
             return;
         }
+#elif UNITY_WEBGL
+        Player player = await GetUserInWebGL();
 #endif
 
         accessToken = player.accessToken;
@@ -52,10 +52,10 @@ public class CompleteLoading : MonoBehaviour
         }
 
         settingsManager = SettingsManager.Instance;
-#if UNITY_WEBGL
-        await settingsManager.LoadSettingsInWebGL();
-#elif UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE || UNITY_EDITOR
         settingsManager.LoadSettings();
+#else
+        await settingsManager.LoadSettingsInWebGL();
 #endif
         settingsManager.SetPlayerData(player);
 
