@@ -1061,6 +1061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsListComponent: {fileID: 1005422427}
+  _animator: {fileID: 1245929023}
   canvas: {fileID: 1014343729}
   contentFolder: {fileID: 277739195}
   defaultSettingPrefab: {fileID: 6410267914375726713, guid: 5f9c30bac7d1c4988b19461be917788d, type: 3}
@@ -1406,6 +1407,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SettingsAnimation
   _fader: {fileID: 1245929024}
+  _settingsDescriptionPanel: {fileID: 1228574896}
+  _settingsPanel: {fileID: 1915442634}
 --- !u!114 &1245929024
 MonoBehaviour:
   m_ObjectHideFlags: 0

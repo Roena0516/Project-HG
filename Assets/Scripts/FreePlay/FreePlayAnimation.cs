@@ -34,12 +34,12 @@ public class FreePlayAnimation : MonoBehaviour
     private void ShowSongList()
     {
         _songListPanel.DOAnchorPosX(750, 0).SetAutoKill(true);
-        _songListPanel.DOAnchorPosX(-250, 0.5f).SetEase(Ease.InOutSine).SetAutoKill(true);
+        _songListPanel.DOAnchorPosX(-250, 0.5f).SetEase(Ease.OutSine).SetAutoKill(true);
     }
 
     private void ShowLevelInfo()
     {
         _songInfoPanel.DOAnchorPosX(-450, 0).SetAutoKill(true);
-        _songInfoPanel.DOAnchorPosX(150, 0.5f).SetEase(Ease.InOutSine).SetAutoKill(true);
+        _songInfoPanel.DOAnchorPosX(150, 0.5f).SetEase(Ease.OutSine).SetAutoKill(true);
     }
 }
