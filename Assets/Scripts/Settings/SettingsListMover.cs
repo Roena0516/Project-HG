@@ -137,6 +137,7 @@ public class SettingsListMover : MonoBehaviour
         RefreshSettingsList();
 
         _animator.FadeOut();
+        _animator.SetPanels();
     }
 
     private void CategoryListSetter()
@@ -360,6 +361,10 @@ public class SettingsListMover : MonoBehaviour
         if (settingsManager != null)
         {
             settingsManager.SaveSettings();
+
+            // 백업 업데이트 - 저장된 값으로 백업을 갱신
+            // 이렇게 하면 저장 후 ESC로 나갈 때 저장된 시점의 값으로 복원됨
+            BackupSettings();
         }
 
         Debug.Log("Setting is successfully saved");
@@ -378,7 +383,10 @@ public class SettingsListMover : MonoBehaviour
         }
 
         // 설정 화면 닫기
-        SceneManager.LoadSceneAsync("Menu");
+        _animator.FadeIn(onComplete: () =>
+        {
+            SceneManager.LoadSceneAsync("Menu");
+        });
     }
 
     private void RefreshSettingsList()
