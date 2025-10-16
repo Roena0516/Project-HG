@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using DG.Tweening;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class SettingsListMover : MonoBehaviour
@@ -16,6 +17,7 @@ public class SettingsListMover : MonoBehaviour
     [SerializeField] private GameObject _categoryContentFolder;
     [SerializeField] private GameObject _categoryPrefab;
     [SerializeField] private GameObject _selectedCategory;
+    [SerializeField] private TextMeshProUGUI _categoryTitle;
 
     private int listNum = 1;
     private float originX;
@@ -28,6 +30,9 @@ public class SettingsListMover : MonoBehaviour
 
     private Coroutine currentSetSongRoutine;
     private Coroutine repeatCoroutine;
+
+    // 설정 백업 (ESC로 취소 시 복원용)
+    private Dictionary<string, int> settingsBackup;
 
     private void Start()
     {
@@ -56,6 +61,16 @@ public class SettingsListMover : MonoBehaviour
             BeginRepeat("Down");
         }
 
+        // 설정 값 변경
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            ChangeSettingValue(-1);
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            ChangeSettingValue(1);
+        }
+
         // 카테고리 전환
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
@@ -64,6 +79,18 @@ public class SettingsListMover : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             ChangeCategory(1);
+        }
+
+        // 저장하고 나가기
+        if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
+        {
+            Save();
+        }
+
+        // 저장하지 않고 나가기
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            CancelAndExit();
         }
 
         // 뗐을 때 반복 중지
@@ -98,6 +125,9 @@ public class SettingsListMover : MonoBehaviour
     public void SettingsListSetter()
     {
         settingsList = settingsListComponent.settingsList;
+
+        // 현재 설정 값 백업
+        BackupSettings();
 
         // 카테고리 프리팹 생성
         CategoryListSetter();
@@ -226,6 +256,48 @@ public class SettingsListMover : MonoBehaviour
         }
     }
 
+    private void ChangeSettingValue(int direction)
+    {
+        if (listNum <= 0 || listNum >= contentFolder.transform.childCount)
+        {
+            return;
+        }
+
+        // 현재 선택된 설정 아이템 가져오기
+        Transform currentItem = contentFolder.transform.GetChild(listNum);
+        SettingObjectComponent settingObjectComponent = currentItem.GetComponent<SettingObjectComponent>();
+
+        if (settingObjectComponent == null)
+        {
+            return;
+        }
+
+        // 현재 인덱스 변경
+        int currentIndex = settingObjectComponent.data.initialIndex;
+        int newIndex = currentIndex + direction;
+
+        // 범위 체크
+        if (newIndex < 0 || newIndex >= settingObjectComponent.data.value.Count)
+        {
+            return;
+        }
+
+        // 인덱스 업데이트
+        settingObjectComponent.data.initialIndex = newIndex;
+
+        // UI 업데이트
+        Transform right = currentItem.Find("Right");
+        Transform settingValue = right.Find("Title");
+        settingValue.GetComponent<TextMeshProUGUI>().text = settingObjectComponent.data.value[newIndex];
+
+        // SettingsManager의 메모리에만 임시 저장 (파일에는 저장하지 않음)
+        SettingsManager settingsManager = SettingsManager.Instance;
+        if (settingsManager != null)
+        {
+            settingsManager.UpdateSettingValueWithoutSave(settingObjectComponent.data.title, newIndex);
+        }
+    }
+
     private void ChangeCategory(int direction)
     {
         List<string> categories = settingsListComponent.categories;
@@ -253,28 +325,91 @@ public class SettingsListMover : MonoBehaviour
             currentPos.z
         );
 
+        _categoryTitle.text = categories[currentCategoryIndex];
+
         _selectedCategory.transform.DOLocalMove(targetPos, 0.2f).SetEase(Ease.OutSine);
 
         // 설정 리스트 새로고침
         RefreshSettingsList();
     }
 
+    private void BackupSettings()
+    {
+        settingsBackup = new Dictionary<string, int>();
+        SettingsManager settingsManager = SettingsManager.Instance;
+
+        if (settingsManager == null) return;
+
+        // 모든 설정 값 백업
+        foreach (SettingComponent item in settingsList)
+        {
+            int currentValue = settingsManager.GetSettingValue(item.title);
+            settingsBackup[item.title] = currentValue;
+        }
+    }
+
+    private void Save()
+    {
+        // SettingsManager에 저장
+        SettingsManager settingsManager = SettingsManager.Instance;
+        if (settingsManager != null)
+        {
+            settingsManager.SaveSettings();
+        }
+
+        Debug.Log("Setting is successfully saved");
+    }
+
+    private void CancelAndExit()
+    {
+        // 백업된 값으로 복원
+        SettingsManager settingsManager = SettingsManager.Instance;
+        if (settingsManager != null && settingsBackup != null)
+        {
+            foreach (var kvp in settingsBackup)
+            {
+                settingsManager.UpdateSettingValueWithoutSave(kvp.Key, kvp.Value);
+            }
+        }
+
+        // 설정 화면 닫기
+        SceneManager.LoadSceneAsync("Menu");
+    }
+
     private void RefreshSettingsList()
     {
-        // 기존 설정 아이템 모두 제거
+        // 기존 설정 아이템 모두 제거 (Top은 제외)
+        List<GameObject> toDestroy = new List<GameObject>();
         foreach (Transform child in contentFolder.transform)
         {
-            Destroy(child.gameObject);
+            if (child.gameObject.name != "Top")
+            {
+                toDestroy.Add(child.gameObject);
+            }
+        }
+        foreach (GameObject obj in toDestroy)
+        {
+            DestroyImmediate(obj);
         }
 
         // 현재 카테고리 가져오기
         string currentCategory = settingsListComponent.categories[currentCategoryIndex];
+
+        // SettingsManager에서 저장된 값 가져오기
+        SettingsManager settingsManager = SettingsManager.Instance;
 
         // 현재 카테고리에 해당하는 설정만 추가
         foreach (SettingComponent item in settingsList)
         {
             if (item.category == currentCategory)
             {
+                // SettingsManager에서 저장된 인덱스 가져오기
+                int savedIndex = item.initialIndex;
+                if (settingsManager != null)
+                {
+                    savedIndex = settingsManager.GetSettingValue(item.title);
+                }
+
                 // add setting into list
                 GameObject settingObject = Instantiate(defaultSettingPrefab, contentFolder.transform);
                 Transform left = settingObject.transform.Find("Left");
@@ -284,13 +419,13 @@ public class SettingsListMover : MonoBehaviour
                 // set setting's value
                 Transform right = settingObject.transform.Find("Right");
                 Transform settingValue = right.Find("Title");
-                settingValue.GetComponent<TextMeshProUGUI>().text = item.value[item.initialIndex];
+                settingValue.GetComponent<TextMeshProUGUI>().text = item.value[savedIndex];
 
                 SettingObjectComponent settingObjectComponent = settingObject.GetComponent<SettingObjectComponent>();
 
                 settingObjectComponent.data.title = item.title;
                 settingObjectComponent.data.value = item.value;
-                settingObjectComponent.data.initialIndex = item.initialIndex;
+                settingObjectComponent.data.initialIndex = savedIndex;
                 settingObjectComponent.data.category = item.category;
             }
         }

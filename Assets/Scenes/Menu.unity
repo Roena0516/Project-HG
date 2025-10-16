@@ -4844,7 +4844,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1513147432
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4861,6 +4861,9 @@ MonoBehaviour:
   canvas: {fileID: 1045611974}
   contentFolder: {fileID: 879097888}
   defaultSettingPrefab: {fileID: 6410267914375726713, guid: 5f9c30bac7d1c4988b19461be917788d, type: 3}
+  _categoryContentFolder: {fileID: 0}
+  _categoryPrefab: {fileID: 0}
+  _selectedCategory: {fileID: 0}
 --- !u!114 &1513147433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4873,6 +4876,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01c3ae6b76eac4332b9b263b8b0012c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  categories: []
   settingsListMover: {fileID: 1513147432}
 --- !u!4 &1513147434
 Transform:

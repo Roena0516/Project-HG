@@ -14,6 +14,15 @@ public class GameSettings
     public string effectOption = "None";
     public bool isKR = false;
 
+    // UI 설정 값들 (타이틀: 선택된 인덱스)
+    public int displayMode = 0;
+    public int displayResolution = 1;
+    public int frameLimit = 4;
+    public int defaultLanguage = 0;
+    public int songInfoLanguage = 0;
+    public int judgementLineHeight = 0;
+    public int songOutputDelay = 0;
+    public int fastSlowExp = 3;
 
     public List<string> KeyBinds = new()
     {
@@ -209,5 +218,92 @@ public class SettingsManager : MonoBehaviour
     public Player GetPlayerData()
     {
         return playerData;
+    }
+
+    public void UpdateSettingValue(string settingTitle, int newIndex)
+    {
+        UpdateSettingValueWithoutSave(settingTitle, newIndex);
+
+        // 자동 저장
+        SaveSettings();
+    }
+
+    public void UpdateSettingValueWithoutSave(string settingTitle, int newIndex)
+    {
+        // Localization된 타이틀을 키로 사용하기 때문에 매핑 필요
+        LocalizationManager locManager = LocalizationManager.Instance;
+
+        if (settingTitle == locManager.GetText("display_mode"))
+        {
+            settings.displayMode = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("display_resolution"))
+        {
+            settings.displayResolution = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("frame_limit"))
+        {
+            settings.frameLimit = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("default_language"))
+        {
+            settings.defaultLanguage = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("song_info_language"))
+        {
+            settings.songInfoLanguage = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("judgement_line_height"))
+        {
+            settings.judgementLineHeight = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("song_output_delay"))
+        {
+            settings.songOutputDelay = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("fast_slow_exp"))
+        {
+            settings.fastSlowExp = newIndex;
+        }
+    }
+
+    public int GetSettingValue(string settingTitle)
+    {
+        LocalizationManager locManager = LocalizationManager.Instance;
+
+        if (settingTitle == locManager.GetText("display_mode"))
+        {
+            return settings.displayMode;
+        }
+        else if (settingTitle == locManager.GetText("display_resolution"))
+        {
+            return settings.displayResolution;
+        }
+        else if (settingTitle == locManager.GetText("frame_limit"))
+        {
+            return settings.frameLimit;
+        }
+        else if (settingTitle == locManager.GetText("default_language"))
+        {
+            return settings.defaultLanguage;
+        }
+        else if (settingTitle == locManager.GetText("song_info_language"))
+        {
+            return settings.songInfoLanguage;
+        }
+        else if (settingTitle == locManager.GetText("judgement_line_height"))
+        {
+            return settings.judgementLineHeight;
+        }
+        else if (settingTitle == locManager.GetText("song_output_delay"))
+        {
+            return settings.songOutputDelay;
+        }
+        else if (settingTitle == locManager.GetText("fast_slow_exp"))
+        {
+            return settings.fastSlowExp;
+        }
+
+        return 0;
     }
 }

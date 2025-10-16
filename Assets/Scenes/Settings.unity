@@ -992,6 +992,7 @@ MonoBehaviour:
   _categoryContentFolder: {fileID: 1886211005}
   _categoryPrefab: {fileID: 6263362273825413539, guid: eacec243c8e164eee947f27139e2d0c6, type: 3}
   _selectedCategory: {fileID: 768740803}
+  _categoryTitle: {fileID: 520855309}
 --- !u!114 &1005422427
 MonoBehaviour:
   m_ObjectHideFlags: 0
