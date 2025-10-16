@@ -158,6 +158,8 @@ public class SettingsListMover : MonoBehaviour
                 }
             }
         }
+
+        _categoryTitle.text = categories[currentCategoryIndex];
     }
 
     private void SetList(int toIndex)
