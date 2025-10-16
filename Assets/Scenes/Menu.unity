@@ -4864,6 +4864,7 @@ MonoBehaviour:
   _categoryContentFolder: {fileID: 0}
   _categoryPrefab: {fileID: 0}
   _selectedCategory: {fileID: 0}
+  _categoryTitle: {fileID: 0}
 --- !u!114 &1513147433
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8499,6 +8500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2000216533}
   - component: {fileID: 2000216532}
+  - component: {fileID: 2000216534}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -8518,7 +8520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0b302ec60086409bbc54e07762e0c55, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MenuAnimation
-  _fadeImage: {fileID: 1800063477}
+  _fader: {fileID: 2000216534}
 --- !u!4 &2000216533
 Transform:
   m_ObjectHideFlags: 0
@@ -8534,6 +8536,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2000216534
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2000216531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f78387b5e81649f3b71a61834e7f25d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fader
+  fadeImage: {fileID: 1800063477}
 --- !u!1 &2042454103
 GameObject:
   m_ObjectHideFlags: 0

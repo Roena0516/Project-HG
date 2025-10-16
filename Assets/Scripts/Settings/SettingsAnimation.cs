@@ -3,9 +3,14 @@ using DG.Tweening;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MenuAnimation : MonoBehaviour
+public class SettingsAnimation : MonoBehaviour
 {
     [SerializeField] private Fader _fader;
+
+    private void Awake()
+    {
+        _fader.fadeImage.color = _fader.fadeImage.color.SetAlpha(1f);
+    }
 
     public void FadeIn(float duration = 0.5f, Action onComplete = null)
     {

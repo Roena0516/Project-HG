@@ -208,6 +208,7 @@ GameObject:
   m_Component:
   - component: {fileID: 17830487}
   - component: {fileID: 17830486}
+  - component: {fileID: 17830488}
   m_Layer: 0
   m_Name: Animator
   m_TagString: Untagged
@@ -229,7 +230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FreePlayAnimation
   _songListPanel: {fileID: 1916045516}
   _songInfoPanel: {fileID: 64882763}
-  _fadeImage: {fileID: 1770498052}
+  _fader: {fileID: 17830488}
 --- !u!4 &17830487
 Transform:
   m_ObjectHideFlags: 0
@@ -245,6 +246,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &17830488
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 17830485}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f78387b5e81649f3b71a61834e7f25d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::Fader
+  fadeImage: {fileID: 1770498052}
 --- !u!1 &44610318
 GameObject:
   m_ObjectHideFlags: 0

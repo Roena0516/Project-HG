@@ -10,6 +10,7 @@ public class SettingsListMover : MonoBehaviour
 {
     //private SettingsManager settings;
     [SerializeField] private SettingsList settingsListComponent;
+    [SerializeField] private SettingsAnimation _animator;
 
     [SerializeField] private GameObject canvas;
     [SerializeField] private GameObject contentFolder;
@@ -134,6 +135,8 @@ public class SettingsListMover : MonoBehaviour
 
         // 첫 번째 카테고리로 시작
         RefreshSettingsList();
+
+        _animator.FadeOut();
     }
 
     private void CategoryListSetter()
