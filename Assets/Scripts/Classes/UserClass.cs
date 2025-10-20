@@ -9,6 +9,7 @@ public class Player
 {
     public string id;
     public string accessToken;
+    public string refreshToken;
     public string playerName;
     public float rating;
     public long ranking;

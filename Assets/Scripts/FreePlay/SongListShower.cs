@@ -166,7 +166,7 @@ public class SongListShower : MonoBehaviour
             Transform left = song.transform.Find("Left");
             Transform right = song.transform.Find("Right");
             Transform artistTitle = left.Find("SongInfo");
-            if (settings.settings.isKR)
+            if (settings.settings.songInfoLanguage == 0)
             {
                 artistTitle.Find("TitleText").gameObject.GetComponent<TextMeshProUGUI>().text = info.title;
                 artistTitle.Find("ArtistText").gameObject.GetComponent<TextMeshProUGUI>().text = info.artist;

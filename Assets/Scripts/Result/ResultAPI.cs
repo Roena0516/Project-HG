@@ -38,6 +38,53 @@ public class ResultAPI : MonoBehaviour
 
             yield return req.SendWebRequest();
 
+            // 401 에러 감지 시 토큰 갱신 후 재시도
+            if (req.responseCode == 401)
+            {
+                Debug.Log("401 Unauthorized detected, attempting token refresh...");
+
+                TokenManager tokenManager = TokenManager.Instance;
+                if (tokenManager != null)
+                {
+                    SettingsManager settingsManager = SettingsManager.Instance;
+                    if (settingsManager != null)
+                    {
+                        Player playerData = settingsManager.GetPlayerData();
+                        if (playerData != null && !string.IsNullOrEmpty(playerData.refreshToken))
+                        {
+                            bool refreshSuccess = false;
+                            System.Threading.Tasks.Task refreshTask = tokenManager.RefreshAccessToken(
+                                baseUrl,
+                                playerData.refreshToken,
+                                (newAccessToken, newRefreshToken) =>
+                                {
+                                    Debug.Log("Token refreshed successfully, retrying API call...");
+                                    refreshSuccess = true;
+                                },
+                                (error) =>
+                                {
+                                    Debug.LogError($"Token refresh failed: {error}");
+                                }
+                            );
+
+                            // Task가 완료될 때까지 대기
+                            yield return new WaitUntil(() => refreshTask.IsCompleted);
+
+                            if (refreshSuccess)
+                            {
+                                // 갱신된 토큰으로 재시도
+                                playerData = settingsManager.GetPlayerData();
+                                yield return PostResultAPI(baseUrl, result, playerData.accessToken, onSuccess, onError, timeOutSec);
+                                yield break;
+                            }
+                        }
+                    }
+                }
+
+                onError?.Invoke("Unauthorized and token refresh failed");
+                yield break;
+            }
+
             if (req.result != UnityWebRequest.Result.Success)
             {
                 onError?.Invoke($"Network error: {req.error}");

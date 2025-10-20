@@ -325,6 +325,7 @@ GameObject:
   - component: {fileID: 1598825783}
   - component: {fileID: 1598825782}
   - component: {fileID: 1598825784}
+  - component: {fileID: 1598825785}
   m_Layer: 0
   m_Name: Settings
   m_TagString: Untagged
@@ -378,6 +379,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba5a34c76c0c4b90a46f5fb6aa0caf7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LocalizationManager
+--- !u!114 &1598825785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1598825781}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 314334aa175614b88a90513a7452c9d1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TokenManager
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

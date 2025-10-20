@@ -9,10 +9,8 @@ public class GameSettings
 {
     public bool isFirstStart = true;
 
-    public float sync = 0f;
     public float speed = 2.0f;
     public string effectOption = "None";
-    public bool isKR = false;
 
     // UI 설정 값들 (타이틀: 선택된 인덱스)
     public int displayMode = 0;
@@ -21,7 +19,7 @@ public class GameSettings
     public int defaultLanguage = 0;
     public int songInfoLanguage = 0;
     public int judgementLineHeight = 0;
-    public int songOutputDelay = 0;
+    public int sync = 0;
     public int fastSlowExp = 3;
 
     public List<string> KeyBinds = new()
@@ -187,7 +185,7 @@ public class SettingsManager : MonoBehaviour
 
     public void SetSync(string inputed)
     {
-        float.TryParse(inputed, out settings.sync);
+        int.TryParse(inputed, out settings.sync);
     }
 
     public void SetSpeed(string inputed)
@@ -198,11 +196,6 @@ public class SettingsManager : MonoBehaviour
     public void SetKeyBinds(List<string> keys)
     {
         settings.KeyBinds = keys;
-    }
-
-    public void SetToKR(bool setted)
-    {
-        settings.isKR = setted;
     }
 
     public void SetFirstStart(bool setted)
@@ -259,7 +252,7 @@ public class SettingsManager : MonoBehaviour
         }
         else if (settingTitle == locManager.GetText("song_output_delay"))
         {
-            settings.songOutputDelay = newIndex;
+            settings.sync = newIndex;
         }
         else if (settingTitle == locManager.GetText("fast_slow_exp"))
         {
@@ -297,7 +290,7 @@ public class SettingsManager : MonoBehaviour
         }
         else if (settingTitle == locManager.GetText("song_output_delay"))
         {
-            return settings.songOutputDelay;
+            return settings.sync;
         }
         else if (settingTitle == locManager.GetText("fast_slow_exp"))
         {

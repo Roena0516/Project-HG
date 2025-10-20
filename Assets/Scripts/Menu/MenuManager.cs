@@ -150,10 +150,10 @@ public class MenuManager : MonoBehaviour
         settingsManager.isAutoPlay = setted;
     }
 
-    public void SetToKR(bool setted)
-    {
-        settingsManager.isKR = setted;
-    }
+    //public void SetToKR(bool setted)
+    //{
+    //    settingsManager.isKR = setted;
+    //}
 
     public void SaveSettingsData()
     {
@@ -178,7 +178,7 @@ public class MenuManager : MonoBehaviour
         });
 
         settingsManager.SetSync($"{sync}");
-        settingsManager.SetToKR(settingsManager.isKR);
+        //settingsManager.SetToKR(settingsManager.isKR);
 
         settingsManager.SaveSettings();
     }
