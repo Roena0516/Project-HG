@@ -22,6 +22,9 @@ public class JudgementManager : MonoBehaviour
     private SettingsManager settings;
     public ParticleManager particle;
     [SerializeField] private UIManager UIManager;
+    [SerializeField] private Animator _animator;
+
+    [SerializeField] private GameObject _FCAPFolder;
 
     public bool isAP;
     public bool isFC;
@@ -233,7 +236,9 @@ public class JudgementManager : MonoBehaviour
         {
             if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0)
             {
-                UIManager.SetFCAPText("FULL COMBO");
+                //UIManager.SetFCAPText("FULL COMBO");
+                _FCAPFolder.SetActive(true);
+                _animator.Play("New Animation");
                 isFC = true;
             }
             if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0 && judgeCount["Good"] == 0 && judgeCount["Great"] == 0)
