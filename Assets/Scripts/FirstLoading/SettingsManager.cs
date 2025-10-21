@@ -42,7 +42,7 @@ public class SettingsManager : MonoBehaviour
 {
     public GameSettings settings;
 
-    private static readonly string filePath = Application.streamingAssetsPath + "/settings.json";
+    private static string filePath => Application.streamingAssetsPath + "/settings.json";
 
     private Player playerData;
 
@@ -206,10 +206,22 @@ public class SettingsManager : MonoBehaviour
     public void SetPlayerData(Player setted)
     {
         playerData = setted;
+        if (playerData != null)
+        {
+            Debug.Log($"[SettingsManager] Player data set: id={playerData.id}, name={playerData.playerName}, hasAccessToken={!string.IsNullOrEmpty(playerData.accessToken)}, hasRefreshToken={!string.IsNullOrEmpty(playerData.refreshToken)}");
+        }
+        else
+        {
+            Debug.LogWarning("[SettingsManager] Player data set to null");
+        }
     }
 
     public Player GetPlayerData()
     {
+        if (playerData == null)
+        {
+            Debug.LogWarning("[SettingsManager] GetPlayerData() called but playerData is null");
+        }
         return playerData;
     }
 

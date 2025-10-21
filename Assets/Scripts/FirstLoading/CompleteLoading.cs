@@ -18,7 +18,7 @@ public class CompleteLoading : MonoBehaviour
 
     private async void Start()
     {
-#if UNITY_STANDALONE || UNITY_EDITOR  
+#if UNITY_STANDALONE || UNITY_EDITOR
         Player player = GetUser();
         if (player == null)
         {
@@ -29,7 +29,18 @@ public class CompleteLoading : MonoBehaviour
 #endif
 
         accessToken = player.accessToken;
+        string refreshToken = player.refreshToken;
 
+        // 사용자 프로필 가져오기
+        UserProfileResponse userProfile = await getUser.GetUserProfileAPI(baseUrl, accessToken, onSuccess: (res) =>
+        {
+            Debug.Log($"get user profile: userId={res.data.userId}, name={res.data.name}");
+        }, onError: (err) =>
+        {
+            Debug.LogWarning("get user profile failed: " + err);
+        });
+
+        // 사용자 rating 가져오기
         GetMyRatingResponse myRating = await getUser.GetUserRatingAPI(baseUrl, accessToken, onSuccess: (res) =>
         {
             Debug.Log($"get rating: {res.data.rating} ranking: {res.data.ranking}");
@@ -38,18 +49,22 @@ public class CompleteLoading : MonoBehaviour
             Debug.LogWarning("get rating failed: " + err);
         });
 
-        if (myRating != null)
+        // Player 데이터 통합
+        if (userProfile != null || myRating != null)
         {
             player = new()
             {
-                id = myRating.playerId,
+                id = userProfile?.userId ?? (myRating?.playerId ?? player.id),
                 accessToken = accessToken,
-                playerName = myRating.playerId,
-                rating = myRating.rating,
-                ranking = myRating.ranking,
-                createdAt = myRating.createdAt,
-                updatedAt = myRating.updatedAt
+                refreshToken = refreshToken, // refreshToken 유지
+                playerName = userProfile?.name ?? (myRating?.playerId ?? player.playerName),
+                rating = myRating?.rating ?? player.rating,
+                ranking = myRating?.ranking ?? player.ranking,
+                createdAt = myRating?.createdAt ?? player.createdAt,
+                updatedAt = myRating?.updatedAt ?? player.updatedAt
             };
+
+            Debug.Log($"[CompleteLoading] Player data initialized: id={player.id}, name={player.playerName}, rating={player.rating}");
         }
 
         settingsManager = SettingsManager.Instance;

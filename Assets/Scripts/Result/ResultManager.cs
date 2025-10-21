@@ -74,11 +74,11 @@ public class ResultManager : MonoBehaviour
         }
         if (judgementManager.isFC)
         {
-            FCAP = "FULL COMBO";
+            FCAP = "FULL_COMBO";
         }
         if (judgementManager.isAP)
         {
-            FCAP = "ALL PERFECT";
+            FCAP = "ALL_PERFECT";
         }
 
         return FCAP;

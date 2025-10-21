@@ -4858,6 +4858,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   settingsListComponent: {fileID: 1513147433}
+  _animator: {fileID: 0}
   canvas: {fileID: 1045611974}
   contentFolder: {fileID: 879097888}
   defaultSettingPrefab: {fileID: 6410267914375726713, guid: 5f9c30bac7d1c4988b19461be917788d, type: 3}
@@ -7678,6 +7679,7 @@ GameObject:
   - component: {fileID: 1891902736}
   - component: {fileID: 1891902737}
   - component: {fileID: 1891902738}
+  - component: {fileID: 1891902739}
   m_Layer: 0
   m_Name: MenuManager
   m_TagString: Untagged
@@ -7716,6 +7718,7 @@ MonoBehaviour:
   menuController: {fileID: 1891902738}
   settingsListMover: {fileID: 1513147432}
   _animator: {fileID: 2000216532}
+  getUser: {fileID: 1891902739}
   settingsPanel: {fileID: 2042454103}
   menuCount: 0
   musicDelayValue: {fileID: 1293142901}
@@ -7750,6 +7753,18 @@ MonoBehaviour:
   - {fileID: 1757379356}
   - {fileID: 1138074615}
   currentIndex: 1
+--- !u!114 &1891902739
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1891902735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c725ee67b86c047639813f000ca4ae54, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::GetUser
 --- !u!1 &1894505897
 GameObject:
   m_ObjectHideFlags: 0

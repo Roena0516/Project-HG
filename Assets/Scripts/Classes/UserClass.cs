@@ -33,3 +33,20 @@ public class ResponseEntity_GetMyRatingResponse
     public string message;
     public GetMyRatingResponse data;
 }
+
+[System.Serializable]
+public class UserProfileResponse
+{
+    public string userId;
+    public string name;
+    public int remainToken;
+    public string profile;
+    public string role;
+}
+
+[System.Serializable]
+public class ResponseEntity_UserProfileResponse
+{
+    public string message;
+    public UserProfileResponse data;
+}

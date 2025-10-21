@@ -23,6 +23,8 @@ public class SongListShower : MonoBehaviour
     public GameObject canvas;
     public GameObject difficultyIndicator;
 
+    [SerializeField] private Image _jacketImage;
+
     public TextMeshProUGUI speedText;
     public TextMeshProUGUI bgnText;
     public TextMeshProUGUI midText;
@@ -110,17 +112,20 @@ public class SongListShower : MonoBehaviour
         accessToken = $"{settings.GetPlayerData().accessToken}";
 
         CursorPageResultResponse res = await getResults.GetBestResultAPI(baseUrl, accessToken, 100, cursor: null, onSuccess: resp => Debug.Log("best ok"), onError: err => Debug.LogError(err));
+        results = new();
 
         if (res != null)
         {
+            Debug.Log($"[Shower] Received {res.values.Count} results from API");
             foreach (ResultResponse item in res.values)
             {
                 Result inputResult = new()
                 {
                     gamePlayHistoryId = item.gamePlayHistoryId,
-                    playerId = item.playerId,
+                    userId = item.userId,
                     musicId = item.musicId,
                     rate = item.completionRate,
+                    rating = item.rating,
                     combo = item.combo,
                     perfectPlus = item.perfectPlus,
                     perfect = item.perfect,
@@ -133,7 +138,12 @@ public class SongListShower : MonoBehaviour
                 };
 
                 results.Add(inputResult);
+                Debug.Log($"[Shower] Added result: musicId={inputResult.musicId}, userId={inputResult.userId}, rate={inputResult.rate}%");
             }
+        }
+        else
+        {
+            Debug.LogWarning("[Shower] GetBestResultAPI returned null");
         }
 
         foreach (var pair in loader.songDictionary)
@@ -194,9 +204,10 @@ public class SongListShower : MonoBehaviour
             // 빈 기록
             Result empty = new()
             {
-                playerId = "1",
+                userId = "1",
                 musicId = info.id,
                 rate = 0,
+                rating = 0,
                 combo = 0,
                 perfectPlus = 0,
                 perfect = 0,
@@ -262,6 +273,11 @@ public class SongListShower : MonoBehaviour
                     if (found != null)
                     {
                         setter.results[0] = found;
+                        Debug.Log($"[Shower] MEMORY: Matched musicId={infos.id}, rate={found.rate}%");
+                    }
+                    else
+                    {
+                        Debug.Log($"[Shower] MEMORY: No match for musicId={infos.id}");
                     }
 
                     // id 저장
@@ -534,14 +550,17 @@ public class SongListShower : MonoBehaviour
         {
             found = results.FirstOrDefault(r => r.musicId == musicId);
         }
-        if (found == null || found.playerId != $"{settings.GetPlayerData().id}")
+
+        if (found == null)
         {
+            Debug.Log($"[GetResult] No result found for musicId={musicId}");
             // 빈 기록
             Result empty = new()
             {
-                playerId = $"{settings.GetPlayerData().id}",
+                userId = $"{settings.GetPlayerData().id}",
                 musicId = musicId,
                 rate = 0,
+                rating = 0,
                 combo = 0,
                 perfectPlus = 0,
                 perfect = 0,
@@ -553,6 +572,16 @@ public class SongListShower : MonoBehaviour
             return empty;
         }
 
+        string currentUserId = $"{settings.GetPlayerData().id}";
+        if (found.userId != currentUserId)
+        {
+            Debug.LogWarning($"[GetResult] UserId mismatch for musicId={musicId}: found.userId={found.userId}, current userId={currentUserId}");
+        }
+        else
+        {
+            Debug.Log($"[GetResult] Found result for musicId={musicId}: rate={found.rate}%, combo={found.combo}");
+        }
+
         return found;
     }
 
@@ -561,7 +590,7 @@ public class SongListShower : MonoBehaviour
     {
         info_rateText.text = $"{result.rate:F2}%";
         info_comboText.text = $"{result.combo}";
-        info_ratingText.text = $"{result.rate * result.combo / 1000f:F3}";
+        info_ratingText.text = $"{result.rating:F3}";
     }
 
     private void SetList(int toIndex)
@@ -736,6 +765,7 @@ public class SongListShower : MonoBehaviour
                 Debug.LogError($"info is not found: {setter.ids[selectedDifficulty - 1]} id");
             }
             SetSelectedSongInfo(foundInfoClass);
+            SetJacketImage($"Images/Jackets/{foundInfoClass.eventName}/{foundInfoClass.difficulty}");
 
             if (currentSetDifficultyRoutine != null)
             {
@@ -743,6 +773,11 @@ public class SongListShower : MonoBehaviour
             }
             currentSetDifficultyRoutine = StartCoroutine(SetDifficultyIndicator(toIndex - 1));
         }
+    }
+
+    private void SetJacketImage(string path)
+    {
+        _jacketImage.sprite = Resources.Load<Sprite>(path);
     }
 
     private IEnumerator SetDifficultyIndicator(int index)

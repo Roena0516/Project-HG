@@ -164,14 +164,12 @@ public class GetResults : MonoBehaviour
                         Player playerData = settingsManager.GetPlayerData();
                         if (playerData != null && !string.IsNullOrEmpty(playerData.refreshToken))
                         {
-                            bool refreshSuccess = false;
-                            System.Threading.Tasks.Task refreshTask = tokenManager.RefreshAccessToken(
+                            System.Threading.Tasks.Task<bool> refreshTask = tokenManager.RefreshAccessToken(
                                 baseUrl,
                                 playerData.refreshToken,
                                 (newAccessToken, newRefreshToken) =>
                                 {
                                     Debug.Log("Token refreshed successfully, retrying API call...");
-                                    refreshSuccess = true;
                                 },
                                 (error) =>
                                 {
@@ -182,7 +180,8 @@ public class GetResults : MonoBehaviour
                             // Task가 완료될 때까지 대기
                             yield return new WaitUntil(() => refreshTask.IsCompleted);
 
-                            if (refreshSuccess)
+                            // Task의 반환값으로 성공 여부 확인
+                            if (refreshTask.Result)
                             {
                                 // 갱신된 토큰으로 재시도
                                 playerData = settingsManager.GetPlayerData();

@@ -1,5 +1,7 @@
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 using System.IO;
 
 public class LocalizationManager : MonoBehaviour
@@ -28,23 +30,34 @@ public class LocalizationManager : MonoBehaviour
         string path = Path.Combine(Application.streamingAssetsPath, "Localization", $"{languageCode}.json");
 
 #if UNITY_WEBGL && !UNITY_EDITOR
-        StartCoroutine(LoadFromWebGL(path));
+        StartCoroutine(LoadInWebGL(languageCode));
 #else
         string json = File.ReadAllText(path);
         localizedTexts = JsonUtility.FromJson<LocalizationDictionary>(json).ToDictionary();
+        Debug.Log($"[LocalizationManager] Language '{languageCode}' loaded successfully");
 #endif
     }
 
-#if UNITY_WEBGL && !UNITY_EDITOR
-    private IEnumerator LoadInWebGL(string path)
+    public IEnumerator LoadInWebGL(string languageCode)
     {
+        currentLanguage = languageCode;
+        string path = Path.Combine(Application.streamingAssetsPath, "Localization", $"{languageCode}.json");
+
         using (var req = UnityWebRequest.Get(path))
         {
             yield return req.SendWebRequest();
-            localizedTexts = JsonUtility.FromJson<LocalizationDictionary>(req.downloadHandler.text).ToDictionary();
+
+            if (req.result == UnityWebRequest.Result.Success)
+            {
+                localizedTexts = JsonUtility.FromJson<LocalizationDictionary>(req.downloadHandler.text).ToDictionary();
+                Debug.Log($"[LocalizationManager] Language '{languageCode}' loaded successfully (WebGL)");
+            }
+            else
+            {
+                Debug.LogError($"[LocalizationManager] Failed to load language '{languageCode}': {req.error}");
+            }
         }
     }
-#endif
 
     public string GetText(string key)
     {

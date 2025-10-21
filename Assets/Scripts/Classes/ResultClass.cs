@@ -10,9 +10,10 @@ public class ResultClass : MonoBehaviour
 public class Result
 {
     public long gamePlayHistoryId;
-    public string playerId;
+    public string userId;
     public long musicId;
     public float rate;
+    public float rating;
     public long combo;
     public long perfectPlus;
     public long perfect;
@@ -42,9 +43,10 @@ public class ResultRequest
 public class ResultResponse
 {
     public long gamePlayHistoryId;
-    public string playerId;
+    public string userId;
     public long musicId;
     public float completionRate;
+    public float rating;
     public long combo;
     public long perfectPlus;
     public long perfect;

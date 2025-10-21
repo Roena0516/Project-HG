@@ -52,14 +52,12 @@ public class ResultAPI : MonoBehaviour
                         Player playerData = settingsManager.GetPlayerData();
                         if (playerData != null && !string.IsNullOrEmpty(playerData.refreshToken))
                         {
-                            bool refreshSuccess = false;
-                            System.Threading.Tasks.Task refreshTask = tokenManager.RefreshAccessToken(
+                            System.Threading.Tasks.Task<bool> refreshTask = tokenManager.RefreshAccessToken(
                                 baseUrl,
                                 playerData.refreshToken,
                                 (newAccessToken, newRefreshToken) =>
                                 {
                                     Debug.Log("Token refreshed successfully, retrying API call...");
-                                    refreshSuccess = true;
                                 },
                                 (error) =>
                                 {
@@ -70,7 +68,8 @@ public class ResultAPI : MonoBehaviour
                             // Task가 완료될 때까지 대기
                             yield return new WaitUntil(() => refreshTask.IsCompleted);
 
-                            if (refreshSuccess)
+                            // Task의 반환값으로 성공 여부 확인
+                            if (refreshTask.Result)
                             {
                                 // 갱신된 토큰으로 재시도
                                 playerData = settingsManager.GetPlayerData();
@@ -91,14 +90,30 @@ public class ResultAPI : MonoBehaviour
                 yield break;
             }
 
-            // not HTTP 200
+            // not HTTP 2xx
             if (req.responseCode < 200 || req.responseCode >= 300)
             {
                 onError?.Invoke($"HTTP {req.responseCode}: {req.downloadHandler.text}");
                 yield break;
             }
 
-            // success
+            // HTTP 202 Accepted - 요청이 수락되었지만 처리가 완료되지 않음
+            if (req.responseCode == 202)
+            {
+                Debug.Log("HTTP 202: Request accepted and being processed");
+                onSuccess?.Invoke(null);
+                yield break;
+            }
+
+            // HTTP 204 No Content - 성공했지만 응답 본문이 없음
+            if (req.responseCode == 204)
+            {
+                Debug.Log("HTTP 204: Success with no content");
+                onSuccess?.Invoke(null);
+                yield break;
+            }
+
+            // HTTP 200 OK - 정상 응답, JSON 파싱
             ResponseEntity_ResultResponse wrapper = null;
             try
             {

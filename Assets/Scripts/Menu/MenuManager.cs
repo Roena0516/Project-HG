@@ -16,6 +16,7 @@ public class MenuManager : MonoBehaviour
     public CircleMenuController menuController;
     [SerializeField] private SettingsListMover settingsListMover;
     [SerializeField] private MenuAnimation _animator;
+    [SerializeField] private GetUser getUser;
 
     public GameObject settingsPanel;
 
@@ -35,6 +36,7 @@ public class MenuManager : MonoBehaviour
 
     private float sync;
 
+    private string baseUrl = "https://prod.windeath44.wiki/api";
 
     [SerializeField] private TextMeshProUGUI ratingText;
     [SerializeField] private TextMeshProUGUI ratingShadowText;
@@ -63,10 +65,95 @@ public class MenuManager : MonoBehaviour
     {
         Player player = settingsManager.GetPlayerData();
 
+        if (player == null)
+        {
+            Debug.LogWarning("[MenuManager] Cannot set player info, player data is null");
+            ratingText.text = "0.000";
+            ratingShadowText.text = "0.000";
+            playerNameText.text = "Player";
+            playerNameShadowText.text = "Player";
+            return;
+        }
+
         ratingText.text = $"{player.rating:F3}";
         ratingShadowText.text = $"{player.rating:F3}";
         playerNameText.text = player.playerName;
         playerNameShadowText.text = player.playerName;
+    }
+
+    private async void RefreshPlayerRating()
+    {
+        // playerData가 설정될 때까지 대기 (최대 5초)
+        float waitTime = 0f;
+        Player player = null;
+
+        while (waitTime < 5f)
+        {
+            player = settingsManager.GetPlayerData();
+            if (player != null)
+            {
+                break;
+            }
+
+            Debug.Log($"[MenuManager] Waiting for player data... ({waitTime:F1}s)");
+            await System.Threading.Tasks.Task.Delay(100); // 100ms 대기
+            waitTime += 0.1f;
+        }
+
+        if (player == null)
+        {
+            Debug.LogError("[MenuManager] Player data not available after waiting 5 seconds");
+            return;
+        }
+
+        if (string.IsNullOrEmpty(player.accessToken))
+        {
+            Debug.LogWarning("[MenuManager] No access token available");
+            return;
+        }
+
+        Debug.Log("[MenuManager] Fetching latest rating...");
+
+        // 사용자 프로필 갱신
+        UserProfileResponse userProfile = await getUser.GetUserProfileAPI(baseUrl, player.accessToken, onSuccess: (res) =>
+        {
+            Debug.Log($"[MenuManager] User profile refreshed: userId={res.data.userId}, name={res.data.name}");
+        }, onError: (err) =>
+        {
+            Debug.LogWarning($"[MenuManager] Failed to refresh user profile: {err}");
+        });
+
+        // 레이팅 갱신
+        GetMyRatingResponse myRating = await getUser.GetUserRatingAPI(baseUrl, player.accessToken, onSuccess: (res) =>
+        {
+            Debug.Log($"[MenuManager] Rating refreshed: {res.data.rating}, ranking: {res.data.ranking}");
+        }, onError: (err) =>
+        {
+            Debug.LogWarning($"[MenuManager] Failed to refresh rating: {err}");
+        });
+
+        // Player 데이터 업데이트
+        if (userProfile != null || myRating != null)
+        {
+            Player updatedPlayer = new()
+            {
+                id = userProfile?.userId ?? player.id,
+                accessToken = player.accessToken,
+                refreshToken = player.refreshToken,
+                playerName = userProfile?.name ?? player.playerName,
+                rating = myRating?.rating ?? player.rating,
+                ranking = myRating?.ranking ?? player.ranking,
+                createdAt = myRating?.createdAt ?? player.createdAt,
+                updatedAt = myRating?.updatedAt ?? player.updatedAt
+            };
+
+            settingsManager.SetPlayerData(updatedPlayer);
+
+            // UI 갱신
+            SetPlayerInfos();
+
+            Debug.Log($"[MenuManager] Player data updated: rating={updatedPlayer.rating:F3}, ranking={updatedPlayer.ranking}");
+        }
     }
 
     private void SelectMenu(int index)
@@ -191,7 +278,11 @@ public class MenuManager : MonoBehaviour
 
         settingsManager = SettingsManager.Instance;
 
+        // 먼저 저장된 정보 표시
         SetPlayerInfos();
+
+        // 최신 레이팅 가져오기
+        RefreshPlayerRating();
 
         sync = settingsManager.settings.sync;
 
