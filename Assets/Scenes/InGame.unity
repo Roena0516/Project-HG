@@ -21789,8 +21789,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _levelText: {fileID: 585881130}
-  _comboText: {fileID: 1274935556}
-  _comboTitleText: {fileID: 280641272}
+  _comboText: {fileID: 280641272}
+  _comboTitleText: {fileID: 1274935556}
   _rateText: {fileID: 1183599896}
   _judgeText: {fileID: 1687371135}
   _plusJudgeText: {fileID: 1627467428}

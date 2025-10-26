@@ -177,7 +177,7 @@ public class UIManager : MonoBehaviour
         // FAST / SLOW 처리
         if (Ms > 0)
         {
-            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 1)
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 1)
             {
                 if (judgement == "Good" && judgement == "Miss")
                 {
@@ -187,7 +187,7 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(IndicatorShower(index, true));
                 }
             }
-            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 2)
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 2)
             {
                 if (judgement == "Great")
                 {
@@ -197,7 +197,7 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(IndicatorShower(index, true));
                 }
             }
-            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 3)
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 3)
             {
                 if (judgement == "Perfect")
                 {
@@ -215,7 +215,7 @@ public class UIManager : MonoBehaviour
         }
         else // Ms < 0
         {
-            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 1)
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 1)
             {
                 if (judgement == "Good" && judgement == "Miss")
                 {
@@ -225,7 +225,7 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(IndicatorShower(index, false));
                 }
             }
-            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 2)
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 2)
             {
                 if (judgement == "Great")
                 {
@@ -235,7 +235,7 @@ public class UIManager : MonoBehaviour
                     StartCoroutine(IndicatorShower(index, false));
                 }
             }
-            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 3)
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 3)
             {
                 if (judgement == "Perfect")
                 {
