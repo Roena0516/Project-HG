@@ -21788,25 +21788,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5691e03e9b6aa4590bdca8701449b550, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  levelText: {fileID: 585881130}
-  comboText: {fileID: 280641272}
-  comboTitleText: {fileID: 1274935556}
-  rateText: {fileID: 1183599896}
-  judgeText: {fileID: 1687371135}
-  plusJudgeText: {fileID: 1627467428}
-  fastSlow: {fileID: 1313420624}
-  perfectpCountText: {fileID: 1606179446}
-  perfectCountText: {fileID: 1093570787}
-  greatCountText: {fileID: 284971308}
-  goodCountText: {fileID: 841335935}
-  missCountText: {fileID: 1793367077}
-  titleText: {fileID: 1022943467}
-  artistText: {fileID: 1485168424}
-  FCAPText: {fileID: 1927130564}
-  speedText: {fileID: 1329598005}
-  fastIndicators: []
-  slowIndicators: []
-  loadManager: {fileID: 1299961084}
+  _levelText: {fileID: 585881130}
+  _comboText: {fileID: 1274935556}
+  _comboTitleText: {fileID: 280641272}
+  _rateText: {fileID: 1183599896}
+  _judgeText: {fileID: 1687371135}
+  _plusJudgeText: {fileID: 1627467428}
+  _fastSlow: {fileID: 1313420624}
+  _perfectpCountText: {fileID: 1606179446}
+  _perfectCountText: {fileID: 1093570787}
+  _greatCountText: {fileID: 284971308}
+  _goodCountText: {fileID: 841335935}
+  _missCountText: {fileID: 1793367077}
+  _titleText: {fileID: 1022943467}
+  _artistText: {fileID: 1485168424}
+  _FCAPText: {fileID: 1927130564}
+  _speedText: {fileID: 1329598005}
+  _fastIndicators:
+  - {fileID: 372063294}
+  - {fileID: 156260798}
+  _slowIndicators:
+  - {fileID: 237094711}
+  - {fileID: 223212340}
+  _loadManager: {fileID: 1299961084}
 --- !u!1 &1313420622
 GameObject:
   m_ObjectHideFlags: 0

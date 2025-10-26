@@ -22,8 +22,8 @@ public class UIManager : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _artistText;
     [SerializeField] private TextMeshProUGUI _FCAPText;
     [SerializeField] private TextMeshProUGUI _speedText;
-    [SerializeField] private List<SpriteRenderer> _fastIndicators;
-    [SerializeField] private List<SpriteRenderer> _slowIndicators;
+    [SerializeField] private List<TextMeshProUGUI> _fastIndicators;
+    [SerializeField] private List<TextMeshProUGUI> _slowIndicators;
 
     // Classes
     [SerializeField] private LoadManager _loadManager;
