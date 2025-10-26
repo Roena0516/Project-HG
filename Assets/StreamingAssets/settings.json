@@ -9,7 +9,7 @@
     "songInfoLanguage": 0,
     "judgementLineHeight": 0,
     "sync": 0,
-    "fastSlowExp": 2,
+    "fastSlowExp": 3,
     "KeyBinds": [
         "<Keyboard>/s",
         "<Keyboard>/d",

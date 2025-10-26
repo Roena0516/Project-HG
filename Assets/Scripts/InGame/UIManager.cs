@@ -299,12 +299,18 @@ public class UIManager : MonoBehaviour
 
         if (isFast)
         {
+            _fastIndicators[index].color = _fastIndicators[index].color.SetAlpha(0f);
+            _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(0f);
+
             _fastIndicators[index].color = _fastIndicators[index].color.SetAlpha(1f);
             yield return new WaitForSeconds(1f);
             _fastIndicators[index].color = _fastIndicators[index].color.SetAlpha(0f);
         }
         else
         {
+            _fastIndicators[index].color = _fastIndicators[index].color.SetAlpha(0f);
+            _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(0f);
+
             _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(1f);
             yield return new WaitForSeconds(1f);
             _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(0f);
