@@ -66,7 +66,6 @@ public class JudgementManager : MonoBehaviour
         judgeCount["Bad"] = 0;
         judgeCount["Miss"] = 0;
 
-        StartCoroutine(UIManager.IndicatorSetter());
         ClearCombo();
         UIManager.UpdateJudgeCountText(judgeCount);
     }

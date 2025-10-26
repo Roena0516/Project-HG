@@ -6,43 +6,51 @@ using System.Collections.Generic;
 public class UIManager : MonoBehaviour
 {
     // UI Components
-    [SerializeField] private TextMeshProUGUI levelText;
-    [SerializeField] private TextMeshProUGUI comboText;
-    [SerializeField] private TextMeshProUGUI comboTitleText;
-    [SerializeField] private TextMeshProUGUI rateText;
-    [SerializeField] private TextMeshProUGUI judgeText;
-    [SerializeField] private TextMeshProUGUI plusJudgeText;
-    [SerializeField] private TextMeshProUGUI fastSlow;
-    [SerializeField] private TextMeshProUGUI perfectpCountText;
-    [SerializeField] private TextMeshProUGUI perfectCountText;
-    [SerializeField] private TextMeshProUGUI greatCountText;
-    [SerializeField] private TextMeshProUGUI goodCountText;
-    [SerializeField] private TextMeshProUGUI missCountText;
-    [SerializeField] private TextMeshProUGUI titleText;
-    [SerializeField] private TextMeshProUGUI artistText;
-    [SerializeField] private TextMeshProUGUI FCAPText;
-    [SerializeField] private TextMeshProUGUI speedText;
-    [SerializeField] private List<SpriteRenderer> fastIndicators;
-    [SerializeField] private List<SpriteRenderer> slowIndicators;
+    [SerializeField] private TextMeshProUGUI _levelText;
+    [SerializeField] private TextMeshProUGUI _comboText;
+    [SerializeField] private TextMeshProUGUI _comboTitleText;
+    [SerializeField] private TextMeshProUGUI _rateText;
+    [SerializeField] private TextMeshProUGUI _judgeText;
+    [SerializeField] private TextMeshProUGUI _plusJudgeText;
+    [SerializeField] private TextMeshProUGUI _fastSlow;
+    [SerializeField] private TextMeshProUGUI _perfectpCountText;
+    [SerializeField] private TextMeshProUGUI _perfectCountText;
+    [SerializeField] private TextMeshProUGUI _greatCountText;
+    [SerializeField] private TextMeshProUGUI _goodCountText;
+    [SerializeField] private TextMeshProUGUI _missCountText;
+    [SerializeField] private TextMeshProUGUI _titleText;
+    [SerializeField] private TextMeshProUGUI _artistText;
+    [SerializeField] private TextMeshProUGUI _FCAPText;
+    [SerializeField] private TextMeshProUGUI _speedText;
+    [SerializeField] private List<SpriteRenderer> _fastIndicators;
+    [SerializeField] private List<SpriteRenderer> _slowIndicators;
 
     // Classes
-    [SerializeField] private LoadManager loadManager;
-    private SettingsManager settings;
+    [SerializeField] private LoadManager _loadManager;
+    private SettingsManager _settings;
 
     // Coroutines
-    private Coroutine comboPopInRoutine;
-    private Coroutine currentJudgementRoutine;
-    private Coroutine popInRoutine;
+    private Coroutine _comboPopInRoutine;
+    private Coroutine _currentJudgementRoutine;
+    private Coroutine _popInRoutine;
+
+    private List<string> _fastSlowExpIndex = new()
+    {
+        "",
+        "Good",
+        "Great",
+        "Perfect",
+    };
 
     private void Start()
     {
-        if (!loadManager)
+        if (!_loadManager)
         {
             Debug.LogError("loadManager is not defined");
             return;
         }
-        settings = SettingsManager.Instance;
-        if (!settings)
+        _settings = SettingsManager.Instance;
+        if (!_settings)
         {
             Debug.LogError("Settings is not defined");
             return;
@@ -53,7 +61,7 @@ public class UIManager : MonoBehaviour
 
     private void SetUIs()
     {
-        float level = loadManager.info.level != 0 ? loadManager.info.level : 0;
+        float level = _loadManager.info.level != 0 ? _loadManager.info.level : 0;
 
         SetInitialJudgementText();
         SetLevelText(level);
@@ -63,131 +71,180 @@ public class UIManager : MonoBehaviour
 
     private void SetInitialJudgementText()
     {
-        Color tempColor = judgeText.color;
-        tempColor.a = 0f;
-        judgeText.color = tempColor;
-        plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
-        fastSlow.color = tempColor;
+        _judgeText.color = _judgeText.color.SetAlpha(0f);
+        _plusJudgeText.color = _plusJudgeText.color.SetAlpha(0f);
+        _fastSlow.color = _fastSlow.color.SetAlpha(0f);
+        _fastIndicators[0].color = _fastIndicators[0].color.SetAlpha(0f);
+        _slowIndicators[0].color = _slowIndicators[0].color.SetAlpha(0f);
+        _fastIndicators[1].color = _fastIndicators[1].color.SetAlpha(0f);
+        _slowIndicators[1].color = _slowIndicators[1].color.SetAlpha(0f);
     }
 
     private void SetInitialSongInfoText()
     {
-        titleText.text = settings.songTitle;
-        artistText.text = settings.songArtist;
+        _titleText.text = _settings.songTitle;
+        _artistText.text = _settings.songArtist;
     }
 
     public void SetSpeedText()
     {
-        speedText.text = $"{settings.settings.speed:F1}";
+        _speedText.text = $"{_settings.settings.speed:F1}";
     }
 
     public void SetLevelText(float level)
     {
-        levelText.text = $"{level}";
+        _levelText.text = $"{level}";
     }
 
     public void SetCombo(int combo)
     {
-        comboText.text = $"{combo}";
-        comboTitleText.color = comboTitleText.color.SetAlpha(1f);
+        _comboText.text = $"{combo}";
+        _comboTitleText.color = _comboTitleText.color.SetAlpha(1f);
 
-        if (comboPopInRoutine != null)
+        if (_comboPopInRoutine != null)
         {
-            StopCoroutine(comboPopInRoutine);
+            StopCoroutine(_comboPopInRoutine);
         }
-        comboPopInRoutine = StartCoroutine(PopIn(comboText.rectTransform));
+        _comboPopInRoutine = StartCoroutine(PopIn(_comboText.rectTransform));
     }
 
     public void ClearCombo()
     {
-        comboText.text = $"";
-        comboTitleText.color = comboTitleText.color.SetAlpha(0f);
+        _comboText.text = $"";
+        _comboTitleText.color = _comboTitleText.color.SetAlpha(0f);
     }
 
     public void UpdateJudgeCountText(Dictionary<string, int> judgeCount)
     {
-        perfectpCountText.text = $"{judgeCount["PerfectP"]}";
-        perfectCountText.text = $"{judgeCount["Perfect"]}";
-        greatCountText.text = $"{judgeCount["Great"]}";
-        goodCountText.text = $"{judgeCount["Good"]}";
-        missCountText.text = $"{judgeCount["Miss"] + judgeCount["Bad"]}";
+        _perfectpCountText.text = $"{judgeCount["PerfectP"]}";
+        _perfectCountText.text = $"{judgeCount["Perfect"]}";
+        _greatCountText.text = $"{judgeCount["Great"]}";
+        _goodCountText.text = $"{judgeCount["Good"]}";
+        _missCountText.text = $"{judgeCount["Miss"] + judgeCount["Bad"]}";
     }
 
     public void ChangeRate(float rate)
     {
-        rateText.text = $"{rate:F2}%";
+        _rateText.text = $"{rate:F2}%";
     }
 
     public void SetFCAPText(string FCAP)
     {
-        FCAPText.text = FCAP;
+        _FCAPText.text = FCAP;
     }
 
     public IEnumerator JudgementTextShower(string judgement, double Ms, int position)
     {
-        if (currentJudgementRoutine != null)
+        if (_currentJudgementRoutine != null)
         {
-            StopCoroutine(currentJudgementRoutine);
+            StopCoroutine(_currentJudgementRoutine);
         }
-        currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement, Ms, position));
+        _currentJudgementRoutine = StartCoroutine(ShowJudgementTextRoutine(judgement, Ms, position));
         yield break;
     }
 
     public IEnumerator ShowJudgementTextRoutine(string judgement, double Ms, int position)
     {
-        Color tempColor = judgeText.color;
+        Color tempColor = _judgeText.color;
         int index = position - 1;
         tempColor.a = 1f;
-        judgeText.color = tempColor;
+        _judgeText.color = tempColor;
 
         // 텍스트 알파값 세팅
         if (judgement == "PerfectP")
         {
-            judgeText.text = "PERFECT";
-            plusJudgeText.color = plusJudgeText.color.SetAlpha(1f);
+            _judgeText.text = "PERFECT";
+            _plusJudgeText.color = _plusJudgeText.color.SetAlpha(1f);
         }
         else if (judgement == "Bad")
         {
-            judgeText.text = "MISS";
-            plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
+            _judgeText.text = "MISS";
+            _plusJudgeText.color = _plusJudgeText.color.SetAlpha(0f);
         }
         else
         {
-            judgeText.text = $"{judgement.ToUpper()}";
-            plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
+            _judgeText.text = $"{judgement.ToUpper()}";
+            _plusJudgeText.color = _plusJudgeText.color.SetAlpha(0f);
         }
 
         // 판정 텍스트 팝인
-        if (popInRoutine != null)
+        if (_popInRoutine != null)
         {
-            StopCoroutine(popInRoutine);
+            StopCoroutine(_popInRoutine);
         }
-        popInRoutine = StartCoroutine(PopIn(judgeText.rectTransform));
+        _popInRoutine = StartCoroutine(PopIn(_judgeText.rectTransform));
 
         // FAST / SLOW 처리
         if (Ms > 0)
         {
-            tempColor = fastSlow.color; tempColor.a = 1f;
-            fastSlow.color = tempColor;
-            fastSlow.text = $"+{(int)Ms}";
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 1)
+            {
+                if (judgement == "Good" && judgement == "Miss")
+                {
+                    _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+                    _fastSlow.text = $"+{(int)Ms}";
 
-            //if (judgement != "Perfect")
-            //    StartCoroutine(IndicatorShower(index, true));
+                    StartCoroutine(IndicatorShower(index, true));
+                }
+            }
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 2)
+            {
+                if (judgement == "Great")
+                {
+                    _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+                    _fastSlow.text = $"+{(int)Ms}";
+
+                    StartCoroutine(IndicatorShower(index, true));
+                }
+            }
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 3)
+            {
+                if (judgement == "Perfect")
+                {
+                    _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+                    _fastSlow.text = $"+{(int)Ms}";
+
+                    StartCoroutine(IndicatorShower(index, true));
+                }
+            }
         }
         else if (Ms == 0)
         {
-            tempColor = fastSlow.color; tempColor.a = 1f;
-            fastSlow.color = tempColor;
-            fastSlow.text = string.Empty;
+            _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+            _fastSlow.text = string.Empty;
         }
         else // Ms < 0
         {
-            tempColor = fastSlow.color; tempColor.a = 1f;
-            fastSlow.color = tempColor;
-            fastSlow.text = $"{(int)Ms}";
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 1)
+            {
+                if (judgement == "Good" && judgement == "Miss")
+                {
+                    _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+                    _fastSlow.text = $"-{(int)Ms}";
 
-            //if (judgement != "Perfect")
-            //    StartCoroutine(IndicatorShower(index, false));
+                    StartCoroutine(IndicatorShower(index, false));
+                }
+            }
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 2)
+            {
+                if (judgement == "Great")
+                {
+                    _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+                    _fastSlow.text = $"-{(int)Ms}";
+
+                    StartCoroutine(IndicatorShower(index, false));
+                }
+            }
+            if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp <= 3)
+            {
+                if (judgement == "Perfect")
+                {
+                    _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+                    _fastSlow.text = $"-{(int)Ms}";
+
+                    StartCoroutine(IndicatorShower(index, false));
+                }
+            }
         }
 
         // Perfect+
@@ -198,49 +255,26 @@ public class UIManager : MonoBehaviour
         yield return new WaitForSeconds(2f);
 
         // 숨기기
-        judgeText.color = judgeText.color.SetAlpha(0f);
-        plusJudgeText.color = plusJudgeText.color.SetAlpha(0f);
-        fastSlow.color = fastSlow.color.SetAlpha(0f);
+        _judgeText.color = _judgeText.color.SetAlpha(0f);
+        _plusJudgeText.color = _plusJudgeText.color.SetAlpha(0f);
+        _fastSlow.color = _fastSlow.color.SetAlpha(0f);
 
-        currentJudgementRoutine = null;
-    }
-
-    public IEnumerator IndicatorSetter()
-    {
-        //for (int i = 0; i < 4; i++)
-        //{
-        //    fastIndicators[i].color = fastIndicators[i].color.SetAlpha(0f);
-        //    slowIndicators[i].color = slowIndicators[i].color.SetAlpha(0f);
-        //}
-
-        yield break;
+        _currentJudgementRoutine = null;
     }
 
     public IEnumerator IndicatorShower(int index, bool isFast)
     {
-        Color tempColor;
-
         if (isFast)
         {
-            tempColor = fastIndicators[index].color;
-            tempColor.a = 1f;
-            fastIndicators[index].color = tempColor;
-
+            _fastIndicators[index].color = _fastIndicators[index].color.SetAlpha(1f);
             yield return new WaitForSeconds(1f);
-
-            tempColor.a = 0f;
-            fastIndicators[index].color = tempColor;
+            _fastIndicators[index].color = _fastIndicators[index].color.SetAlpha(0f);
         }
         else
         {
-            tempColor = slowIndicators[index].color;
-            tempColor.a = 1f;
-            slowIndicators[index].color = tempColor;
-
+            _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(1f);
             yield return new WaitForSeconds(1f);
-
-            tempColor.a = 0f;
-            slowIndicators[index].color = tempColor;
+            _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(0f);
         }
     }
 
