@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
     public bool isSyncRoom;
     public bool isTest;
 
+    [SerializeField] InGameAnimation _animator;
+
     public static GameManager Instance { get; private set; }
 
     private LevelEditer levelEditor;
@@ -95,16 +97,19 @@ public class GameManager : MonoBehaviour
 
         if (!isTest)
         {
-            DontDestroyOnLoad(gameObject);
+            _animator.FadeIn(1f, () =>
+            {
+                DontDestroyOnLoad(gameObject);
 
-            if (isSyncRoom)
-            {
-                SceneManager.LoadSceneAsync("SyncRoomResult");
-            }
-            else
-            {
-                SceneManager.LoadSceneAsync("Result");
-            }
+                if (isSyncRoom)
+                {
+                    SceneManager.LoadSceneAsync("SyncRoomResult");
+                }
+                else
+                {
+                    SceneManager.LoadSceneAsync("Result");
+                }
+            });
         }
 
         yield break;

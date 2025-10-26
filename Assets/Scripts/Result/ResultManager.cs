@@ -12,6 +12,7 @@ public class ResultManager : MonoBehaviour
     private SettingsManager settings;
     [SerializeField] private ResultUIManager UIManager;
     [SerializeField] private ResultAPI resultAPI;
+    [SerializeField] private ResultAnimation _animator;
 
     private string baseUrl = "https://prod.windeath44.wiki/api";
     private string accessToken;
@@ -24,6 +25,8 @@ public class ResultManager : MonoBehaviour
 
         SaveResult();
         UIManager.SetResultUIs(loadManager, judgementManager);
+        _animator.FadeOut();
+        _animator.SetPanels();
     }
 
     private void Update()
