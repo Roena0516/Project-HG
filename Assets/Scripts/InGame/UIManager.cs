@@ -177,6 +177,9 @@ public class UIManager : MonoBehaviour
 
         bool isIndicatorLeft = index <= 1;
 
+        _fastSlow.color = _fastSlow.color.SetAlpha(1f);
+        _fastSlow.text = string.Empty;
+
         // FAST / SLOW 처리
         if (Ms > 0)
         {
