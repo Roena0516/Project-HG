@@ -179,7 +179,7 @@ public class UIManager : MonoBehaviour
         {
             if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 1)
             {
-                if (judgement == "Good" && judgement == "Miss")
+                if (judgement == "Good" || judgement == "Miss")
                 {
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"+{(int)Ms}";
@@ -217,7 +217,7 @@ public class UIManager : MonoBehaviour
         {
             if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 1)
             {
-                if (judgement == "Good" && judgement == "Miss")
+                if (judgement == "Good" || judgement == "Miss")
                 {
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"-{(int)Ms}";
