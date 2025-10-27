@@ -85,7 +85,17 @@ public class SettingsListMover : MonoBehaviour
         // 저장하고 나가기
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            Save();
+            _animator.SetAlertSeparated("현재 설정을 저장하시겠습니까? \n Test",
+                () =>
+                {
+                    Save();
+                    _animator.DisableAlert();
+                },
+                () =>
+                {
+                    _animator.DisableAlert();
+                }
+            );
         }
 
         // 저장하지 않고 나가기
