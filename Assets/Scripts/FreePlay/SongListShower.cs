@@ -39,6 +39,11 @@ public class SongListShower : MonoBehaviour
     public TextMeshProUGUI info_comboText;
     public TextMeshProUGUI info_ratingText;
 
+    [SerializeField] private Image _approachJacketImage;
+    [SerializeField] private TextMeshProUGUI _approachSongTitle;
+    [SerializeField] private TextMeshProUGUI _approachSongArtist;
+    [SerializeField] private TextMeshProUGUI _approachLevel;
+
     public GameObject syncInput;
     public GameObject speedInput;
     public TMP_Dropdown dropdown;
@@ -855,7 +860,15 @@ public class SongListShower : MonoBehaviour
         settings.SetEventName(setter.eventName);
         settings.Info = selectedSongInfo;
 
-        SceneManager.LoadSceneAsync("InGame");
+        _approachJacketImage.sprite = _jacketImage.sprite;
+        _approachSongTitle.text = selectedSongInfo.title;
+        _approachSongArtist.text = selectedSongInfo.artist;
+        _approachLevel.text = $"{selectedSongInfo.level}";
+
+        _animator.Approach(() =>
+        {
+            SceneManager.LoadSceneAsync("InGame");
+        });
     }
 
     public void SetSpeed(string inputed)

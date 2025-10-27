@@ -185,9 +185,11 @@ public class MenuManager : MonoBehaviour
             if (isSet)
             {
                 isSet = false;
-                settingsManager.SetFileName($"{Application.streamingAssetsPath}/system/SyncRoom-Level.roena");
+                //settingsManager.SetFileName($"{Application.streamingAssetsPath}/system/SyncRoom-Level.roena");
 
-                SceneManager.LoadSceneAsync("SyncRoom");
+                _animator.FadeIn(onComplete: () => {
+                    SceneManager.LoadSceneAsync("Rankings");
+                });
             }
         }
     }

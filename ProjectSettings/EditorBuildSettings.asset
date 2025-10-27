@@ -18,16 +18,19 @@ EditorBuildSettings:
     path: Assets/Scenes/FreePlay.unity
     guid: 6f12c57ed69164ec48a7cae5d7c6b6c2
   - enabled: 1
+    path: Assets/Scenes/Rankings.unity
+    guid: 94ecd7eb421014176a7c67c3cc2c58fd
+  - enabled: 1
     path: Assets/Scenes/InGame.unity
     guid: 8c9cfa26abfee488c85f1582747f6a02
   - enabled: 1
-    path: Assets/Scenes/SyncRoom.unity
+    path: Assets/Scenes/Utils/SyncRoom.unity
     guid: 4e4de52bf26cb4fb09fb411e4f241068
   - enabled: 1
     path: Assets/Scenes/Result.unity
     guid: 163e7a3c47cb83045a59889ba47623de
   - enabled: 1
-    path: Assets/Scenes/SyncRoomResult.unity
+    path: Assets/Scenes/Utils/SyncRoomResult.unity
     guid: 0c0613089800c49f6aa190f7f44a41c0
   - enabled: 1
     path: Assets/Scenes/LevelEditor.unity

@@ -2,11 +2,23 @@ using UnityEngine;
 using DG.Tweening;
 using UnityEngine.UI;
 using System;
+using TMPro;
 
 public class FreePlayAnimation : MonoBehaviour
 {
     [SerializeField] private RectTransform _songListPanel;
     [SerializeField] private RectTransform _songInfoPanel;
+    [SerializeField] private RectTransform _approachBackground1;
+    [SerializeField] private Image _approachBackground1_5;
+    [SerializeField] private RectTransform _approachBackground2;
+    [SerializeField] private Image _card;
+    [SerializeField] private Image _jacket;
+    [SerializeField] private Image _levelSprite;
+    [SerializeField] private TextMeshProUGUI _levelTitle;
+    [SerializeField] private TextMeshProUGUI _levelValue;
+    [SerializeField] private Image _songTitleBackground;
+    [SerializeField] private TextMeshProUGUI _songTitle;
+    [SerializeField] private TextMeshProUGUI _songArtist;
 
     [SerializeField] private Fader _fader;
 
@@ -41,5 +53,46 @@ public class FreePlayAnimation : MonoBehaviour
     {
         _songInfoPanel.DOAnchorPosX(-450, 0).SetAutoKill(true);
         _songInfoPanel.DOAnchorPosX(150, 0.5f).SetEase(Ease.OutSine).SetAutoKill(true);
+    }
+
+    public void Approach(Action onComplete = null)
+    {
+        _approachBackground1.DOAnchorPosY(900f, 1f)
+            .SetEase(Ease.OutSine)
+            .OnComplete(() =>
+            {
+                _approachBackground1.DOAnchorPosY(1000f, 4f)
+                    .OnComplete(() => onComplete?.Invoke())
+                    .SetAutoKill(true);
+            })
+            .SetAutoKill(true);
+        _approachBackground2.DOAnchorPosY(450f, 1f)
+            .SetEase(Ease.OutQuad)
+            .SetAutoKill(true);
+
+        _card.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _jacket.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _levelSprite.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _levelTitle.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _levelValue.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _songTitleBackground.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _songTitle.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
+        _songArtist.DOFade(1f, 0.25f)
+            .SetEase(Ease.OutSine)
+            .SetAutoKill(true);
     }
 }
