@@ -8,8 +8,8 @@ using System.Linq;
 public class JudgementManager : MonoBehaviour
 {
     private float perfectp = 25f;
-    private float perfect = 40f;
-    private float great = 60f;
+    private float perfect = 50f;
+    private float great = 70f;
     private float good = 110f;
     private float bad = 160f;
 
@@ -149,45 +149,27 @@ public class JudgementManager : MonoBehaviour
             float timeDifference = Mathf.Abs((float)(note.ms - currentTimeMs));
             double notAbsDiff = note.ms - currentTimeMs;
 
-            if ((note.ms - (currentTimeMs) <= 40 && note.ms - (currentTimeMs) > 0) && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
+            if ((note.ms - (currentTimeMs) <= 50 && note.ms - (currentTimeMs) > 0) && note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 note.isInputed = true;
                 break;
             }
 
-            if (timeDifference <= perfect && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff >= -80 && notAbsDiff < 60 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "PerfectP", currentTimeMs);
                 AddCombo(1);
                 break;
             }
-            if (notAbsDiff >= -80 && notAbsDiff < -40 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
-            {
-                PerformAction(note, "Perfect", currentTimeMs);
-                AddCombo(1);
-                break;
-            }
-            if (notAbsDiff >= -120 && notAbsDiff < -80 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff >= -200 && notAbsDiff < -80 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Great", currentTimeMs);
                 AddCombo(1);
                 break;
             }
-            if (notAbsDiff >= -200 && notAbsDiff < -120 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
-            {
-                PerformAction(note, "Good", currentTimeMs);
-                AddCombo(1);
-                break;
-            }
-            if (notAbsDiff > 40 && notAbsDiff <= 100  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
+            if (notAbsDiff > 60 && notAbsDiff <= 130  && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
             {
                 PerformAction(note, "Great", currentTimeMs);
-                AddCombo(1);
-                break;
-            }
-            if (notAbsDiff > 100 && notAbsDiff <= 140 && note.type == "up" && raneNumber + 1 == note.position && !note.isInputed)
-            {
-                PerformAction(note, "Good", currentTimeMs);
                 AddCombo(1);
                 break;
             }
