@@ -22,7 +22,8 @@ public class JudgementManager : MonoBehaviour
     private SettingsManager settings;
     public ParticleManager particle;
     [SerializeField] private UIManager UIManager;
-    [SerializeField] private Animator _animator;
+    [SerializeField] private Animator _unityAnimator;
+    [SerializeField] private InGameAnimation _animator;
 
     [SerializeField] private GameObject _FCAPFolder;
 
@@ -231,13 +232,18 @@ public class JudgementManager : MonoBehaviour
         judgeCount[judgement]++;
         UIManager.UpdateJudgeCountText(judgeCount);
 
+        if (judgement != "Miss")
+        {
+            _animator.SpawnKeyBombEffect(note.position - 1);
+        }
+
         if (note.isEndNote == true)
         {
             if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0)
             {
                 //UIManager.SetFCAPText("FULL COMBO");
                 _FCAPFolder.SetActive(true);
-                _animator.Play("New Animation");
+                _unityAnimator.Play("New Animation");
                 isFC = true;
             }
             if (judgeCount["Miss"] == 0 && judgeCount["Bad"] == 0 && judgeCount["Good"] == 0 && judgeCount["Great"] == 0)

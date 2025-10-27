@@ -32,16 +32,9 @@ public class UIManager : MonoBehaviour
     // Coroutines
     private Coroutine _comboPopInRoutine;
     private Coroutine _currentJudgementRoutine;
-    private Coroutine _currentIndicatorRoutine;
+    private Coroutine _currentLeftIndicatorRoutine;
+    private Coroutine _currentRightIndicatorRoutine;
     private Coroutine _popInRoutine;
-
-    private List<string> _fastSlowExpIndex = new()
-    {
-        "",
-        "Good",
-        "Great",
-        "Perfect",
-    };
 
     private void Start()
     {
@@ -190,11 +183,22 @@ public class UIManager : MonoBehaviour
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"+{(int)Ms}";
 
-                    if (_currentIndicatorRoutine != null)
+                    if (isIndicatorLeft)
                     {
-                        StopCoroutine(_currentIndicatorRoutine);
+                        if (_currentLeftIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentLeftIndicatorRoutine);
+                        }
+                        _currentLeftIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
                     }
-                    _currentIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
+                    else
+                    {
+                        if (_currentRightIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentRightIndicatorRoutine);
+                        }
+                        _currentRightIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
+                    }
                 }
             }
             if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 2)
@@ -204,11 +208,22 @@ public class UIManager : MonoBehaviour
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"+{(int)Ms}";
 
-                    if (_currentIndicatorRoutine != null)
+                    if (isIndicatorLeft)
                     {
-                        StopCoroutine(_currentIndicatorRoutine);
+                        if (_currentLeftIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentLeftIndicatorRoutine);
+                        }
+                        _currentLeftIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
                     }
-                    _currentIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
+                    else
+                    {
+                        if (_currentRightIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentRightIndicatorRoutine);
+                        }
+                        _currentRightIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
+                    }
                 }
             }
             if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 3)
@@ -218,11 +233,22 @@ public class UIManager : MonoBehaviour
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"+{(int)Ms}";
 
-                    if (_currentIndicatorRoutine != null)
+                    if (isIndicatorLeft)
                     {
-                        StopCoroutine(_currentIndicatorRoutine);
+                        if (_currentLeftIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentLeftIndicatorRoutine);
+                        }
+                        _currentLeftIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
                     }
-                    _currentIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
+                    else
+                    {
+                        if (_currentRightIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentRightIndicatorRoutine);
+                        }
+                        _currentRightIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, true));
+                    }
                 }
             }
         }
@@ -240,11 +266,22 @@ public class UIManager : MonoBehaviour
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"-{(int)Ms}";
 
-                    if (_currentIndicatorRoutine != null)
+                    if (isIndicatorLeft)
                     {
-                        StopCoroutine(_currentIndicatorRoutine);
+                        if (_currentLeftIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentLeftIndicatorRoutine);
+                        }
+                        _currentLeftIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
                     }
-                    _currentIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
+                    else
+                    {
+                        if (_currentRightIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentRightIndicatorRoutine);
+                        }
+                        _currentRightIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
+                    }
                 }
             }
             if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 2)
@@ -254,11 +291,22 @@ public class UIManager : MonoBehaviour
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"-{(int)Ms}";
 
-                    if (_currentIndicatorRoutine != null)
+                    if (isIndicatorLeft)
                     {
-                        StopCoroutine(_currentIndicatorRoutine);
+                        if (_currentLeftIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentLeftIndicatorRoutine);
+                        }
+                        _currentLeftIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
                     }
-                    _currentIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
+                    else
+                    {
+                        if (_currentRightIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentRightIndicatorRoutine);
+                        }
+                        _currentRightIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
+                    }
                 }
             }
             if (_settings.settings.fastSlowExp != 0 && _settings.settings.fastSlowExp >= 3)
@@ -268,11 +316,22 @@ public class UIManager : MonoBehaviour
                     _fastSlow.color = _fastSlow.color.SetAlpha(1f);
                     _fastSlow.text = $"-{(int)Ms}";
 
-                    if (_currentIndicatorRoutine != null)
+                    if (isIndicatorLeft)
                     {
-                        StopCoroutine(_currentIndicatorRoutine);
+                        if (_currentLeftIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentLeftIndicatorRoutine);
+                        }
+                        _currentLeftIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
                     }
-                    _currentIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
+                    else
+                    {
+                        if (_currentRightIndicatorRoutine != null)
+                        {
+                            StopCoroutine(_currentRightIndicatorRoutine);
+                        }
+                        _currentRightIndicatorRoutine = StartCoroutine(IndicatorShower(isIndicatorLeft, false));
+                    }
                 }
             }
         }
@@ -318,7 +377,15 @@ public class UIManager : MonoBehaviour
             yield return new WaitForSeconds(1f);
             _slowIndicators[index].color = _slowIndicators[index].color.SetAlpha(0f);
         }
-        _currentIndicatorRoutine = null;
+
+        if (isIndicatorLeft)
+        {
+            _currentLeftIndicatorRoutine = null;
+        }
+        else
+        {
+            _currentRightIndicatorRoutine = null;
+        }
     }
 
     private IEnumerator PopIn(RectTransform target, float fromScale = 0.3f, float toScale = 1f, float duration = 0.07f)
