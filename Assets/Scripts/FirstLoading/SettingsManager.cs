@@ -64,6 +64,13 @@ public class SettingsManager : MonoBehaviour
 
     public bool isAutoPlay;
 
+    private bool isBlocked;
+    public bool IsBlocked
+    {
+        get => isBlocked;
+        set => isBlocked = value;
+    }
+
     public bool isKR;
 
     public static SettingsManager Instance { get; private set; }

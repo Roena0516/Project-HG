@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class SettingsListMover : MonoBehaviour
 {
-    //private SettingsManager settings;
+    private SettingsManager settings;
     [SerializeField] private SettingsList settingsListComponent;
     [SerializeField] private SettingsAnimation _animator;
 
@@ -39,7 +39,7 @@ public class SettingsListMover : MonoBehaviour
     {
         canvas.transform.localScale = Vector3.one;
 
-        //settings = SettingsManager.Instance;
+        settings = SettingsManager.Instance;
 
         originX = contentFolder.transform.position.x;
         originY = contentFolder.transform.position.y;
@@ -50,6 +50,8 @@ public class SettingsListMover : MonoBehaviour
 
     private void Update()
     {
+        if (settings.IsBlocked) return;
+
         // 한 번 눌렀을 때
         if (Input.GetKeyDown(KeyCode.UpArrow))
         {
@@ -85,7 +87,7 @@ public class SettingsListMover : MonoBehaviour
         // 저장하고 나가기
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.KeypadEnter))
         {
-            _animator.SetAlertSeparated("현재 설정을 저장하시겠습니까? \n Test",
+            _animator.SetAlertSeparated("현재 변경사항을 저장하시겠습니까?",
                 () =>
                 {
                     Save();
@@ -101,7 +103,17 @@ public class SettingsListMover : MonoBehaviour
         // 저장하지 않고 나가기
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            CancelAndExit();
+            _animator.SetAlertSeparated("설정 화면에서 나가시겠습니까?\n저장하지 않은 변경사항은 모두 사라집니다.",
+                () =>
+                {
+                    CancelAndExit();
+                    _animator.DisableAlert();
+                },
+                () =>
+                {
+                    _animator.DisableAlert();
+                }
+            );
         }
 
         // 뗐을 때 반복 중지

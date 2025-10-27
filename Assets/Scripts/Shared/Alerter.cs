@@ -11,20 +11,49 @@ public class Alerter : MonoBehaviour
     [SerializeField] private Image _alertFade;
     [SerializeField] private GameObject _alertSeparated;
 
-    private RectTransform alert;
+    private SettingsManager _settings;
+    private RectTransform _alert;
+    private UnityAction _onConfirm;
+    private UnityAction _onCancel;
+    private bool _isSet;
+
+    private void Awake()
+    {
+        _settings = SettingsManager.Instance;
+    }
+
+    private void Update()
+    {
+        if (_isSet)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                _onConfirm?.Invoke();
+            }
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                _onCancel?.Invoke();
+            }
+        }
+    }
 
     public void SetAlertSeparated(string content, UnityAction onConfirm = null, UnityAction onCancel = null)
     {
         _canvas.transform.localScale = Vector3.one;
 
+        _settings.IsBlocked = true;
+
         Vector3 position = new(0f, -1400f, 0f);
         Quaternion rotation = new(0f, 0f, 0f, 0f);
-        alert = Instantiate(_alertSeparated, position, rotation, _canvas.transform).GetComponent<RectTransform>();
+        _alert = Instantiate(_alertSeparated, position, rotation, _canvas.transform).GetComponent<RectTransform>();
         //alert.DOAnchorPosY(1400f, 0f).SetEase(Ease.OutSine).SetAutoKill(true);
 
-        if (alert)
+        if (_alert)
         {
-            Transform containerFolder = alert.gameObject.transform.Find("Container");
+            _onConfirm = onConfirm;
+            _onCancel = onCancel;
+
+            Transform containerFolder = _alert.gameObject.transform.Find("Container");
             Transform contentFolder = containerFolder.Find("Content");
             Transform text = contentFolder.Find("Text");
 
@@ -37,10 +66,14 @@ public class Alerter : MonoBehaviour
 
             Button confirmButton = confirmButtonTransform.gameObject.GetComponent<Button>();
             Button cancelButton = cancelButtonTransform.gameObject.GetComponent<Button>();
-            confirmButton.onClick.AddListener(onConfirm);
-            cancelButton.onClick.AddListener(onCancel);
+            confirmButton.onClick.AddListener(_onConfirm);
+            cancelButton.onClick.AddListener(_onCancel);
 
-            alert.DOAnchorPosY(0f, 0.3f).SetEase(Ease.OutSine).SetAutoKill(true);
+            _alert
+                .DOAnchorPosY(0f, 0.3f)
+                .SetEase(Ease.OutSine)
+                .OnComplete(() => _isSet = true)
+                .SetAutoKill(true);
             _alertFade
                 .DOFade(0.4f, 0.3f)
                 .SetEase(Ease.OutSine)
@@ -50,15 +83,21 @@ public class Alerter : MonoBehaviour
 
     public void DisableAlert()
     {
-        if (alert)
+        _settings.IsBlocked = false;
+
+        if (_alert)
         {
             _canvas.transform.localScale = Vector3.one;
 
-            alert.DOAnchorPosY(1400f, 0.3f).SetEase(Ease.OutSine).SetAutoKill(true);
+            _alert.DOAnchorPosY(1400f, 0.3f).SetEase(Ease.OutSine).SetAutoKill(true);
             _alertFade
                 .DOFade(0f, 0.3f)
                 .SetEase(Ease.OutSine)
-                .OnComplete(() => Destroy(alert.gameObject))
+                .OnComplete(() =>
+                {
+                    Destroy(_alert.gameObject);
+                    _isSet = false;
+                })
                 .SetAutoKill(true);
         }
     }
