@@ -11,9 +11,9 @@
     "sync": 0,
     "fastSlowExp": 3,
     "KeyBinds": [
-        "<Keyboard>/s",
-        "<Keyboard>/d",
-        "<Keyboard>/l",
-        "<Keyboard>/semicolon"
+        "S",
+        "D",
+        ";",
+        "'"
     ]
 }

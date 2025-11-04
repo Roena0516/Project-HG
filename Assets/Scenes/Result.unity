@@ -444,8 +444,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uAC2F\uB098\uB9AC \uD574\uC800\uB2F4"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5e631d79a891b43ed96dc4ca1cf728ac, type: 2}
-  m_sharedMaterial: {fileID: -4762265759878741764, guid: 5e631d79a891b43ed96dc4ca1cf728ac, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5173b8446befeb2418710cbe22cc2098, type: 2}
+  m_sharedMaterial: {fileID: -6694628783189429205, guid: 5173b8446befeb2418710cbe22cc2098, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -760,7 +760,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   UIManager: {fileID: 371779189}
   resultAPI: {fileID: 371779190}
-  _animator: {fileID: 0}
+  _animator: {fileID: 412779405}
 --- !u!114 &371779189
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -976,6 +976,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultAnimation
   _fader: {fileID: 412779404}
+  _rightPanel: {fileID: 0}
+  _boardPanel: {fileID: 0}
 --- !u!4 &412779406
 Transform:
   m_ObjectHideFlags: 0
@@ -3814,8 +3816,8 @@ MonoBehaviour:
 
 '
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 5e631d79a891b43ed96dc4ca1cf728ac, type: 2}
-  m_sharedMaterial: {fileID: -4762265759878741764, guid: 5e631d79a891b43ed96dc4ca1cf728ac, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 5173b8446befeb2418710cbe22cc2098, type: 2}
+  m_sharedMaterial: {fileID: -6694628783189429205, guid: 5173b8446befeb2418710cbe22cc2098, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
