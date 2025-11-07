@@ -647,9 +647,7 @@ public class SongListShower : MonoBehaviour
 
             DifficultySetter(setter.artist + "-" + setter.title);
             SetInfoBoard(setter);
-
             SetDifficulty(selectedDifficulty, 1);
-
             if (_currentStartPreviewRoutine != null)
             {
                 StopCoroutine(_currentStartPreviewRoutine);
@@ -657,6 +655,8 @@ public class SongListShower : MonoBehaviour
                 _currentStartPreviewRoutine = null;
             }
             _currentStartPreviewRoutine = StartCoroutine(SetPreview($"event:/{setter.eventName}", setter.previewStart, setter.previewEnd));
+
+            SFXLoader.Instance.PlaySFX("list_scroll.ogg");
 
             Result found = GetResult(setter.ids[selectedDifficulty - 1]);
             if (found != null)
@@ -675,7 +675,7 @@ public class SongListShower : MonoBehaviour
             _currentStopPreviewRoutine = null;
         }
 
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(0.5f);
 
         _preview.release();
         _preview = RuntimeManager.CreateInstance(eventName);

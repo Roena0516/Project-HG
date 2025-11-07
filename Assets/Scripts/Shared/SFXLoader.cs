@@ -31,7 +31,7 @@ public class SFXLoader : MonoBehaviour
 
     private void PlaySFXInStandAlone(string fileName)
     {
-        string path = System.IO.Path.Combine(Application.streamingAssetsPath, "SFX", fileName);
+        string path = $"{Application.streamingAssetsPath}/SFX/{fileName}";
 
         // FMOD에서 직접 경로를 통해 재생
         FMOD.RESULT result = RuntimeManager.CoreSystem.createSound(
@@ -53,7 +53,7 @@ public class SFXLoader : MonoBehaviour
 
     private IEnumerator PlaySFXInWebGL(string fileName)
     {
-        string path = System.IO.Path.Combine(Application.streamingAssetsPath, "SFX", fileName);
+        string path = $"{Application.streamingAssetsPath}/SFX/{fileName}";
         using (UnityWebRequest req = UnityWebRequestMultimedia.GetAudioClip(path, AudioType.WAV))
         {
             yield return req.SendWebRequest();
