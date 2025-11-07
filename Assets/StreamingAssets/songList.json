@@ -24,7 +24,9 @@
       "eventName": "kyukurarin",
       "fileLocation": "kyu_kurarin",
       "level": 9.0,
-      "difficulty": "NIGHTMARE"
+      "difficulty": "NIGHTMARE",
+      "previewStart": "108000",
+      "previewEnd": "137000"
     },
     {
       "id": 3,
@@ -76,7 +78,9 @@
       "eventName": "kyukurarin",
       "fileLocation": "kyu_kurarin",
       "level": 5.0,
-      "difficulty": "ADVERSITY"
+      "difficulty": "ADVERSITY",
+      "previewStart": "108000",
+      "previewEnd": "137000"
     },
     {
       "id": 7,
@@ -89,7 +93,9 @@
       "eventName": "kyukurarin",
       "fileLocation": "kyu_kurarin",
       "level": 3.0,
-      "difficulty": "MEMORY"
+      "difficulty": "MEMORY",
+      "previewStart": "108000",
+      "previewEnd": "137000"
     },
     {
       "id": 8,

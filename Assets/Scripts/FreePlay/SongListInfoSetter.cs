@@ -12,6 +12,7 @@ public class SongListInfoSetter : MonoBehaviour
     public float BPM;
     public List<string> filePath = new();
     public string eventName;
-
+    public int previewStart;
+    public int previewEnd;
     public List<Result> results = new();
 }

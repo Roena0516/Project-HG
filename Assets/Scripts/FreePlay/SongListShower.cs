@@ -7,6 +7,9 @@ using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine.UI;
+using FMODUnity;
+using FMOD.Studio;
+using UnityEngine.Rendering;
 
 public class SongListShower : MonoBehaviour
 {
@@ -48,6 +51,8 @@ public class SongListShower : MonoBehaviour
     public GameObject speedInput;
     public TMP_Dropdown dropdown;
 
+    private EventInstance _preview;
+
     private float originX;
     private float indicatorOriginX;
     private float originY;
@@ -61,6 +66,8 @@ public class SongListShower : MonoBehaviour
     private Coroutine currentSetSongRoutine;
     private Coroutine currentSetDifficultyRoutine;
     private Coroutine repeatCoroutine;
+    private Coroutine _currentStopPreviewRoutine;
+    private Coroutine _currentStartPreviewRoutine;
 
     public SongInfoClass selectedSongInfo;
     [SerializeField] private FreePlayAnimation _animator;
@@ -73,14 +80,19 @@ public class SongListShower : MonoBehaviour
     private void Start()
     {
         canvas.transform.localScale = Vector3.one;
-
         settings = SettingsManager.Instance;
+        
+        UIInit();
+        isHold = false;
 
+        FMODInit();
+    }
+
+    private void UIInit()
+    {
         originX = contentFolder.transform.position.x;
         indicatorOriginX = difficultyIndicator.transform.position.x;
         originY = contentFolder.transform.position.y;
-
-        isHold = false;
 
         listNum = 1;
         selectedDifficulty = 1;
@@ -110,6 +122,13 @@ public class SongListShower : MonoBehaviour
             dropdown.value = 4;
         }
         Debug.Log($"value : {dropdown.value}");
+    }
+
+    private void FMODInit()
+    {
+        _preview = RuntimeManager.CreateInstance("event:");
+        _preview.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+        _preview.setVolume(0.5f);
     }
 
     public async void Shower()
@@ -254,6 +273,8 @@ public class SongListShower : MonoBehaviour
             setter.jpTitle = info.jpTitle;
             setter.BPM = info.bpm;
             setter.eventName = info.eventName;
+            setter.previewStart = info.previewStart;
+            setter.previewEnd = info.previewEnd;
 
             // 난이도 따른 파일 경로 및 기록 지정
             List<SongInfoClass> songList = loader.songDictionary[key];
@@ -629,12 +650,57 @@ public class SongListShower : MonoBehaviour
 
             SetDifficulty(selectedDifficulty, 1);
 
+            if (_currentStartPreviewRoutine != null)
+            {
+                StopCoroutine(_currentStartPreviewRoutine);
+                _preview.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+                _currentStartPreviewRoutine = null;
+            }
+            _currentStartPreviewRoutine = StartCoroutine(SetPreview($"event:/{setter.eventName}", setter.previewStart, setter.previewEnd));
+
             Result found = GetResult(setter.ids[selectedDifficulty - 1]);
             if (found != null)
             {
                 SetResult(found);
             }
         }
+    }
+
+    private IEnumerator SetPreview(string eventName, int startTime, int endTime)
+    {
+        if (_currentStopPreviewRoutine != null)
+        {
+            StopCoroutine(_currentStopPreviewRoutine);
+            _preview.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            _currentStopPreviewRoutine = null;
+        }
+
+        yield return new WaitForSeconds(1f);
+
+        _preview.release();
+        _preview = RuntimeManager.CreateInstance(eventName);
+        _preview.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
+        _preview.setVolume(0.5f);
+        _preview.setTimelinePosition(startTime);
+        _preview.start();
+
+        Debug.Log($"Preview started: {eventName}, from {startTime}ms to {endTime}ms");
+
+        _currentStopPreviewRoutine = StartCoroutine(StopPreview(endTime - startTime));
+
+        _currentStartPreviewRoutine = null;
+
+        yield break;
+    }
+
+    private IEnumerator StopPreview(int duration)
+    {
+        yield return new WaitForSeconds(duration/1000f);
+
+        _preview.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        _currentStopPreviewRoutine = null;
+
+        yield break;
     }
 
     private void SetInfoBoard(SongListInfoSetter setter)

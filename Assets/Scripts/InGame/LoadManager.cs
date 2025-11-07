@@ -19,6 +19,8 @@ public class SongInfoClass
     public string fileLocation;
     public float level = 0;
     public string difficulty;
+    public int previewStart = 0;
+    public int previewEnd = 20000;
 }
 
 [System.Serializable]

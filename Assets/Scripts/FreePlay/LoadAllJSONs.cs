@@ -69,6 +69,8 @@ public class LoadAllJSONs : MonoBehaviour
             info.bpm = song.bpm;
             info.eventName = song.eventName;
             info.level = song.level;
+            info.previewStart = song.previewStart;
+            info.previewEnd = song.previewEnd;
 
             string key = info.artist + "-" + info.title;
             if (!songDictionary.ContainsKey(key))
