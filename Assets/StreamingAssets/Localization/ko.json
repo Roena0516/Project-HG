@@ -18,6 +18,8 @@
     { "key": "off_fast_slow", "value": "표시 안함" },
     { "key": "good_down", "value": "GOOD 이하" },
     { "key": "great_down", "value": "GREAT 이하" },
-    { "key": "perfect_down", "value": "PERFECT 이하" }
+    { "key": "perfect_down", "value": "PERFECT 이하" },
+    { "key": "music_volume", "value": "노래 음량" },
+    { "key": "sfx_volume", "value": "효과음 음량" }
   ]
 }

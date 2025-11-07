@@ -87,7 +87,7 @@ public class MusicPlayer : MonoBehaviour
 
         eventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
 
-        eventInstance.setVolume(0.5f);
+        eventInstance.setVolume(0.5f * (settings.settings.musicVolume / 10f));
         eventInstance.setTimelinePosition(timeLinePosition);
 
         StartCoroutine(StartSong());

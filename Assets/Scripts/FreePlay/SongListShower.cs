@@ -528,6 +528,7 @@ public class SongListShower : MonoBehaviour
                 case "ExitSongList":
                     _animator.FadeIn(onComplete: () =>
                     {
+                        _preview.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                         SceneManager.LoadScene("Menu");
                     });
                     break;
@@ -680,7 +681,7 @@ public class SongListShower : MonoBehaviour
         _preview.release();
         _preview = RuntimeManager.CreateInstance(eventName);
         _preview.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-        _preview.setVolume(0.5f);
+        _preview.setVolume(0.5f * (settings.settings.musicVolume / 10f));
         _preview.setTimelinePosition(startTime);
         _preview.start();
 

@@ -16,7 +16,7 @@ public class SettingsList : MonoBehaviour
             "DISPLAY",
             "GAME",
             "SOUND",
-            "ACCOUNT"
+            "ACCOUNT",
         };
 
         settingsList = new()
@@ -114,6 +114,26 @@ public class SettingsList : MonoBehaviour
                 },
                 initialIndex = 3,
                 category = categories[1]
+            },
+            new SettingComponent()
+            {
+                title = _localizationManager.GetText("music_volume"),
+                value = new()
+                {
+                    "0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"
+                },
+                initialIndex = 6,
+                category = categories[2]
+            },
+            new SettingComponent()
+            {
+                title = _localizationManager.GetText("sfx_volume"),
+                value = new()
+                {
+                    "0%","10%","20%","30%","40%","50%","60%","70%","80%","90%","100%"
+                },
+                initialIndex = 9,
+                category = categories[2]
             },
         };
 

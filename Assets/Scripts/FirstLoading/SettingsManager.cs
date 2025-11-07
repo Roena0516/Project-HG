@@ -21,6 +21,8 @@ public class GameSettings
     public int judgementLineHeight = 0;
     public int sync = 0;
     public int fastSlowExp = 3;
+    public int musicVolume = 6;
+    public int sfxVolume = 9;
 
     public List<string> KeyBinds = new()
     {
@@ -277,6 +279,14 @@ public class SettingsManager : MonoBehaviour
         {
             settings.fastSlowExp = newIndex;
         }
+        else if (settingTitle == locManager.GetText("music_volume"))
+        {
+            settings.musicVolume = newIndex;
+        }
+        else if (settingTitle == locManager.GetText("sfx_volume"))
+        {
+            settings.sfxVolume = newIndex;
+        }
     }
 
     public int GetSettingValue(string settingTitle)
@@ -314,6 +324,14 @@ public class SettingsManager : MonoBehaviour
         else if (settingTitle == locManager.GetText("fast_slow_exp"))
         {
             return settings.fastSlowExp;
+        }
+        else if (settingTitle == locManager.GetText("music_volume"))
+        {
+            return settings.musicVolume;
+        }
+        else if (settingTitle == locManager.GetText("sfx_volume"))
+        {
+            return settings.sfxVolume;
         }
 
         return 0;
