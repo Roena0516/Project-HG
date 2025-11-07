@@ -26,20 +26,6 @@ public class Note : MonoBehaviour
 
     private Coroutine moveNoteRoutine;
 
-    // 히트 사운드
-    public EventInstance eventInstance;
-    public EventInstance hitSoundInstance;
-
-    private void SetHitSoundInstance()
-    {
-        hitSoundInstance = RuntimeManager.CreateInstance($"event:/tamb");
-
-        hitSoundInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
-
-        hitSoundInstance.setVolume(1f);
-        //hitSoundInstance.start();
-    }
-
 
     void Start()
     {
@@ -55,8 +41,6 @@ public class Note : MonoBehaviour
         dropStartTime = (ms - noteGenerator.fallTime) / 1000f;
 
         moveNoteRoutine = StartCoroutine(MoveNote());
-
-        SetHitSoundInstance();
     }
 
     public void SetNote()
@@ -113,7 +97,6 @@ public class Note : MonoBehaviour
             line.judgementManager.AddCombo(1);
             
             Debug.Log($"AutoPlay note.ms: {noteClass.ms}, currentTime: {line.currentTime * 1000f}");
-            //hitSoundInstance.start();
         }
     }
 

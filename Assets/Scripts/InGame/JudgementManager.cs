@@ -194,6 +194,7 @@ public class JudgementManager : MonoBehaviour
         note.isInputed = true;
         Destroy(note.noteObject);
         Debug.Log(noteTypeRate[note.type]);
+
         if (judgement == "Great")
         {
             ChangeRate(noteTypeRate[note.type], 0.25f);
@@ -217,6 +218,7 @@ public class JudgementManager : MonoBehaviour
         if (judgement != "Miss")
         {
             _animator.SpawnKeyBombEffect(note.position - 1);
+            SFXLoader.Instance.PlaySFX("hitsound_tamb.wav");
         }
 
         if (note.isEndNote == true)

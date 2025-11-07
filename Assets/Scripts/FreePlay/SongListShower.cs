@@ -933,6 +933,7 @@ public class SongListShower : MonoBehaviour
 
         _animator.Approach(() =>
         {
+            _preview.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
             SceneManager.LoadSceneAsync("InGame");
         });
     }
