@@ -37,7 +37,7 @@ public class LoadAllJSONs : MonoBehaviour
 
         foreach (var song in songListContainer.songs)
         {
-            string[] directory = Directory.GetDirectories(Application.streamingAssetsPath, song.fileLocation);
+            string[] directory = Directory.GetDirectories(Application.streamingAssetsPath, $"Charts/{song.fileLocation}");
 
             if (directory.Length == 0)
             {
