@@ -36,6 +36,19 @@ public static class EncryptionHelper
 
     public static string Decrypt(string encryptedText)
     {
+        // ① URL 인코딩 해제 (%2F → /, %2B → + 등)
+        encryptedText = Uri.UnescapeDataString(encryptedText);
+
+        // ② Base64URL 형식(-, _)을 표준 Base64(+, /)로 변환
+        encryptedText = encryptedText.Replace('-', '+').Replace('_', '/');
+
+        // ③ 패딩이 깨졌을 경우 복원
+        switch (encryptedText.Length % 4)
+        {
+            case 2: encryptedText += "=="; break;
+            case 3: encryptedText += "="; break;
+        }
+
         byte[] fullCipher = Convert.FromBase64String(encryptedText);
         byte[] iv = new byte[16];
         byte[] cipherText = new byte[fullCipher.Length - iv.Length];
