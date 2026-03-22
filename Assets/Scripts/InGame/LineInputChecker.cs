@@ -327,13 +327,19 @@ public class LineInputChecker : MonoBehaviour
 
     private void CheckHold(int raneNumber)
     {
+        if (noteGenerator == null || noteGenerator.notes == null)
+            return; // notes가 아직 초기화되지 않았다면 그냥 스킵
+
         var filteredNotes = noteGenerator.notes
-        .Where(note => Mathf.Abs((float)(note.ms - (currentTime * 1000))) <= 40)
-        .ToList();
+            .Where(note => Mathf.Abs((float)(note.ms - (currentTime * 1000))) <= 40)
+            .ToList();
 
         foreach (NoteClass note in filteredNotes)
         {
-            if (note.type == "hold" && raneNumber + 1 == note.position && !note.isInputed && (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -160))
+            if (note.type == "hold" &&
+                raneNumber + 1 == note.position &&
+                !note.isInputed &&
+                (note.ms - (currentTime * 1000f) <= 0 && note.ms - (currentTime * 1000f) >= -160))
             {
                 note.isInputed = true;
                 break;

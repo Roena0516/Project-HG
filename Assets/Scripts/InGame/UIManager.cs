@@ -57,6 +57,8 @@ public class UIManager : MonoBehaviour
     {
         float level = _loadManager.info.level != 0 ? _loadManager.info.level : 0;
 
+        Debug.Log($"level: {level} _loadManager.info.level: {_loadManager.info.level}");
+
         SetInitialJudgementText();
         SetLevelText(level);
         SetInitialSongInfoText();

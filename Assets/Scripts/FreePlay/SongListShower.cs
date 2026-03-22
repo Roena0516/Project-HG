@@ -357,6 +357,11 @@ public class SongListShower : MonoBehaviour
 
                     setter.ids[3] = infos.id;
                 }
+
+                Debug.Log($"[Shower] filePath[{0}] = {setter.filePath[0]}");
+                Debug.Log($"[Shower] filePath[{1}] = {setter.filePath[1]}");
+                Debug.Log($"[Shower] filePath[{2}] = {setter.filePath[2]}");
+                Debug.Log($"[Shower] filePath[{3}] = {setter.filePath[3]}");
             }
         }
 
@@ -931,6 +936,8 @@ public class SongListShower : MonoBehaviour
         _approachSongTitle.text = selectedSongInfo.title;
         _approachSongArtist.text = selectedSongInfo.artist;
         _approachLevel.text = $"{selectedSongInfo.level}";
+
+        Debug.Log(settings.fileName + " 1234321");
 
         _animator.Approach(() =>
         {

@@ -21,11 +21,10 @@ public class LoadAllJSONs : MonoBehaviour
     {
         GetAll();
 #else
-    private async void Start()
-    {
-        await GetAllInWebGL();
+private async void Start()
+{
+    await GetAllInWebGL();
 #endif
-
         shower.Shower();
     }
 
@@ -131,7 +130,7 @@ public class LoadAllJSONs : MonoBehaviour
             foreach (var song in songListContainer.songs)
             {
                 // StreamingAssets/song.fileLocation/
-                string songFolderUrl = $"{Application.streamingAssetsPath}/{song.fileLocation}/";
+                string songFolderUrl = $"{Application.streamingAssetsPath}/Charts/{song.fileLocation}/";
                 string songFileUrl = $"{songFolderUrl}{song.difficulty}.roena";
 
                 using (UnityWebRequest req = UnityWebRequest.Get(songFileUrl))
@@ -185,6 +184,7 @@ public class LoadAllJSONs : MonoBehaviour
                             songDictionary[key][3] = info;
                             break;
                     }
+                    Debug.Log($"[GetAllInWebGL] songFileUrl = {songFileUrl}");
                 }
             }
         }

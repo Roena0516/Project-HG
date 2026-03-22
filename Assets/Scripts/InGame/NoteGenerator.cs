@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine;
+using System.IO;
 
 public class NoteGenerator : MonoBehaviour
 {
@@ -61,7 +62,12 @@ public class NoteGenerator : MonoBehaviour
         randomRane.Add(4);
     }
 
+
+#if UNITY_STANDALONE || UNITY_EDITOR
     private void Start()
+#else
+    private async void Start()
+#endif
     {
         speed = 4.5f;
         distance = 6f - (-2.63f);
@@ -97,6 +103,12 @@ public class NoteGenerator : MonoBehaviour
         {
             randomRane.ShuffleBySplit(3);
         }
+
+#if UNITY_STANDALONE || UNITY_EDITOR
+#else
+        Debug.Log(settings.fileName);
+        await loadManager.LoadFromJsonInWebGL(Path.Combine(settings.fileName));
+#endif
 
         StartCoroutine(NoteGenerate());
     }

@@ -75,8 +75,6 @@ public class LoadManager : MonoBehaviour
         {
 #if UNITY_STANDALONE || UNITY_EDITOR
             LoadFromJson(Path.Combine(settings.fileName));
-#else
-            await LoadFromJsonInWebGL(Path.Combine(settings.fileName));  
 #endif
         }
         else

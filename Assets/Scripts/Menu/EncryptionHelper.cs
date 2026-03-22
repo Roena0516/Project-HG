@@ -1,6 +1,7 @@
 using System;
 using System.Security.Cryptography;
 using System.Text;
+using UnityEngine;
 
 public static class EncryptionHelper
 {
@@ -36,37 +37,55 @@ public static class EncryptionHelper
 
     public static string Decrypt(string encryptedText)
     {
-        // ① URL 인코딩 해제 (%2F → /, %2B → + 등)
-        encryptedText = Uri.UnescapeDataString(encryptedText);
-
-        // ② Base64URL 형식(-, _)을 표준 Base64(+, /)로 변환
-        encryptedText = encryptedText.Replace('-', '+').Replace('_', '/');
-
-        // ③ 패딩이 깨졌을 경우 복원
-        switch (encryptedText.Length % 4)
+        try
         {
-            case 2: encryptedText += "=="; break;
-            case 3: encryptedText += "="; break;
-        }
+            Debug.Log($"[Decrypt] 입력 문자열: {encryptedText}");
 
-        byte[] fullCipher = Convert.FromBase64String(encryptedText);
-        byte[] iv = new byte[16];
-        byte[] cipherText = new byte[fullCipher.Length - iv.Length];
+            // 🔹 URL 인코딩 해제 + Base64 정규화 시도
+            string normalized = Uri.UnescapeDataString(encryptedText)
+                .Replace('-', '+')
+                .Replace('_', '/');
 
-        Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
-        Buffer.BlockCopy(fullCipher, iv.Length, cipherText, 0, cipherText.Length);
-
-        byte[] keyBytes = Encoding.UTF8.GetBytes(encryptionKey);
-
-        using (Aes aes = Aes.Create())
-        {
-            aes.Key = keyBytes;
-            aes.IV = iv;
-            using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+            switch (normalized.Length % 4)
             {
-                byte[] plainBytes = decryptor.TransformFinalBlock(cipherText, 0, cipherText.Length);
-                return Encoding.UTF8.GetString(plainBytes);
+                case 2: normalized += "=="; break;
+                case 3: normalized += "="; break;
             }
+
+            Debug.Log($"[Decrypt] 정규화된 문자열: {normalized}");
+
+            byte[] fullCipher = Convert.FromBase64String(normalized);
+
+            byte[] iv = new byte[16];
+            byte[] cipherText = new byte[fullCipher.Length - iv.Length];
+
+            Buffer.BlockCopy(fullCipher, 0, iv, 0, iv.Length);
+            Buffer.BlockCopy(fullCipher, iv.Length, cipherText, 0, cipherText.Length);
+
+            byte[] keyBytes = Encoding.UTF8.GetBytes(encryptionKey);
+
+            using (Aes aes = Aes.Create())
+            {
+                aes.Key = keyBytes;
+                aes.IV = iv;
+                using (var decryptor = aes.CreateDecryptor(aes.Key, aes.IV))
+                {
+                    byte[] plainBytes = decryptor.TransformFinalBlock(cipherText, 0, cipherText.Length);
+                    return Encoding.UTF8.GetString(plainBytes);
+                }
+            }
+        }
+        catch (FormatException e)
+        {
+            Debug.LogError($"[Decrypt] Base64 변환 실패! 입력값: {encryptedText}");
+            Debug.LogException(e);
+            return null;
+        }
+        catch (Exception e)
+        {
+            Debug.LogError($"[Decrypt] 일반 예외 발생! 입력값: {encryptedText}");
+            Debug.LogException(e);
+            return null;
         }
     }
 }

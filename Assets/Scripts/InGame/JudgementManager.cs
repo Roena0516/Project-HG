@@ -69,6 +69,7 @@ public class JudgementManager : MonoBehaviour
 
         ClearCombo();
         UIManager.UpdateJudgeCountText(judgeCount);
+        UIManager.ChangeRate(rate);
     }
 
     public void CalcRate()

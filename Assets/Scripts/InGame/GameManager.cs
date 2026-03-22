@@ -52,7 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.R) && !isTest)
+        if (Input.GetKeyDown(KeyCode.F5) && !isTest)
         {
             SceneManager.LoadSceneAsync("InGame");
         }
